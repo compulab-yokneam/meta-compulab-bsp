@@ -1,0 +1,89 @@
+#!/bin/bash
+
+get_meta_compulab() {
+meta_cpl_dir="../sources/meta-compulab"
+branch="devel"
+meta_url="https://github.com/compulab-yokneam/meta-compulab"
+[[ ! -d ${meta_cpl_dir} ]] && git clone -b ${branch} ${meta_url} ${meta_cpl_dir}
+}
+
+fsl_imx_x11() {
+CORE_IMAGE_EXTRA_INSTALL_append += " xf86-video-fbdev"
+}
+
+mod_bblayer() {
+# bblayers.conf file update
+
+# Make sure thet the main meta layer is deployed onto the source dirrectory
+get_meta_compulab
+# A mandatory main bsp layer
+sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab "' ${BBLAYERS_CONF}
+
+# A mandatory bsp layer: kernel, u-boot, imx-boot
+sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-bsp "' ${BBLAYERS_CONF}
+# An optional desktop utils layer: cl-deploy, cl-uboot, cl-cleanup
+sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-desktop "' ${BBLAYERS_CONF}
+# An optional multimedia layer; fixes sample rate for pulseaudio
+sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-multimedia "' ${BBLAYERS_CONF}
+# An optional xfce layer; provides compulab-image-xfce image
+sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-xfce "' ${BBLAYERS_CONF}
+}
+
+CWD=$(pwd)
+PROGNAME=${BASH_SOURCE[0]}
+[ $(basename -- $BASH_SOURCE) == $(basename -- $0) ] && EXIT="exit" || EXIT="return"
+
+if [[ $(id -u) -eq 0 ]]; then
+    echo "ERROR: do not use the BSP as root. Exiting..."
+    ${EXIT}
+fi
+
+BBLAYERS_CONF=conf/bblayers.conf
+BB_CL_CONF_DONE=conf/bb_cl_conf.done
+LOCAL_CONF=conf/local.conf
+
+if ([ ! -f ${BBLAYERS_CONF} ] || [ ! -f ${LOCAL_CONF} ]);then
+cat << eom
+    Warning: Files ${BBLAYERS_CONF} and ${LOCAL_CONF} not found.
+    Make sure that the scritp issued at a correct location.
+eom
+    ${EXIT} 2
+fi
+
+if [ -f ${BB_CL_CONF_DONE} ];then
+cat << eom
+    Note: Already issued.
+    Nothing to be done.
+eom
+    ${EXIT} 0
+fi
+
+eval $(awk '(/MACHINE|DISTRO/)&&(gsub(/'"'"'/,"")&&($0=$1"="$NF))' ORS=";" ${LOCAL_CONF})
+
+cat << eom
+    Prepare: ${MACHINE}:${DISTRO} ...
+eom
+
+# Issue a distro function if defined
+distro_function=$(cat <<< ${DISTRO} | sed 's/-/_/')
+type ${distro_function} &>/dev/null
+[[ $? -eq 0 ]] && ${distro_function}
+
+# Modify local.conf
+CORE_IMAGE_EXTRA_INSTALL_append = " cl-deploy cl-uboot bt-start dhcp-client imx-gpu-viv-demos"
+IMAGE_FEATURES_append = " package-management ssh-server-openssh"
+
+sed -i "$ a CORE_IMAGE_EXTRA_INSTALL += \"${CORE_IMAGE_EXTRA_INSTALL_append}\"" ${LOCAL_CONF}
+sed -i "$ a IMAGE_FEATURES += \"${IMAGE_FEATURES_append}\"" ${LOCAL_CONF}
+
+mod_bblayer
+
+cat << eom
+    Note: Files ${BBLAYERS_CONF} and ${LOCAL_CONF} updated successfully.
+eom
+
+cat << eom > ${BB_CL_CONF_DONE}
+$(date)
+eom
+
+${EXIT} 0
