@@ -1,0 +1,137 @@
+From 9b2b59f07cb242c5c8f8d60df28608dcbd0f4bcf Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Sat, 30 Jun 2018 17:22:15 +0300
+Subject: [PATCH 4/4] libarch: patch #4
+
+non-recursive-extract-and-list
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ libarchive/archive.h       |  2 ++
+ libarchive/archive_match.c | 30 +++++++++++++++++++++++++++++-
+ tar/bsdtar.1               |  3 +--
+ tar/bsdtar.c               | 12 ++++++++++--
+ 4 files changed, 42 insertions(+), 5 deletions(-)
+
+diff --git a/libarchive/archive.h b/libarchive/archive.h
+index 316a68a..a3ae681 100644
+--- a/libarchive/archive.h
++++ b/libarchive/archive.h
+@@ -1089,6 +1089,8 @@ __LA_DECL int	archive_match_excluded(struct archive *,
+  */
+ __LA_DECL int	archive_match_path_excluded(struct archive *,
+ 		    struct archive_entry *);
++/* Control recursive inclusion of directory content when directory is included. Default on. */
++__LA_DECL int	archive_match_include_directories_recursively(struct archive *, int _enabled);
+ /* Add exclusion pathname pattern. */
+ __LA_DECL int	archive_match_exclude_pattern(struct archive *, const char *);
+ __LA_DECL int	archive_match_exclude_pattern_w(struct archive *,
+diff --git a/libarchive/archive_match.c b/libarchive/archive_match.c
+index be72066..bb6a340 100644
+--- a/libarchive/archive_match.c
++++ b/libarchive/archive_match.c
+@@ -93,6 +93,9 @@ struct archive_match {
+ 	/* exclusion/inclusion set flag. */
+ 	int			 setflag;
+ 
++	/* Recursively include directory content? */
++	int			 recursive_include;
++
+ 	/*
+ 	 * Matching filename patterns.
+ 	 */
+@@ -223,6 +226,7 @@ archive_match_new(void)
+ 		return (NULL);
+ 	a->archive.magic = ARCHIVE_MATCH_MAGIC;
+ 	a->archive.state = ARCHIVE_STATE_NEW;
++	a->recursive_include = 1;
+ 	match_list_init(&(a->inclusions));
+ 	match_list_init(&(a->exclusions));
+ 	__archive_rb_tree_init(&(a->exclusion_tree), &rb_ops_mbs);
+@@ -471,6 +475,28 @@ archive_match_path_excluded(struct archive *_a,
+ }
+ 
+ /*
++ * When recursive inclusion of directory content is enabled,
++ * an inclusion pattern that matches a directory will also
++ * include everything beneath that directory. Enabled by default.
++ *
++ * For compatibility with GNU tar, exclusion patterns always
++ * match if a subset of the full patch matches (i.e., they are
++ * are not rooted at the beginning of the path) and thus there
++ * is no corresponding non-recursive exclusion mode.
++ */
++int
++archive_match_include_directories_recursively(struct archive *_a, int _enabled)
++{
++	struct archive_match *a;
++
++	archive_check_magic(_a, ARCHIVE_MATCH_MAGIC,
++	    ARCHIVE_STATE_NEW, "archive_match_include_directories_recursively");
++	a = (struct archive_match *)_a;
++	a->recursive_include = _enabled;
++	return (ARCHIVE_OK);
++}
++
++/*
+  * Utility functions to get statistic information for inclusion patterns.
+  */
+ int
+@@ -781,7 +807,9 @@ static int
+ match_path_inclusion(struct archive_match *a, struct match *m,
+     int mbs, const void *pn)
+ {
+-	int flag = PATHMATCH_NO_ANCHOR_END;
++	int flag = a->recursive_include ?
++		PATHMATCH_NO_ANCHOR_END : /* Prefix match is good enough. */
++		0; /* Full match required. */
+ 	int r;
+ 
+ 	if (mbs) {
+diff --git a/tar/bsdtar.1 b/tar/bsdtar.1
+index cdc317b..35f6e36 100644
+--- a/tar/bsdtar.1
++++ b/tar/bsdtar.1
+@@ -371,8 +371,7 @@ and the default behavior in c, r, and u modes or if
+ .Nm
+ is run in x mode as root.
+ .It Fl n , Fl Fl norecurse , Fl Fl no-recursion
+-(c, r, u modes only)
+-Do not recursively archive the contents of directories.
++Do not recursively archive (c, r, u), extract (x) or list (t) the contents of directories.
+ .It Fl Fl newer Ar date
+ (c, r, u modes only)
+ Only include files and directories newer than the specified date.
+diff --git a/tar/bsdtar.c b/tar/bsdtar.c
+index 9fc6833..a008ed8 100644
+--- a/tar/bsdtar.c
++++ b/tar/bsdtar.c
+@@ -792,8 +792,6 @@ main(int argc, char **argv)
+ 			break;
+ 		}
+ 	}
+-	if (bsdtar->flags & OPTFLAG_NO_SUBDIRS)
+-		only_mode(bsdtar, "-n", "cru");
+ 	if (bsdtar->flags & OPTFLAG_STDOUT)
+ 		only_mode(bsdtar, "-O", "xt");
+ 	if (bsdtar->flags & OPTFLAG_UNLINK_FIRST)
+@@ -843,6 +841,16 @@ main(int argc, char **argv)
+ 		only_mode(bsdtar, buff, "cru");
+ 	}
+ 
++	/*
++	 * When creating an archive from a directory tree, the directory
++	 * walking code will already avoid entering directories when
++	 * recursive inclusion of directory content is disabled, therefore
++	 * changing the matching behavior has no effect for creation modes.
++	 * It is relevant for extraction or listing.
++	 */
++	archive_match_include_directories_recursively(bsdtar->matching,
++						      !(bsdtar->flags & OPTFLAG_NO_SUBDIRS));
++
+ 	/* Filename "-" implies stdio. */
+ 	if (strcmp(bsdtar->filename, "-") == 0)
+ 		bsdtar->filename = NULL;
+-- 
+2.7.4
+

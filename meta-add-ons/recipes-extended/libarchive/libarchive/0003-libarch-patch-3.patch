@@ -1,0 +1,32 @@
+From bd7e6b9d16b231981601b36c8b2ec2c4e5948ae5 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Sat, 30 Jun 2018 17:18:49 +0300
+Subject: [PATCH 3/4] libarch: patch #3
+
+CVE-2017-14502
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ libarchive/archive_read_support_format_rar.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/libarchive/archive_read_support_format_rar.c b/libarchive/archive_read_support_format_rar.c
+index cbb14c3..751de69 100644
+--- a/libarchive/archive_read_support_format_rar.c
++++ b/libarchive/archive_read_support_format_rar.c
+@@ -1496,7 +1496,11 @@ read_header(struct archive_read *a, struct archive_entry *entry,
+         return (ARCHIVE_FATAL);
+       }
+       filename[filename_size++] = '\0';
+-      filename[filename_size++] = '\0';
++      /*
++       * Do not increment filename_size here as the computations below
++       * add the space for the terminating NUL explicitly.
++       */
++      filename[filename_size] = '\0';
+ 
+       /* Decoded unicode form is UTF-16BE, so we have to update a string
+        * conversion object for it. */
+-- 
+2.7.4
+
