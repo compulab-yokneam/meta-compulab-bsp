@@ -10,4 +10,5 @@ MACHINE=cl-som-imx8 DISTRO=fsl-imx-wayland source ./fsl-setup-release.sh -b buil
 source ../sources/meta-compulab-bsp/tools/setup-compulab-env
 bitbake -k fsl-image-qt5-validation-imx
 
-# https://github.com/compulab-yokneam/meta-compulab-bsp/wiki[meta-compulab-bsp wiki]
+# Wiki Page (TBD)
+https://github.com/compulab-yokneam/meta-compulab-bsp/wiki[meta-compulab-bsp wiki]
