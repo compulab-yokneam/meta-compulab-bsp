@@ -25,7 +25,8 @@ sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-bsp "' ${BBLAYE
 sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-desktop "' ${BBLAYERS_CONF}
 # An optional multimedia layer; fixes sample rate for pulseaudio
 sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-multimedia "' ${BBLAYERS_CONF}
-# An optional xfce layer; provides compulab-image-xfce image
+# Optional xfce layers; provides compulab-image-xfce image
+sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-openembedded/meta-xfce "' ${BBLAYERS_CONF}
 sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-xfce "' ${BBLAYERS_CONF}
 }
 
