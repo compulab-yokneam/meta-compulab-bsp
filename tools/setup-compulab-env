@@ -67,6 +67,13 @@ cat << eom
     Prepare: ${MACHINE}:${DISTRO} ...
 eom
 
+mod_bblayer
+
+if [[ ${MACHINE} != 'cl-som-imx8' ]];then
+source ../sources/meta-compulab/bb-tools/setup-compulab-env
+${EXIT} 0
+fi
+
 # Issue a distro function if defined
 distro_function=$(cat <<< ${DISTRO} | sed 's/-/_/')
 type ${distro_function} &>/dev/null
@@ -78,8 +85,6 @@ IMAGE_FEATURES_append=" package-management ssh-server-openssh"
 
 sed -i "$ a CORE_IMAGE_EXTRA_INSTALL += \"${CORE_IMAGE_EXTRA_INSTALL_append}\"" ${LOCAL_CONF}
 sed -i "$ a IMAGE_FEATURES += \"${IMAGE_FEATURES_append}\"" ${LOCAL_CONF}
-
-mod_bblayer
 
 cat << eom
     Note: Files ${BBLAYERS_CONF} and ${LOCAL_CONF} updated successfully.
