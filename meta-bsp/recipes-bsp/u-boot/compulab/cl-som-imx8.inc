@@ -15,14 +15,11 @@ SRC_URI_append_cl-som-imx8 = " \
     file://0013-cl-som-imx8-config-Disable-CONFIG_NXP_TMU.patch \
     file://0014-cl-som-imx8-Set-correct-module-eeprom-bus-address.patch \
     file://0015-cl-som-imx8-Add-ATP-support.patch \
-    file://0016-cl-som-imx8-mem-Update-Micron-2G-memory-settings.patch \
+    file://0016-cl-som-imx8-Enable-env-export-import.patch \
+    file://0017-cl-som-imx8-mem-Update-Micron-2G-memory-settings.patch \
+    file://0018-cl-som-imx8-Add-get-ddr-train-result-method.patch \
+    file://0019-cl-som-imx8-Add-memory-detection-support.patch \
+    file://0020-cl-som-imx8-Add-memory-selection-support.patch \
+    file://0021-cl-som-imx8-dts-Change-compatibility-string.patch \
     file://cl-som-imx8_defconfig \
-"
-
-SRC_URI_append_cl-som-imx8_1G = " \
-    file://0016-cl-som-imx8-Add-Micron-1G-memory-settings.patch \
-"
-
-SRC_URI_append_cl-som-imx8_2G = " \
-    file://0016-cl-som-imx8-mem-Update-Micron-2G-memory-settings.patch \
 "
