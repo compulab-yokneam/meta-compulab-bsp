@@ -1,0 +1,29 @@
+From a2f310f7f4e30b684e9c911e643f30e45636f9eb Mon Sep 17 00:00:00 2001
+From: Uri Mashiach <uri.mashiach@compulab.co.il>
+Date: Mon, 3 Sep 2018 18:49:12 +0300
+Subject: [PATCH 50/52] ARM: imx7d: cl-som-imx7: enable LVDS support
+
+The CL-SOM-iMX7 include a MIPI DSI to LVDS bridge.
+Enable the MIPI DSI and the bridge drivers.
+
+Signed-off-by: Uri Mashiach <uri.mashiach@compulab.co.il>
+---
+ arch/arm/configs/compulab_imx7_defconfig | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm/configs/compulab_imx7_defconfig b/arch/arm/configs/compulab_imx7_defconfig
+index 4db63f2..33c609a 100644
+--- a/arch/arm/configs/compulab_imx7_defconfig
++++ b/arch/arm/configs/compulab_imx7_defconfig
+@@ -393,6 +393,8 @@ CONFIG_DRM_VIVANTE=y
+ CONFIG_FB_UDL=m
+ CONFIG_FB_MXS=y
+ CONFIG_FB_MXC_SYNC_PANEL=y
++CONFIG_FB_MXC_MIPI_DSI_SAMSUNG=y
++CONFIG_FB_MXC_SN65DSI8X=y
+ CONFIG_LCD_CLASS_DEVICE=y
+ CONFIG_LCD_L4F00242T03=y
+ CONFIG_LCD_PLATFORM=y
+-- 
+1.9.1
+

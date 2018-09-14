@@ -1,0 +1,26 @@
+From d5bcbd5fe71fe023eaea0f47cdfaae350c8b9c1d Mon Sep 17 00:00:00 2001
+From: Ilya Ledvich <ilya@compulab.co.il>
+Date: Mon, 12 Feb 2018 14:53:18 +0200
+Subject: [PATCH 41/52] ARM: imx7d: release kernel v4.9.11-cl-som-imx7-5.0
+
+Signed-off-by: Ilya Ledvich <ilya@compulab.co.il>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 18b0c5a..92bdf54 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,7 +1,7 @@
+ VERSION = 4
+ PATCHLEVEL = 9
+ SUBLEVEL = 11
+-EXTRAVERSION =
++EXTRAVERSION = -cl-som-imx7-5.0
+ NAME = Roaring Lionus
+ 
+ # *DOCUMENTATION*
+-- 
+1.9.1
+

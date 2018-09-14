@@ -1,0 +1,69 @@
+From a6f6d3a2b5ef09b25bf4402803cb7e6b9e3db165 Mon Sep 17 00:00:00 2001
+From: Nikita Kiryanov <nikita@compulab.co.il>
+Date: Wed, 28 Feb 2018 20:10:00 +0200
+Subject: [PATCH 40/52] ARM: dts: imx7d: sbc-imx7: add support for m4
+
+Add device tree settings for sbc-imx7 to support operating FreeRTOS on
+the M4 core alongside Linux.
+
+The rpmsg buffer is placed at the last 64K of 256MB DRAM to be
+compatible with all configurations of sbc-imx7.
+
+Signed-off-by: Nikita Kiryanov <nikita@compulab.co.il>
+---
+ arch/arm/boot/dts/Makefile              |  1 +
+ arch/arm/boot/dts/imx7d-sbc-imx7-m4.dts | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
+ create mode 100644 arch/arm/boot/dts/imx7d-sbc-imx7-m4.dts
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index f35d411..81d5bf2 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -548,6 +548,7 @@ dtb-$(CONFIG_SOC_IMX7D) += \
+ 	imx7d-colibri-eval-v3.dtb \
+ 	imx7d-nitrogen7.dtb \
+ 	imx7d-sbc-imx7.dtb \
++	imx7d-sbc-imx7-m4.dtb \
+ 	imx7d-sbc-iot-imx7.dtb \
+ 	imx7d-sbc-iot-imx7-can.dtb \
+ 	imx7d-sbc-iot-imx7-rs485-hdx.dtb \
+diff --git a/arch/arm/boot/dts/imx7d-sbc-imx7-m4.dts b/arch/arm/boot/dts/imx7d-sbc-imx7-m4.dts
+new file mode 100644
+index 0000000..2a27491
+--- /dev/null
++++ b/arch/arm/boot/dts/imx7d-sbc-imx7-m4.dts
+@@ -0,0 +1,30 @@
++#include "imx7d-sbc-imx7.dts"
++
++/ {
++	m4_tcm: tcml@007f8000 {
++		compatible = "fsl, m4_tcml";
++		reg = <0x007f8000 0x8000>;
++	};
++};
++
++&adc1 {
++	status = "disabled";
++};
++
++&adc2 {
++	status = "disabled";
++};
++
++&rpmsg {
++	status = "okay";
++	vdev-nums = <1>;
++	reg = <0xafff0000 0x10000>;
++};
++
++&uart2 {
++	status = "disabled";
++};
++
++&ocram {
++	reg = <0x00901000 0xf000>;
++};
+-- 
+1.9.1
+

@@ -1,0 +1,52 @@
+From 12e66088a52ea7b58ae6184bb1640babecbb4ef4 Mon Sep 17 00:00:00 2001
+From: Ilya Ledvich <ilya@compulab.co.il>
+Date: Thu, 14 Jan 2016 13:35:58 +0200
+Subject: [PATCH 06/51] ARM: dts: imx7d: cl-som-imx7: add support for gpio led
+
+Add support for onboard LED driven by GPIO6_14 in heartbeat mode.
+
+Signed-off-by: Ilya Ledvich <ilya@compulab.co.il>
+---
+ arch/arm/boot/dts/imx7d-cl-som-imx7.dts | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/arch/arm/boot/dts/imx7d-cl-som-imx7.dts b/arch/arm/boot/dts/imx7d-cl-som-imx7.dts
+index 142b401..d21f8d7 100644
+--- a/arch/arm/boot/dts/imx7d-cl-som-imx7.dts
++++ b/arch/arm/boot/dts/imx7d-cl-som-imx7.dts
+@@ -40,6 +40,16 @@
+ 		enable-active-high;
+ 		regulator-always-on;
+ 	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		onboard-led {
++			label = "Heartbeat";
++			gpios = <&gpio6 14 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "heartbeat";
++		};
++	};
+ };
+ 
+ &cpu0 {
+@@ -227,6 +237,15 @@
+ };
+ 
+ &iomuxc {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_hog>;
++
++	pinctrl_hog: hoggrp {
++		fsl,pins = <
++			MX7D_PAD_SAI1_TX_SYNC__GPIO6_IO14		0x34 /* Onboard LED */
++		>;
++	};
++
+ 	pinctrl_enet1: enet1grp {
+ 		fsl,pins = <
+ 			MX7D_PAD_SD2_CD_B__ENET1_MDIO			0x30
+-- 
+1.9.1
+

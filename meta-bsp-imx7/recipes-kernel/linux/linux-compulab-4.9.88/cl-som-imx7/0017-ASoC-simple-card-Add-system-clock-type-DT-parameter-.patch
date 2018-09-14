@@ -1,0 +1,74 @@
+From 2f85d69dff32ee254f0c93fb455d4c22cbcfc852 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Wed, 4 May 2016 14:54:22 +0300
+Subject: [PATCH 17/51] ASoC: simple-card: Add system-clock-type DT parameter
+ to dai nodes
+
+Select the clock type parameter for set_sysclk calls in the card init phase.
+Make use of the dir clock parameter for set_sysclk instead if the
+SND_SOC_CLOCK_IN value.
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ Documentation/devicetree/bindings/sound/simple-card.txt |  1 +
+ include/sound/simple_card_utils.h                       |  1 +
+ sound/soc/generic/simple-card-utils.c                   | 12 +++++++++++-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/sound/simple-card.txt b/Documentation/devicetree/bindings/sound/simple-card.txt
+index 6360288..8682f9b 100644
+--- a/Documentation/devicetree/bindings/sound/simple-card.txt
++++ b/Documentation/devicetree/bindings/sound/simple-card.txt
+@@ -87,6 +87,7 @@ Optional CPU/CODEC subnodes properties:
+ 					  clk_disable_unprepare() in dai
+ 					  shutdown().
+ - system-clock-direction		: "in" or "out", default "in"
++- system-clock-type			: "xtal" or "mclk" that has 1 or 2 value, default is 0
+ 
+ Example 1 - single DAI link:
+ 
+diff --git a/include/sound/simple_card_utils.h b/include/sound/simple_card_utils.h
+index 9bfad55..321565e 100644
+--- a/include/sound/simple_card_utils.h
++++ b/include/sound/simple_card_utils.h
+@@ -16,6 +16,7 @@ struct asoc_simple_dai {
+ 	const char *name;
+ 	unsigned int sysclk;
+ 	int sysclk_dir;
++	int sysclk_id;
+ 	int slots;
+ 	int slot_width;
+ 	unsigned int tx_slot_mask;
+diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
+index 22c469d..2bcff0a 100644
+--- a/sound/soc/generic/simple-card-utils.c
++++ b/sound/soc/generic/simple-card-utils.c
+@@ -116,6 +116,15 @@ int asoc_simple_card_parse_clk(struct device_node *node,
+ 			return -EINVAL;
+ 	}
+ 
++	if (!of_property_read_string(node, "system-clock-type", &str)) {
++		if (!strcmp(str, "xtal"))
++			simple_dai->sysclk_id = 1;
++		else if (!strcmp(str, "mclk"))
++			simple_dai->sysclk_id = 2;
++		else
++			return -EINVAL;
++	}
++
+ 	/*
+ 	 * Parse dai->sysclk come from "clocks = <&xxx>"
+ 	 * (if system has common clock)
+@@ -181,7 +190,8 @@ int asoc_simple_card_init_dai(struct snd_soc_dai *dai,
+ 	int ret;
+ 
+ 	if (simple_dai->sysclk) {
+-		ret = snd_soc_dai_set_sysclk(dai, 0, simple_dai->sysclk,
++		ret = snd_soc_dai_set_sysclk(dai, simple_dai->sysclk_id,
++					     simple_dai->sysclk,
+ 					     simple_dai->sysclk_dir);
+ 		if (ret && ret != -ENOTSUPP) {
+ 			dev_err(dai->dev, "simple-card: set_sysclk error\n");
+-- 
+1.9.1
+

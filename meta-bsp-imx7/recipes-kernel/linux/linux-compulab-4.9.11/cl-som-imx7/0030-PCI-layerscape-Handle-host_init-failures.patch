@@ -1,0 +1,85 @@
+From 6912e436d9b356eb61cb8098756fcc7df097ac9f Mon Sep 17 00:00:00 2001
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
+Date: Sat, 15 Jul 2017 23:39:45 -0700
+Subject: [PATCH 30/52] PCI: layerscape: Handle ->host_init() failures
+
+In several layerscape-based drivers, ->host_init() can fail, so make sure to
+propagate and handle this to avoid continuing operation of a driver or
+hardware in an invalid state.
+
+Adaptation of commit 4a301766f5263dd94c1b95d1b1bbdf338afb1a37 from the mainline
+to the Freescale iMX source tree.
+
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Joao Pinto <jpinto@synopsys.com>
+Acked-by: Jingoo Han <jingoohan1@gmail.com>
+Signed-off-by: Ilya Ledvich <ilya@compulab.co.il>
+---
+ drivers/pci/host/pci-layerscape.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/pci/host/pci-layerscape.c b/drivers/pci/host/pci-layerscape.c
+index 6537079..f6f69e7 100644
+--- a/drivers/pci/host/pci-layerscape.c
++++ b/drivers/pci/host/pci-layerscape.c
+@@ -103,30 +103,34 @@ static int ls1021_pcie_link_up(struct pcie_port *pp)
+ 	return 1;
+ }
+ 
+-static void ls1021_pcie_host_init(struct pcie_port *pp)
++static int ls1021_pcie_host_init(struct pcie_port *pp)
+ {
+ 	struct device *dev = pp->dev;
+ 	struct ls_pcie *pcie = to_ls_pcie(pp);
+ 	u32 index[2];
++	int ret;
+ 
+ 	pcie->scfg = syscon_regmap_lookup_by_phandle(dev->of_node,
+ 						     "fsl,pcie-scfg");
+ 	if (IS_ERR(pcie->scfg)) {
++		ret = PTR_ERR(pcie->scfg);
+ 		dev_err(dev, "No syscfg phandle specified\n");
+ 		pcie->scfg = NULL;
+-		return;
++		return ret;
+ 	}
+ 
+ 	if (of_property_read_u32_array(dev->of_node,
+ 				       "fsl,pcie-scfg", index, 2)) {
+ 		pcie->scfg = NULL;
+-		return;
++		return -EINVAL;
+ 	}
+ 	pcie->index = index[1];
+ 
+ 	dw_pcie_setup_rc(pp);
+ 
+ 	ls_pcie_drop_msg_tlp(pcie);
++
++	return 0;
+ }
+ 
+ static int ls_pcie_link_up(struct pcie_port *pp)
+@@ -144,7 +148,8 @@ static int ls_pcie_link_up(struct pcie_port *pp)
+ 	return 1;
+ }
+ 
+-static void ls_pcie_host_init(struct pcie_port *pp)
++int (*host_init)(struct pcie_port *pp);
++static int ls_pcie_host_init(struct pcie_port *pp)
+ {
+ 	struct ls_pcie *pcie = to_ls_pcie(pp);
+ 
+@@ -153,6 +158,8 @@ static void ls_pcie_host_init(struct pcie_port *pp)
+ 	ls_pcie_clear_multifunction(pcie);
+ 	ls_pcie_drop_msg_tlp(pcie);
+ 	iowrite32(0, pcie->pp.dbi_base + PCIE_DBI_RO_WR_EN);
++
++	return 0;
+ }
+ 
+ static int ls_pcie_msi_host_init(struct pcie_port *pp,
+-- 
+1.9.1
+

@@ -1,0 +1,31 @@
+From 5c673c43464949c58bd37421fa1de8fff30e91a5 Mon Sep 17 00:00:00 2001
+From: Ilya Ledvich <ilya@compulab.co.il>
+Date: Wed, 10 Feb 2016 10:34:11 +0200
+Subject: [PATCH 09/51] ARM: dts: imx7d: cl-som-imx7: add support for USB host
+
+Enable USB OTG2 port in host mode.
+
+Signed-off-by: Ilya Ledvich <ilya@compulab.co.il>
+---
+ arch/arm/boot/dts/imx7d-cl-som-imx7.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm/boot/dts/imx7d-cl-som-imx7.dts b/arch/arm/boot/dts/imx7d-cl-som-imx7.dts
+index b6fe3d2..18f13aa 100644
+--- a/arch/arm/boot/dts/imx7d-cl-som-imx7.dts
++++ b/arch/arm/boot/dts/imx7d-cl-som-imx7.dts
+@@ -294,6 +294,11 @@
+ 	status = "okay";
+ };
+ 
++&usbotg2 {
++	dr_mode = "host";
++	status = "okay";
++};
++
+ &usdhc3 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_usdhc3>;
+-- 
+1.9.1
+

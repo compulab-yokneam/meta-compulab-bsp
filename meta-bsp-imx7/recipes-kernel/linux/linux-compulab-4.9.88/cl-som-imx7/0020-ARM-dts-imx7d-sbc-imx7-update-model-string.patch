@@ -1,0 +1,29 @@
+From 3dd4e50941bc592874b65488ead1957c481bad99 Mon Sep 17 00:00:00 2001
+From: Ilya Ledvich <ilya@compulab.co.il>
+Date: Mon, 13 Nov 2017 14:18:59 +0200
+Subject: [PATCH 20/51] ARM: dts: imx7d: sbc-imx7: update model string
+
+Update sbc-imx7 model string in order to meet
+the CompuLab ATP machine name requirements.
+
+Signed-off-by: Ilya Ledvich <ilya@compulab.co.il>
+---
+ arch/arm/boot/dts/imx7d-sbc-imx7.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/imx7d-sbc-imx7.dts b/arch/arm/boot/dts/imx7d-sbc-imx7.dts
+index f8a8685..8a54936 100644
+--- a/arch/arm/boot/dts/imx7d-sbc-imx7.dts
++++ b/arch/arm/boot/dts/imx7d-sbc-imx7.dts
+@@ -13,7 +13,7 @@
+ #include "imx7d-cl-som-imx7.dts"
+ 
+ / {
+-	model = "CompuLab SBC-iMX7";
++	model = "CompuLab CL-SOM-iMX7 on SB-SOM";
+ 	compatible = "compulab,sbc-imx7", "compulab,cl-som-imx7", "fsl,imx7d";
+ };
+ 
+-- 
+1.9.1
+

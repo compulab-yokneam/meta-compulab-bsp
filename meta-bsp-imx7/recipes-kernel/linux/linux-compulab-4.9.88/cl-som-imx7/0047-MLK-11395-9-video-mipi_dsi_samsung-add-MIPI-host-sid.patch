@@ -1,0 +1,283 @@
+From 53b9bbb9ac43967464954a7416dd9ae5079b5bf7 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Mon, 3 Sep 2018 17:31:40 +0300
+Subject: [PATCH 47/51] MLK-11395-9 video: mipi_dsi_samsung: add MIPI host side
+ congiguration for ti,sn65dsi83x
+
+* Move the MIPI DSI host timing configuration values to the configuration
+table (mipi_dsi_lcd_db).
+* Add LCD panel operation callback functions: mipi_lcd_start, mipi_lcd_stop.
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ drivers/video/fbdev/mxc/mipi_dsi.h         |  30 ++++++-
+ drivers/video/fbdev/mxc/mipi_dsi_samsung.c | 133 ++++++++++++++++++++---------
+ 2 files changed, 122 insertions(+), 41 deletions(-)
+
+diff --git a/drivers/video/fbdev/mxc/mipi_dsi.h b/drivers/video/fbdev/mxc/mipi_dsi.h
+index 6219024..3eb2de2 100644
+--- a/drivers/video/fbdev/mxc/mipi_dsi.h
++++ b/drivers/video/fbdev/mxc/mipi_dsi.h
+@@ -57,12 +57,21 @@ struct mipi_dsi_lcd_callback {
+ 	void (*get_mipi_lcd_videomode)(struct fb_videomode **, int *,
+ 			struct mipi_lcd_config **);
+ 	int  (*mipi_lcd_setup)(struct mipi_dsi_info *);
++	int  (*mipi_lcd_start)(struct mipi_dsi_info *);
++	int  (*mipi_lcd_stop)(struct mipi_dsi_info *);
++};
+ 
++struct mipi_dsi_host_timing {
++	u32 mipi_dsi_pllctrl_pms;
++	u32 mipi_dsi_phytiming;
++	u32 mipi_dsi_phytiming1;
++	u32 mipi_dsi_phytiming2;
+ };
+ 
+ struct mipi_dsi_match_lcd {
+ 	char *lcd_panel;
+ 	struct mipi_dsi_lcd_callback lcd_callback;
++	struct mipi_dsi_host_timing host_timing;
+ };
+ 
+ struct mipi_dsi_bus_mux {
+@@ -109,6 +118,8 @@ struct mipi_dsi_info {
+ 	struct backlight_device		*bl;
+ 	/* callback for lcd panel operation */
+ 	struct mipi_dsi_lcd_callback	*lcd_callback;
++	/* mipi front end timings */
++	struct mipi_dsi_host_timing	*host_timing;
+ 
+ 	int (*mipi_dsi_pkt_read)(struct mipi_dsi_info *mipi,
+ 			u8 data_type, u32 *buf, int len);
+@@ -118,6 +129,7 @@ struct mipi_dsi_info {
+ 			u8 cmd, const u32 *param, int num);
+ };
+ 
++
+ #ifdef CONFIG_FB_MXC_TRULY_WVGA_SYNC_PANEL
+ void mipid_hx8369_get_lcd_videomode(struct fb_videomode **mode, int *size,
+ 		struct mipi_lcd_config **data);
+@@ -133,9 +145,23 @@ void mipid_hx8363_get_lcd_videomode(struct fb_videomode **mode, int *size,
+ 		struct mipi_lcd_config **data);
+ int mipid_hx8363_lcd_setup(struct mipi_dsi_info *);
+ #endif
+-
+-#ifndef CONFIG_FB_MXC_TRULY_WVGA_SYNC_PANEL
++#ifdef CONFIG_FB_MXC_SN65DSI8X
++void sn65dsi83_get_lcd_videomode(struct fb_videomode **mode, int *size,
++				 struct mipi_lcd_config **data);
++int sn65dsi83_lcd_setup(struct mipi_dsi_info *);
++int sn65dsi83_lcd_start(struct mipi_dsi_info *mipi_dsi);
++int sn65dsi83_lcd_stop(struct mipi_dsi_info *mipi_dsi);
++#endif /* CONFIG_FB_MXC_SN65DSI8X */
++
++#if	!defined(CONFIG_FB_MXC_TRULY_WVGA_SYNC_PANEL)  && \
++	!defined(CONFIG_FB_MXC_TRULY_PANEL_TFT3P5079E) && \
++	!defined(CONFIG_FB_MXC_TRULY_PANEL_TFT3P5581E) && \
++	!defined(CONFIG_FB_MXC_SN65DSI8X)
+ #error "Please configure MIPI LCD panel, we cannot find one!"
+ #endif
+ 
+ #endif
++
++
++
++
+diff --git a/drivers/video/fbdev/mxc/mipi_dsi_samsung.c b/drivers/video/fbdev/mxc/mipi_dsi_samsung.c
+index d6bcf2a..7cad477 100644
+--- a/drivers/video/fbdev/mxc/mipi_dsi_samsung.c
++++ b/drivers/video/fbdev/mxc/mipi_dsi_samsung.c
+@@ -53,20 +53,86 @@
+ static struct mipi_dsi_match_lcd mipi_dsi_lcd_db[] = {
+ #ifdef CONFIG_FB_MXC_TRULY_WVGA_SYNC_PANEL
+ 	{
+-	 "TRULY-WVGA",
+-	 {mipid_hx8369_get_lcd_videomode, mipid_hx8369_lcd_setup}
++		"TRULY-WVGA",
++		{
++			mipid_hx8369_get_lcd_videomode,
++			mipid_hx8369_lcd_setup,
++			NULL, NULL
++		},
++		{
++			MIPI_DSI_PMS(0x4190),
++			(MIPI_DSI_M_TLPXCTL(11) | MIPI_DSI_M_THSEXITCTL(18)),
++			(MIPI_DSI_M_TCLKPRPRCTL(13) |
++			 MIPI_DSI_M_TCLKZEROCTL(65) |
++			 MIPI_DSI_M_TCLKPOSTCTL(17) |
++			 MIPI_DSI_M_TCLKTRAILCTL(13)),
++			(MIPI_DSI_M_THSPRPRCTL(16) | MIPI_DSI_M_THSZEROCTL(24) |
++			 MIPI_DSI_M_THSTRAILCTL(16))
++		}
++	 
+ 	},
+ #endif
+ #ifdef CONFIG_FB_MXC_TRULY_PANEL_TFT3P5079E
+ 	{
+-	 "TRULY-WVGA-TFT3P5079E",
+-	 {mipid_otm8018b_get_lcd_videomode, mipid_otm8018b_lcd_setup}
++		"TRULY-WVGA-TFT3P5079E",
++		{
++			mipid_otm8018b_get_lcd_videomode,
++			mipid_otm8018b_lcd_setup,
++			NULL, NULL
++
++		},
++		{
++			MIPI_DSI_PMS(0x4190),
++			(MIPI_DSI_M_TLPXCTL(11) | MIPI_DSI_M_THSEXITCTL(18)),
++			(MIPI_DSI_M_TCLKPRPRCTL(13) |
++			 MIPI_DSI_M_TCLKZEROCTL(65) |
++			 MIPI_DSI_M_TCLKPOSTCTL(17) |
++			 MIPI_DSI_M_TCLKTRAILCTL(13)),
++			(MIPI_DSI_M_THSPRPRCTL(16) | MIPI_DSI_M_THSZEROCTL(24) |
++			 MIPI_DSI_M_THSTRAILCTL(16))
++		}
+ 	},
+ #endif
+ #ifdef CONFIG_FB_MXC_TRULY_PANEL_TFT3P5581E
+ 	{
+-	 "TRULY-WVGA-TFT3P5581E",
+-	 {mipid_hx8363_get_lcd_videomode, mipid_hx8363_lcd_setup}
++		"TRULY-WVGA-TFT3P5581E",
++		{
++			mipid_hx8363_get_lcd_videomode,
++			mipid_hx8363_lcd_setup,
++			NULL, NULL
++		},
++		{
++			MIPI_DSI_PMS(0x3141),
++			(MIPI_DSI_M_TLPXCTL(2) | MIPI_DSI_M_THSEXITCTL(4)),
++			(MIPI_DSI_M_TCLKPRPRCTL(5) |
++			 MIPI_DSI_M_TCLKZEROCTL(14) |
++			 MIPI_DSI_M_TCLKPOSTCTL(8) |
++			 MIPI_DSI_M_TCLKTRAILCTL(3)),
++			(MIPI_DSI_M_THSPRPRCTL(3) | MIPI_DSI_M_THSZEROCTL(3) |
++			 MIPI_DSI_M_THSTRAILCTL(3))
++		}
++	},
++#endif
++#ifdef CONFIG_FB_MXC_SN65DSI8X
++	{
++		"SN65DSI_default",
++		{
++			sn65dsi83_get_lcd_videomode,
++			sn65dsi83_lcd_setup,
++			sn65dsi83_lcd_start,
++			sn65dsi83_lcd_stop
++		},
++		{
++			MIPI_DSI_PMS(0x4268),
++			(MIPI_DSI_M_TLPXCTL(3) | MIPI_DSI_M_THSEXITCTL(5)),
++			(MIPI_DSI_M_TCLKPRPRCTL(3) |
++			 MIPI_DSI_M_TCLKZEROCTL(20) |
++			 MIPI_DSI_M_TCLKPOSTCTL(9) |
++			 MIPI_DSI_M_TCLKTRAILCTL(4)),
++			(MIPI_DSI_M_THSPRPRCTL(5) |
++			 MIPI_DSI_M_THSZEROCTL(6) |
++			 MIPI_DSI_M_THSTRAILCTL(7))
++		}
+ 	},
+ #endif
+ 	{
+@@ -105,6 +171,8 @@ static int mipi_dsi_lcd_init(struct mipi_dsi_info *mipi_dsi,
+ 			mipi_dsi_lcd_db[i].lcd_panel)) {
+ 			mipi_dsi->lcd_callback =
+ 				&mipi_dsi_lcd_db[i].lcd_callback;
++			mipi_dsi->host_timing =
++				&mipi_dsi_lcd_db[i].host_timing;
+ 			break;
+ 		}
+ 	}
+@@ -397,12 +465,8 @@ static int mipi_dsi_master_init(struct mipi_dsi_info *mipi_dsi,
+ 	       MIPI_DSI_PLL_BYPASS(0) |
+ 	       MIPI_DSI_BYTE_CLK_SRC(0),
+ 	       mipi_dsi->mmio_base + MIPI_DSI_CLKCTRL);
+-	if (!strcmp(mipi_dsi->lcd_panel, "TRULY-WVGA-TFT3P5581E"))
+-		writel(MIPI_DSI_PLL_EN(1) | MIPI_DSI_PMS(0x3141),
+-		       mipi_dsi->mmio_base + MIPI_DSI_PLLCTRL);
+-	else
+-		writel(MIPI_DSI_PLL_EN(1) | MIPI_DSI_PMS(0x4190),
+-		       mipi_dsi->mmio_base + MIPI_DSI_PLLCTRL);
++	writel(MIPI_DSI_PLL_EN(1) | mipi_dsi->host_timing->mipi_dsi_pllctrl_pms,
++	       mipi_dsi->mmio_base + MIPI_DSI_PLLCTRL);
+ 
+ 	/* set PLLTMR: stable time */
+ 	writel(33024, mipi_dsi->mmio_base + MIPI_DSI_PLLTMR);
+@@ -458,31 +522,12 @@ static int mipi_dsi_master_init(struct mipi_dsi_info *mipi_dsi,
+ 	       mipi_dsi->mmio_base + MIPI_DSI_MSYNC);
+ 
+ 	/* configure d-phy timings */
+-	if (!strcmp(mipi_dsi->lcd_panel, "TRULY-WVGA-TFT3P5581E")) {
+-		writel(MIPI_DSI_M_TLPXCTL(2) | MIPI_DSI_M_THSEXITCTL(4),
+-			mipi_dsi->mmio_base + MIPI_DSI_PHYTIMING);
+-		writel(MIPI_DSI_M_TCLKPRPRCTL(5) |
+-			MIPI_DSI_M_TCLKZEROCTL(14) |
+-			MIPI_DSI_M_TCLKPOSTCTL(8) |
+-			MIPI_DSI_M_TCLKTRAILCTL(3),
+-			mipi_dsi->mmio_base + MIPI_DSI_PHYTIMING1);
+-		writel(MIPI_DSI_M_THSPRPRCTL(3) |
+-			MIPI_DSI_M_THSZEROCTL(3) |
+-			MIPI_DSI_M_THSTRAILCTL(3),
+-			mipi_dsi->mmio_base + MIPI_DSI_PHYTIMING2);
+-	} else {
+-		writel(MIPI_DSI_M_TLPXCTL(11) | MIPI_DSI_M_THSEXITCTL(18),
+-			mipi_dsi->mmio_base + MIPI_DSI_PHYTIMING);
+-		writel(MIPI_DSI_M_TCLKPRPRCTL(13) |
+-			MIPI_DSI_M_TCLKZEROCTL(65) |
+-			MIPI_DSI_M_TCLKPOSTCTL(17) |
+-			MIPI_DSI_M_TCLKTRAILCTL(13),
+-			mipi_dsi->mmio_base + MIPI_DSI_PHYTIMING1);
+-		writel(MIPI_DSI_M_THSPRPRCTL(16) |
+-			MIPI_DSI_M_THSZEROCTL(24) |
+-			MIPI_DSI_M_THSTRAILCTL(16),
+-			mipi_dsi->mmio_base + MIPI_DSI_PHYTIMING2);
+-	}
++	writel(mipi_dsi->host_timing->mipi_dsi_phytiming,
++		mipi_dsi->mmio_base + MIPI_DSI_PHYTIMING);
++	writel(mipi_dsi->host_timing->mipi_dsi_phytiming1,
++		mipi_dsi->mmio_base + MIPI_DSI_PHYTIMING1);
++	writel(mipi_dsi->host_timing->mipi_dsi_phytiming2,
++		mipi_dsi->mmio_base + MIPI_DSI_PHYTIMING2);
+ 
+ 	writel(0xf000f, mipi_dsi->mmio_base + MIPI_DSI_TIMEOUT);
+ 
+@@ -635,6 +680,11 @@ static int mipi_dsi_enable(struct mxc_dispdrv_handle *disp,
+ 
+ 	mipi_dsi_set_main_standby(mipi_dsi, 1);
+ 
++	if (mipi_dsi->lcd_callback->mipi_lcd_start) {
++		msleep(120);
++		mipi_dsi->lcd_callback->mipi_lcd_start(mipi_dsi);
++	}
++
+ 	return 0;
+ }
+ 
+@@ -654,9 +704,12 @@ static void mipi_dsi_disable(struct mxc_dispdrv_handle *disp,
+ 
+ 		if (mipi_dsi->disp_power_on)
+ 			regulator_disable(mipi_dsi->disp_power_on);
+-
+-		mipi_dsi->lcd_inited = 0;
+ 	}
++
++	if (mipi_dsi->lcd_callback->mipi_lcd_stop)
++		mipi_dsi->lcd_callback->mipi_lcd_stop(mipi_dsi);
++
++	mipi_dsi->lcd_inited = 0;
+ }
+ 
+ static int mipi_dsi_setup(struct mxc_dispdrv_handle *disp,
+@@ -840,6 +893,8 @@ static int mipi_dsi_probe(struct platform_device *pdev)
+ 	dev_set_drvdata(&pdev->dev, mipi_dsi);
+ 
+ 	dev_info(&pdev->dev, "i.MX MIPI DSI driver probed\n");
++	ret = 0;
++
+ 	return ret;
+ 
+ dispdrv_reg_fail:
+-- 
+1.9.1
+

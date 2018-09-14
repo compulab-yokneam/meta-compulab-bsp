@@ -1,0 +1,82 @@
+From bce71627aa0cbf23f6eddd1dffb1164d24f890d8 Mon Sep 17 00:00:00 2001
+From: Ilya Ledvich <ilya@compulab.co.il>
+Date: Thu, 28 Dec 2017 09:48:38 +0200
+Subject: [PATCH 32/52] ARM: dts: imx7d: sbc-iot-imx7: add support for CAN bus
+
+Enable CAN bus support over FLEXCAN2 interface.
+
+Signed-off-by: Ilya Ledvich <ilya@compulab.co.il>
+---
+ arch/arm/boot/dts/Makefile                   |  1 +
+ arch/arm/boot/dts/imx7d-sbc-iot-imx7-can.dts | 47 ++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
+ create mode 100644 arch/arm/boot/dts/imx7d-sbc-iot-imx7-can.dts
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 147dc1d..e11f491 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -549,6 +549,7 @@ dtb-$(CONFIG_SOC_IMX7D) += \
+ 	imx7d-nitrogen7.dtb \
+ 	imx7d-sbc-imx7.dtb \
+ 	imx7d-sbc-iot-imx7.dtb \
++	imx7d-sbc-iot-imx7-can.dtb \
+ 	imx7s-colibri-eval-v3.dtb \
+ 	imx7s-warp.dtb \
+ 	imx7d-12x12-lpddr3-arm2.dtb \
+diff --git a/arch/arm/boot/dts/imx7d-sbc-iot-imx7-can.dts b/arch/arm/boot/dts/imx7d-sbc-iot-imx7-can.dts
+new file mode 100644
+index 0000000..3eb7753
+--- /dev/null
++++ b/arch/arm/boot/dts/imx7d-sbc-iot-imx7-can.dts
+@@ -0,0 +1,47 @@
++/*
++ * Support for CompuLab SBC-IOT-iMX7 Single Board Computer with CAN bus support
++ *
++ * Copyright (C) 2017 CompuLab Ltd. - http://www.compulab.co.il/
++ * Author: Ilya Ledvich <ilya@compulab.co.il>
++ *
++ * This file is dual-licensed: you can use it either under the terms
++ * of the GPL or the X11 license, at your option. Note that this dual
++ * licensing only applies to this file, and not this project as a
++ * whole.
++ */
++
++#include "imx7d-sbc-iot-imx7.dts"
++
++&flexcan2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_flexcan2>;
++	status = "okay";
++};
++
++&iomuxc {
++	pinctrl_flexcan2: flexcan2grp {
++		fsl,pins = <
++			MX7D_PAD_I2C3_SCL__FLEXCAN2_RX		0x59
++			MX7D_PAD_I2C3_SDA__FLEXCAN2_TX		0x59
++		>;
++	};
++
++	pinctrl_uart5: uart5grp {
++		fsl,pins = <
++			MX7D_PAD_I2C4_SDA__UART5_DCE_TX		0x79 /* RS232-TX */
++			MX7D_PAD_I2C4_SCL__UART5_DCE_RX		0x79 /* RS232-RX */
++		>;
++	};
++};
++
++&uart5 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_uart5>;
++	assigned-clocks = <&clks IMX7D_UART5_ROOT_SRC>;
++	assigned-clock-parents = <&clks IMX7D_PLL_SYS_MAIN_240M_CLK>;
++	status = "okay";
++};
++
++&uart7 {
++	status = "disabled";
++};
+-- 
+1.9.1
+

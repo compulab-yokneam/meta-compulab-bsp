@@ -1,0 +1,74 @@
+From d22a4765d693106de131677c127d9ce78bb82221 Mon Sep 17 00:00:00 2001
+From: Ilya Ledvich <ilya@compulab.co.il>
+Date: Sun, 24 Apr 2016 17:20:18 +0300
+Subject: [PATCH 28/51] PCIe: imx6: imx7d: add support for phy refclk source
+ configuration
+
+i.MX7D variant of the IP can use either Crystal Oscillator input
+or internal clock input as a Reference Clock input for PCIe PHY.
+Add support for an optional property 'fsl,pcie-phy-refclk-internal'.
+If present then an internal clock input is used as PCIe PHY
+reference clock source. By default an external ocsillator input
+is still used.
+
+Verified on Compulab SBC-iMX7 Single Board Computer.
+
+Signed-off-by: Ilya Ledvich <ilya@compulab.co.il>
+---
+ Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.txt | 6 ++++++
+ drivers/pci/host/pci-imx6.c                              | 8 ++++++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.txt b/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.txt
+index 5384a28..cd25d87 100644
+--- a/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.txt
++++ b/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.txt
+@@ -53,6 +53,12 @@ Additional required properties for imx8 pcie:
+ 		hsio = <&hsio>;
+ 		ctrl-id = <0>; /* pciea */
+ 		cpu-base-addr = <0x40000000>;
++
++Additional optional properties for imx7d-pcie:
++- fsl,pcie-phy-refclk-internal: If present then an internal PLL input is used
++  as PCIe PHY reference clock source. By default an external ocsillator input
++  is used.
++
+ Example:
+ 
+ 	pcie@0x01000000 {
+diff --git a/drivers/pci/host/pci-imx6.c b/drivers/pci/host/pci-imx6.c
+index 432c8de..2f9c390 100644
+--- a/drivers/pci/host/pci-imx6.c
++++ b/drivers/pci/host/pci-imx6.c
+@@ -94,6 +94,7 @@ struct imx_pcie {
+ 	struct regulator	*pcie_phy_regulator;
+ 	struct regulator	*pcie_bus_regulator;
+ 	struct regulator	*epdev_on;
++	bool			pcie_phy_refclk_sel;
+ };
+ 
+ /* PCIe Root Complex registers (memory-mapped) */
+@@ -1077,8 +1078,8 @@ static void imx_pcie_init_phy(struct imx_pcie *imx_pcie)
+ 				"failed to enable pcie regulator\n");
+ 
+ 		/* pcie phy ref clock select; 1? internal pll : external osc */
+-		regmap_update_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR12,
+-				BIT(5), 0);
++		regmap_update_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR12, BIT(5),
++				imx_pcie->pcie_phy_refclk_sel ? BIT(5) : 0);
+ 	} else if (imx_pcie->variant == IMX6SX) {
+ 		/* Force PCIe PHY reset */
+ 		regmap_update_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR5,
+@@ -2288,6 +2289,9 @@ static int imx_pcie_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		imx_pcie->link_gen = 1;
+ 
++	imx_pcie->pcie_phy_refclk_sel =
++		of_property_read_bool(node, "fsl,pcie-phy-refclk-internal");
++
+ 	platform_set_drvdata(pdev, imx_pcie);
+ 
+ 	if (IS_ENABLED(CONFIG_EP_MODE_IN_EP_RC_SYS)
+-- 
+1.9.1
+

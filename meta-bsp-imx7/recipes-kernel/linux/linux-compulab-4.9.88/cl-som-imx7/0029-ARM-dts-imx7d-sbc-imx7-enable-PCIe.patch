@@ -1,0 +1,41 @@
+From d2a808e40f4af49b2bf7687017fa4cad55125089 Mon Sep 17 00:00:00 2001
+From: Ilya Ledvich <ilya@compulab.co.il>
+Date: Sun, 14 Jan 2018 13:36:51 +0200
+Subject: [PATCH 29/51] ARM: dts: imx7d: sbc-imx7: enable PCIe
+
+Enable PCIe peripheral. Use the internal clock input as
+a Reference clock for the PCIe PHY.
+
+Signed-off-by: Ilya Ledvich <ilya@compulab.co.il>
+---
+ arch/arm/boot/dts/imx7d-sbc-imx7.dts | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/arm/boot/dts/imx7d-sbc-imx7.dts b/arch/arm/boot/dts/imx7d-sbc-imx7.dts
+index d6a8055..f0b5a0d8 100644
+--- a/arch/arm/boot/dts/imx7d-sbc-imx7.dts
++++ b/arch/arm/boot/dts/imx7d-sbc-imx7.dts
+@@ -18,6 +18,7 @@
+ 
+ 	aliases {
+ 		lcdif = &lcdif;
++		pcie = &pcie;
+ 	};
+ 
+ 	backlight {
+@@ -135,6 +136,12 @@
+ 	};
+ };
+ 
++&pcie {
++	reset-gpio = <&pca9555_sb 1 GPIO_ACTIVE_LOW>;
++	fsl,pcie-phy-refclk-internal;
++	status = "okay";
++};
++
+ &pwm2 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_pwm2>;
+-- 
+1.9.1
+

@@ -1,0 +1,40 @@
+From dfb5dde15ffbe1b27625c0c7bd366c4fa43a3347 Mon Sep 17 00:00:00 2001
+From: Uri Mashiach <uri.mashiach@compulab.co.il>
+Date: Tue, 7 Aug 2018 09:03:10 +0300
+Subject: [PATCH 42/51] ARM: imx7d: cl-som-imx7: remove TI shared transport
+ driver
+
+Texas Instrument recondition for the WL18xx part is to remove the shared
+transport driver, and use just 'hci_uart' driver from the kernel:
+https://e2e.ti.com/support/wireless_connectivity/
+wilink_wifi_bluetooth/f/307/p/602155/2219156#2219156
+
+Signed-off-by: Uri Mashiach <uri.mashiach@compulab.co.il>
+---
+ arch/arm/configs/compulab_imx7_defconfig | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/arch/arm/configs/compulab_imx7_defconfig b/arch/arm/configs/compulab_imx7_defconfig
+index 4a78367..2ebd378 100644
+--- a/arch/arm/configs/compulab_imx7_defconfig
++++ b/arch/arm/configs/compulab_imx7_defconfig
+@@ -211,7 +211,6 @@ CONFIG_BT_BNEP_PROTO_FILTER=y
+ CONFIG_BT_HCIUART=m
+ CONFIG_BT_HCIUART_H4=y
+ CONFIG_BT_HCIUART_LL=y
+-CONFIG_BT_WILINK=m
+ CONFIG_CFG80211=y
+ CONFIG_CFG80211_WEXT=y
+ CONFIG_MAC80211=y
+@@ -247,8 +246,6 @@ CONFIG_BLK_DEV_RAM=y
+ CONFIG_BLK_DEV_RAM_SIZE=65536
+ CONFIG_EEPROM_AT24=y
+ CONFIG_EEPROM_AT25=y
+-CONFIG_TI_ST=y
+-CONFIG_ST_HCI=m
+ # CONFIG_SCSI_PROC_FS is not set
+ CONFIG_BLK_DEV_SD=y
+ CONFIG_SCSI_CONSTANTS=y
+-- 
+1.9.1
+
