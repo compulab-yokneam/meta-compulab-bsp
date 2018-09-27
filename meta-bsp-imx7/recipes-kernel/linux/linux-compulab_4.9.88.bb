@@ -22,5 +22,5 @@ do_copy_defconfig () {
     cp ${S}/arch/arm/configs/compulab_imx7_defconfig ${B}/../defconfig
 }
 
-COMPATIBLE_MACHINE = "cl-som-imx7"
+COMPATIBLE_MACHINE = "cl-som-imx7-evk"
 EXTRA_OEMAKE_append_mx7 = " ARCH=arm"
