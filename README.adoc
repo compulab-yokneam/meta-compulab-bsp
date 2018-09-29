@@ -1,12 +1,34 @@
 # Quick Start Guide
 
-This example shows how to build a Wayland image with the Qt5 support.
+## Supported CompuLab Machines
 
+* `cl-som-imx8`
+* `cl-som-imx7`
+
+# Prepare NXP BSP
 [source,console]
 repo init -u git://source.codeaurora.org/external/imx/imx-manifest.git -b imx-linux-rocko -m imx-4.9.88-2.0.0_ga.xml
 repo sync
+
+# Download CompuLab meta layer
+[source,console]
 git clone -b master https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
-MACHINE=cl-som-imx8 DISTRO=fsl-imx-wayland source ./fsl-setup-release.sh -b build-wayland
+
+# Set a desire machine
+* `cl-som-imx8`
+[source,console]
+COMPULAB_MACHINE=cl-som-imx8
+
+* `cl-som-imx7`
+[source,console]
+COMPULAB_MACHINE=cl-som-imx7
+
+# Build Images
+Refer to the https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree/imx/README?h=rocko-4.9.88-2.0.0_ga#n73[`NXP Readme`] for details about how to select a correct `backend` & `distro`.
+
+This example shows how to build a Wayland image for a supported CompuLab nachine with the Qt5 support.
+[source,console]
+MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-wayland source ./fsl-setup-release.sh -b build-wayland
 source ../sources/meta-compulab-bsp/tools/setup-compulab-env
 bitbake -k fsl-image-qt5-validation-imx
 
