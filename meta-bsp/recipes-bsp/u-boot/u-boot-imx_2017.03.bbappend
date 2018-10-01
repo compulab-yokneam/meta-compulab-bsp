@@ -1,6 +1,6 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/compulab:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/compulab/imx8mq:"
 
-include compulab/cl-som-imx8.inc
+include compulab/imx8mq.inc
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 COMPATIBLE_MACHINE = "(cl-som-imx8)"

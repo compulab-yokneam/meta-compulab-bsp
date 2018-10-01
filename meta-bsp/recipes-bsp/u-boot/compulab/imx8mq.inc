@@ -1,4 +1,4 @@
-SRC_URI_append_cl-som-imx8 = " \
+SRC_URI_append = " \
     file://0000-arm-imx8-cl-som-imx8-add-initial-board-support.patch \
     file://0001-arm-imx8-cl-som-imx8-ddr-mark-mapping-section.patch \
     file://0002-arm-imx8-cl-som-imx8-dts-Update.patch \
