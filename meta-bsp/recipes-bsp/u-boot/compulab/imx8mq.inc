@@ -21,5 +21,15 @@ SRC_URI_append = " \
     file://0019-cl-som-imx8-Add-memory-detection-support.patch \
     file://0020-cl-som-imx8-Add-memory-selection-support.patch \
     file://0021-cl-som-imx8-dts-Change-compatibility-string.patch \
+    file://0022-cl-som-imx8-defconfig-Set-local-version-string.patch \
+    file://0023-ucm-imx8-Add-initial-board-support.patch \
+    file://0024-cl-som-imx8-defconfig-Update-with-respect-to-the-new.patch \
+"
+
+SRC_URI_append-cl-som-imx8 = " \
     file://cl-som-imx8_defconfig \
+"
+
+SRC_URI_append-ucm-imx8 = " \
+    file://ucm-imx8_defconfig \
 "
