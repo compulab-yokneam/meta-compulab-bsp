@@ -84,7 +84,7 @@ mach_function=$(cat <<< ${MACHINE} | sed 's/-/_/g')
 type ${mach_function} &>/dev/null
 [[ $? -eq 0 ]] && ${mach_function}
 
-if [[ ${MACHINE} != 'cl-som-imx8' ]];then
+if [[ ! ${MACHINE} =~ 'imx8' ]];then
 source ../sources/meta-compulab/bb-tools/setup-compulab-env
 ${EXIT} 0
 fi
