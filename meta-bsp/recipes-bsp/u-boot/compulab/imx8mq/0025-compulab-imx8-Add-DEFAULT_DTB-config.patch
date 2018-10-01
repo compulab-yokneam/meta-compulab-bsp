@@ -1,0 +1,44 @@
+From 736d8448867d589fed77abadc0061034851c8680 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Tue, 2 Oct 2018 00:35:06 +0300
+Subject: [PATCH 25/25] compulab: imx8: Add DEFAULT_DTB config
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ board/compulab/imx8/Kconfig   | 6 ++++++
+ include/configs/cl-som-imx8.h | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/board/compulab/imx8/Kconfig b/board/compulab/imx8/Kconfig
+index 3be6683..4cd7f88 100644
+--- a/board/compulab/imx8/Kconfig
++++ b/board/compulab/imx8/Kconfig
+@@ -11,6 +11,12 @@ config TARGET_UCM_IMX8
+ 
+ endchoice
+ 
++config DEFAULT_DTB
++    string "U-Boot Default Device Tree File"
++    depends on TARGET_COMPULAB_IMX8
++    default "sbc-imx8.dtb" if TARGET_CL_SOM_IMX8
++    default "sbc-ucm-imx8.dtb" if TARGET_UCM_IMX8
++
+ config SYS_BOARD
+ 	default "cl-som-imx8"
+ 
+diff --git a/include/configs/cl-som-imx8.h b/include/configs/cl-som-imx8.h
+index 0c31c14..692ced2 100644
+--- a/include/configs/cl-som-imx8.h
++++ b/include/configs/cl-som-imx8.h
+@@ -114,7 +114,7 @@
+ 	"fdt_addr=0x43000000\0"			\
+ 	"fdt_high=0xffffffffffffffff\0"		\
+ 	"boot_fdt=try\0" \
+-	"fdt_file="CONFIG_SYS_BOARD".dtb\0" \
++	"fdt_file="CONFIG_DEFAULT_DTB"\0" \
+ 	"initrd_addr=0x43800000\0"		\
+ 	"initrd_high=0xffffffffffffffff\0" \
+ 	"mmcdev="__stringify(CONFIG_SYS_MMC_ENV_DEV)"\0" \
+-- 
+1.9.1
+

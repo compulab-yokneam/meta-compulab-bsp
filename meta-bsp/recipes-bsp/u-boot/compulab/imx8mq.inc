@@ -24,6 +24,7 @@ SRC_URI_append = " \
     file://0022-cl-som-imx8-defconfig-Set-local-version-string.patch \
     file://0023-ucm-imx8-Add-initial-board-support.patch \
     file://0024-cl-som-imx8-defconfig-Update-with-respect-to-the-new.patch \
+    file://0025-compulab-imx8-Add-DEFAULT_DTB-config.patch \
 "
 
 SRC_URI_append-cl-som-imx8 = " \
