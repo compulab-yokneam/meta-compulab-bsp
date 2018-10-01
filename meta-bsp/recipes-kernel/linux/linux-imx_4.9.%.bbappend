@@ -1,8 +1,8 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/compulab:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/compulab/imx8mq:"
 
-include compulab/cl-som-imx8.inc
+include compulab/imx8mq.inc
 
-do_configure_append_cl-som-imx8 () {
+do_configure_append () {
     oe_runmake cl-som-imx8_defconfig
 # Unset CONFIG_MXC_GPU_VIV in oredr to 
 # allow compiling galcore externally

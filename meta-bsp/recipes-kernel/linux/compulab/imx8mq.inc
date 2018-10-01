@@ -1,4 +1,4 @@
-SRC_URI_append_cl-som-imx8 = " \
+SRC_URI_append = " \
 	file://0000-cl-som-imx8-dts-Add-device-tree-file.patch \
 	file://0001-cl-som-imx8-dts-Enable-HDMI.patch \
 	file://0002-cl-som-imx8-dts-Enable-PWM.patch \
