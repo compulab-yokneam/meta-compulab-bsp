@@ -3,6 +3,7 @@
 ## Supported CompuLab Machines
 
 * `cl-som-imx8`
+* `ucm-imx8`
 * `cl-som-imx7`
 
 # Prepare NXP BSP
@@ -18,6 +19,10 @@ git clone -b master https://github.com/compulab-yokneam/meta-compulab-bsp.git so
 * `cl-som-imx8`
 [source,console]
 COMPULAB_MACHINE=cl-som-imx8
+
+* `ucm-imx8`
+[source,console]
+COMPULAB_MACHINE=ucm-imx8
 
 * `cl-som-imx7`
 [source,console]
