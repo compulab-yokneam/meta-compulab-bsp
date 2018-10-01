@@ -64,5 +64,11 @@ SRC_URI_append = " \
 	file://0062-cl-som-imx8-dts-Remove-the-odsolete-hdmi_cec.patch \
 	file://0063-nxp-pcie-External-OSC-handling.patch \
 	file://0064-cl-som-imx8-config-Update-for-4.9.88.patch \
+	file://0065-cl-som-imx8-dts-Merge-CSI-into-the-main-dts-file.patch \
+	file://0066-cl-som-imx8-Add-the-em3027-label.patch \
+	file://0067-cl-som-imx8-dts-Fix-reserved-memory-pools-location.patch \
+	file://0068-compulab-dtsi-Add-generic-dtsi-files-for-imx8mq.patch \
+	file://0069-sbc-imx8-dts-Add-the-SBC-iMX8-device-tree-file.patch \
+	file://0070-ucm-imx8-Add-the-initial-device-support.patch \
 	file://defconfig \
 "
