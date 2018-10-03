@@ -1,0 +1,142 @@
+From 5cd60f9670ded07adee3dbdb34e95620e668649e Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Tue, 2 Oct 2018 15:43:22 +0300
+Subject: [PATCH 71/74] compulab: imx8: Refactoring pcie bus definitions
+
+Move the pciX bus into the modules & sb device trees.
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/cl-som-imx8.dts      | 30 +++++++++++++++++++++++
+ arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi | 26 --------------------
+ arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi     |  4 +++
+ arch/arm64/boot/dts/compulab/ucm-imx8.dts         | 12 +++++++++
+ 4 files changed, 46 insertions(+), 26 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8.dts b/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
+index 7042ec9..34b20fb 100644
+--- a/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
+@@ -26,3 +26,33 @@
+ 		bcmdhd_nv = "/lib/firmware/bcm/1CX_BCM4356/bcmdhd.cal";
+ 	};
+ };
++
++&iomuxc {
++	cl-som-imx8 {
++		pinctrl_pcie1: pcie1grp {
++			fsl,pins = <
++				MX8MQ_IOMUXC_GPIO1_IO02_GPIO1_IO2	0x16 /* WIFI clkreq-gpio  pin#39 */
++				MX8MQ_IOMUXC_SAI3_RXC_GPIO4_IO29 	0x16 /* WIFI disable-gpio pin#41 */
++				MX8MQ_IOMUXC_GPIO1_IO01_GPIO1_IO1	0x16 /* WIFI rest-gpio    pin#23 */
++
++				MX8MQ_IOMUXC_GPIO1_IO03_GPIO1_IO3	0x16
++				MX8MQ_IOMUXC_GPIO1_IO00_ANAMIX_REF_CLK_32K 0x16
++			>;
++		};
++	};
++};
++
++&pcie0 {
++	status = "okay";
++};
++
++&pcie1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pcie1>;
++	clkreq-gpio = <&gpio1 2 GPIO_ACTIVE_LOW>;   /* pin#39 */
++	disable-gpio = <&gpio4 29 GPIO_ACTIVE_LOW>; /* pin#41 */
++	reset-gpio = <&gpio1 1 GPIO_ACTIVE_LOW>;    /* pin#23 */
++	ext_osc = <0>;
++	hard-wired = <1>;
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+index e81a378..02a0af9 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+@@ -211,17 +211,6 @@
+ 			>;
+ 		};
+ 
+-		pinctrl_pcie1: pcie1grp {
+-			fsl,pins = <
+-				MX8MQ_IOMUXC_GPIO1_IO02_GPIO1_IO2	0x16 /* WIFI clkreq-gpio  pin#39 */
+-				MX8MQ_IOMUXC_SAI3_RXC_GPIO4_IO29 	0x16 /* WIFI disable-gpio pin#41 */
+-				MX8MQ_IOMUXC_GPIO1_IO01_GPIO1_IO1	0x16 /* WIFI rest-gpio    pin#23 */
+-
+-				MX8MQ_IOMUXC_GPIO1_IO03_GPIO1_IO3	0x16
+-				MX8MQ_IOMUXC_GPIO1_IO00_ANAMIX_REF_CLK_32K 0x16
+-			>;
+-		};
+-
+ 		pinctrl_pwm2: pwm2grp {
+ 			fsl,pins = <
+ 				MX8MQ_IOMUXC_I2C4_SCL_PWM2_OUT 		0x16
+@@ -550,21 +539,6 @@
+     };
+ };
+ 
+-&pcie0 {
+-	status = "okay";
+-};
+-
+-&pcie1 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_pcie1>;
+-	clkreq-gpio = <&gpio1 2 GPIO_ACTIVE_LOW>;   /* pin#39 */
+-	disable-gpio = <&gpio4 29 GPIO_ACTIVE_LOW>; /* pin#41 */
+-	reset-gpio = <&gpio1 1 GPIO_ACTIVE_LOW>;    /* pin#23 */
+-	ext_osc = <0>;
+-	hard-wired = <1>;
+-	status = "okay";
+-};
+-
+ &pwm2 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_pwm2>;
+diff --git a/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi b/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi
+index c3c0d90..641bce1 100644
+--- a/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi
++++ b/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi
+@@ -23,6 +23,10 @@
+     };
+ };
+ 
++&pcie0 {
++	reset-gpio = <&pca9555 0 GPIO_ACTIVE_LOW>;
++	status = "okay";
++};
+ &pwm2 {
+     status = "disabled";
+ };
+diff --git a/arch/arm64/boot/dts/compulab/ucm-imx8.dts b/arch/arm64/boot/dts/compulab/ucm-imx8.dts
+index cbd0cea..f6669ec 100644
+--- a/arch/arm64/boot/dts/compulab/ucm-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/ucm-imx8.dts
+@@ -23,6 +23,11 @@
+ 
+ &iomuxc {
+ 	ucm-imx8 {
++	pinctrl_pcie1: pcie1grp {
++		fsl,pins = <
++			MX8MQ_IOMUXC_GPIO1_IO01_GPIO1_IO1	0x16 /* WIFI rest-gpio    pin#23 */
++		>;
++	};
+ 
+     };
+ };
+@@ -38,3 +43,10 @@
+         pagesize = <16>;
+     };
+ };
++
++&pcie1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pcie1>;
++	reset-gpio = <&gpio1 1 GPIO_ACTIVE_LOW>;    /* pin#23 */
++	status = "okay";
++};
+-- 
+1.9.1
+

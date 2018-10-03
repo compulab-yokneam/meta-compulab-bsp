@@ -70,5 +70,9 @@ SRC_URI_append = " \
 	file://0068-compulab-dtsi-Add-generic-dtsi-files-for-imx8mq.patch \
 	file://0069-sbc-imx8-dts-Add-the-SBC-iMX8-device-tree-file.patch \
 	file://0070-ucm-imx8-Add-the-initial-device-support.patch \
+	file://0071-compulab-imx8-Refactoring-pcie-bus-definitions.patch \
+	file://0072-sb-ucm-imx8-dts-Define-i2c1-bus-and-clients.patch \
+	file://0073-ucm-imx8-Add-WiFi-pinmux.patch \
+	file://0074-sb-ucm-imx8-dts-Add-WiFi-enabled-dts.patch \
 	file://defconfig \
 "
