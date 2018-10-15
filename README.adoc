@@ -32,5 +32,8 @@ MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-wayland source ./fsl-setup-release.sh
 source ../sources/meta-compulab-bsp/tools/setup-compulab-env
 bitbake -k fsl-image-qt5-validation-imx
 
+# Pre-Built Development Image
+https://drive.google.com/open?id=1opnBSiWzFNQWB34l21tUYrIUXLAJIl0A[fsl-image-qt5-validation-imx-cl-som-imx8-20180910100947.rootfs.sdcard.bz2]
+
 # Wiki Page (TBD)
 https://github.com/compulab-yokneam/meta-compulab-bsp/wiki[meta-compulab-bsp wiki]
