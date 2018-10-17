@@ -33,9 +33,7 @@ source ../sources/meta-compulab-bsp/tools/setup-compulab-env
 bitbake -k fsl-image-qt5-validation-imx
 
 # Pre-Built Development Image
-* `cl-som-imx8`
-
-https://drive.google.com/open?id=1ptJ43j8ExPx7re-Ds0QQrV_o_PQFAJlS[fsl-image-qt5-validation-imx-cl-som-imx8-20181014093522.rootfs.sdcard.bz2]
+* `cl-som-imx8` https://drive.google.com/open?id=1ptJ43j8ExPx7re-Ds0QQrV_o_PQFAJlS[fsl-image-qt5-validation-imx-cl-som-imx8-20181014093522.rootfs.sdcard.bz2]
 
 # Boot from SD-card
 * Insert a created SD card into the SD socket `P13` (SB-iMX8 print side).
