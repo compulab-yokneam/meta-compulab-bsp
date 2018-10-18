@@ -64,5 +64,6 @@ SRC_URI_append_cl-som-imx8 = " \
 	file://0062-cl-som-imx8-dts-Remove-the-odsolete-hdmi_cec.patch \
 	file://0063-nxp-pcie-External-OSC-handling.patch \
 	file://0064-cl-som-imx8-config-Update-for-4.9.88.patch \
+	file://0065-cl-som-imx8-dts-Reserve-memory-fix.patch \
 	file://defconfig \
 "
