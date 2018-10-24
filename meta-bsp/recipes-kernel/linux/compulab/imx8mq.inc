@@ -74,5 +74,17 @@ SRC_URI_append = " \
 	file://0072-sb-ucm-imx8-dts-Define-i2c1-bus-and-clients.patch \
 	file://0073-ucm-imx8-Add-WiFi-pinmux.patch \
 	file://0074-sb-ucm-imx8-dts-Add-WiFi-enabled-dts.patch \
+	file://0075-compulab-imx8mq-Reefactoring-of-lvds.patch \
+	file://0076-compulab-imx8mq-General-refactoring.patch \
+	file://0077-compulab-imx8mq-lvds-mipi-Remove-all-non-lvds-mipi-s.patch \
+	file://0078-sb-imx8-Add-tspinmus-and-sbc_i2c_lvds-alias.patch \
+	file://0079-sb-ucm-imx8-Fix-pca95xx-setings-add-sbc_i2c_lvds-ali.patch \
+	file://0080-imx8-lvds-Add-lvds-configuration-of-CompuLab-boards.patch \
+	file://0081-imx8-Makefile-Update-dts-list.patch \
+	file://0082-compulab-imx8mq-Refactoring-of-reserved-memomry.patch \
+	file://0083-imx8mq-Refactoring-wm8731.patch \
+	file://0084-sb-imx8-dts-ov5640-Added-known-issues-comments.patch \
+	file://0085-sb-ucm-imx8-dts-Add-ov5640-support.patch \
+	file://0086-ucm-imx8-touch-Add-an-option-for-another-pendown-int.patch \
 	file://defconfig \
 "

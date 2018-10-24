@@ -1,0 +1,71 @@
+From 1c6b6c71a09a5bd08bb7e3cc0044eafee93658d8 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Thu, 11 Oct 2018 12:45:20 +0300
+Subject: [PATCH 77/86] compulab-imx8mq: lvds: mipi: Remove all non lvds-mipi
+ staff
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ .../dts/compulab/compulab-imx8mq-lvds-mipi.dtsi    | 32 ++--------------------
+ 1 file changed, 2 insertions(+), 30 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi
+index 3a984fa..d2b695e 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi
+@@ -13,7 +13,7 @@
+  */
+ 
+ &iomuxc {
+-    cl-som-imx8-lvds {
++    compulab-imx8mq-lvds {
+         pinctrl_dsi_lvds: dsilvds_group {
+             fsl,pins = <
+                 MX8MQ_IOMUXC_GPIO1_IO06_GPIO1_IO6 0x16
+@@ -22,7 +22,7 @@
+     };
+ };
+ 
+-&i2c2 {
++&sbc_i2c_lvds {
+     ti_bridge: sn65dsi83@2c {
+         compatible = "ti,sn65dsi83";
+         reg = <0x2c>;
+@@ -62,34 +62,6 @@
+     };
+ };
+ 
+-&lcdif {
+-    status = "okay";
+-    max-res = <1280>, <800>;
+-
+-    port@0 {
+-        lcdif_mipi_dsi: mipi-dsi-endpoint {
+-            remote-endpoint = <&mipi_dsi_in>;
+-        };
+-    };
+-};
+-
+-&mipi_dsi_phy {
+-    status = "okay";
+-};
+-
+-&mipi_dsi {
+-    status = "okay";
+-    as_bridge;
+-    sync-pol = <1>;
+-    pwr-delay = <10>;
+-
+-    port@1 {
+-        mipi_dsi_in: endpoint {
+-            remote-endpoint = <&lcdif_mipi_dsi>;
+-        };
+-    };
+-};
+-
+ &mipi_dsi_bridge {
+     status = "okay";
+ 
+-- 
+1.9.1
+
