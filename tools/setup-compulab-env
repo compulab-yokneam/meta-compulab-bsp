@@ -16,18 +16,25 @@ fsl_imx_x11() {
 CORE_IMAGE_EXTRA_INSTALL_append+=" xf86-video-fbdev"
 }
 
+cl_som_imx6ul() {
+# A mandatory main bsp layer for cl-som-imx6ul
+sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-bsp-imx6ul "' ${BBLAYERS_CONF}
+}
+
 cl_som_imx7() {
 # A mandatory main bsp layer for cl-som-imx7
 sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-bsp-imx7 "' ${BBLAYERS_CONF}
 }
 
-mod_bblayer() {
-# bblayers.conf file update
-
+mod_bblayer0() {
 # Make sure thet the main meta layer is deployed onto the source dirrectory
 get_meta_compulab
 # A mandatory main bsp layer
 sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab "' ${BBLAYERS_CONF}
+}
+
+mod_bblayer1() {
+# bblayers.conf file update
 
 # A mandatory bsp layer: kernel, u-boot, imx-boot
 sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-bsp "' ${BBLAYERS_CONF}
@@ -77,7 +84,7 @@ cat << eom
     Prepare: ${MACHINE}:${DISTRO} ...
 eom
 
-mod_bblayer
+mod_bblayer0
 
 # Issue a machine function if defined
 mach_function=$(cat <<< ${MACHINE} | sed 's/-/_/g')
@@ -88,6 +95,8 @@ if [[ ! ${MACHINE} =~ 'imx8' ]];then
 source ../sources/meta-compulab/bb-tools/setup-compulab-env
 ${EXIT} 0
 fi
+
+mod_bblayer1
 
 # Issue a distro function if defined
 distro_function=$(cat <<< ${DISTRO} | sed 's/-/_/g')
