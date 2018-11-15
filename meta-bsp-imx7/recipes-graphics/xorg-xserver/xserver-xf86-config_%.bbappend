@@ -1,10 +1,12 @@
 # Append path for freescale layer to include bsp xorg.conf 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-SRC_URI_cl-som-imx7 = " \
+SRC_URI = " \
 	file://xorg.conf-fbdev \
 "
 
-do_configure_cl-som-imx7 () {
+do_configure () {
 	mv ${S}/xorg.conf-fbdev ${S}/xorg.conf
 }
+
+COMPATIBLE_MACHINE = "cl-som-imx7"
