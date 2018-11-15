@@ -13,7 +13,7 @@ repo sync
 
 # Download CompuLab meta layer
 [source,console]
-git clone -b master https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
+git clone -b devel https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
 
 # Set a desire machine
 * `cl-som-imx8`
