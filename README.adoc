@@ -5,6 +5,7 @@
 * `cl-som-imx8`
 * `ucm-imx8`
 * `cl-som-imx7`
+* `cl-som-imx6ul`
 
 # Prepare NXP BSP
 [source,console]
