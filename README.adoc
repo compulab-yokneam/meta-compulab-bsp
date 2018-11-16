@@ -39,16 +39,16 @@ Refer to the https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tre
 ## imx7/imx8
 This example shows how to build a Wayland image for a supported CompuLab machine with the Qt5 support.
 [source,console]
-MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-wayland source ./fsl-setup-release.sh -b build-wayland
+MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-wayland source ./fsl-setup-release.sh -b build-${COMPULAB_MACHINE}-${DISTRO}
 source ../sources/meta-compulab-bsp/tools/setup-compulab-env
 bitbake -k fsl-image-qt5-validation-imx
 
 ## imx6ul
-This example shows how to build an X11 image for a supported CompuLab machine.
+This example shows how to build an X11 image for a supported CompuLab machine with the Qt5 support.
 [source,console]
-MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-x11 source ./fsl-setup-release.sh -b build-x11
+MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-x11 source ./fsl-setup-release.sh -b build-${COMPULAB_MACHINE}-${DISTRO}
 source ../sources/meta-compulab-bsp/tools/setup-compulab-env
-bitbake -k fsl-image-validation-imx
+bitbake -k fsl-image-qt5-validation-imx
 
 # Wiki Page (TBD)
 https://github.com/compulab-yokneam/meta-compulab-bsp/wiki[meta-compulab-bsp wiki]
