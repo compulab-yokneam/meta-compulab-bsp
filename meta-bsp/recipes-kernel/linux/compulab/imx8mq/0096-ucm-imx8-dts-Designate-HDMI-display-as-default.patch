@@ -1,0 +1,256 @@
+From 4d648e8c71d926e4fede25b4ae9bfb5e0096d84b Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Sun, 9 Dec 2018 18:52:36 +0200
+Subject: [PATCH 96/96] ucm-imx8: dts: Designate HDMI display as default
+
+Reorder the device tree so as the dtb with single HDMI output is designated as
+default.
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/Makefile              |  2 +-
+ arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds.dtsi | 20 +-----------
+ .../compulab/sb-ucm-imx8-touchscreen-gt911.dtsi    | 31 +++++++++++++++++++
+ arch/arm64/boot/dts/compulab/sbc-ucm-imx8-hdmi.dts | 36 ----------------------
+ .../boot/dts/compulab/sbc-ucm-imx8-lvds-dcss.dts   | 12 ++++++++
+ .../boot/dts/compulab/sbc-ucm-imx8-lvds-lcdif.dts  | 36 ++++++++++++++++++++++
+ .../boot/dts/compulab/sbc-ucm-imx8-sd-card.dts     | 12 ++++++++
+ arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts      | 12 ++++++++
+ 8 files changed, 105 insertions(+), 56 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/compulab/sb-ucm-imx8-touchscreen-gt911.dtsi
+ delete mode 100644 arch/arm64/boot/dts/compulab/sbc-ucm-imx8-hdmi.dts
+ create mode 100644 arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-lcdif.dts
+
+diff --git a/arch/arm64/boot/dts/compulab/Makefile b/arch/arm64/boot/dts/compulab/Makefile
+index 4cc880d..7d583da 100644
+--- a/arch/arm64/boot/dts/compulab/Makefile
++++ b/arch/arm64/boot/dts/compulab/Makefile
+@@ -3,9 +3,9 @@ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-lvds-dcss.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-dual.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += ucm-imx8.dtb
+-dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8-hdmi.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8-sd-card.dtb
++dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8-lvds-lcdif.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8-lvds-dcss.dtb
+ 
+ always		:= $(dtb-y)
+diff --git a/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds.dtsi b/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds.dtsi
+index 78e9c06..1e504ac 100644
+--- a/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds.dtsi
++++ b/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds.dtsi
+@@ -13,23 +13,5 @@
+  */
+ 
+ &ti_bridge {
+-    enable-gpios = <&pca9555 10 GPIO_ACTIVE_HIGH>;
+-};
+-
+-&i2c4 {
+-    status = "okay";
+-    goodix_ts@5d {
+-        compatible = "goodix,gt911";
+-        reg = <0x5d>;
+-
+-        pinctrl-names = "default";
+-        pinctrl-0 = <&touchscreen_pins>;
+-
+-        interrupt-parent = <&gpio5>;
+-        interrupts = <25 IRQ_TYPE_EDGE_FALLING>;
+-
+-        irq-gpios = <&gpio5 25 GPIO_ACTIVE_HIGH>;
+-        reset-gpios = <&pca9555 14 GPIO_ACTIVE_HIGH>;
+-        status = "okay";
+-    };
++	enable-gpios = <&pca9555 10 GPIO_ACTIVE_HIGH>;
+ };
+diff --git a/arch/arm64/boot/dts/compulab/sb-ucm-imx8-touchscreen-gt911.dtsi b/arch/arm64/boot/dts/compulab/sb-ucm-imx8-touchscreen-gt911.dtsi
+new file mode 100644
+index 0000000..b873608
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/sb-ucm-imx8-touchscreen-gt911.dtsi
+@@ -0,0 +1,31 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++&i2c4 {
++	status = "okay";
++	goodix_ts@5d {
++		compatible = "goodix,gt911";
++		reg = <0x5d>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&touchscreen_pins>;
++
++		interrupt-parent = <&gpio5>;
++		interrupts = <25 IRQ_TYPE_EDGE_FALLING>;
++
++		irq-gpios = <&gpio5 25 GPIO_ACTIVE_HIGH>;
++		reset-gpios = <&pca9555 14 GPIO_ACTIVE_HIGH>;
++		status = "okay";
++	};
++};
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-hdmi.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-hdmi.dts
+deleted file mode 100644
+index 3c6927b..0000000
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-hdmi.dts
++++ /dev/null
+@@ -1,36 +0,0 @@
+-/*
+- * Copyright (C) 2018 CompuLab Ltd.
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License
+- * as published by the Free Software Foundation; either version 2
+- * of the License, or (at your option) any later version.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+- * GNU General Public License for more details.
+- */
+-
+-/dts-v1/;
+-
+-#include "ucm-imx8.dtsi"
+-#include "sb-ucm-imx8.dtsi"
+-#include "ucm-imx8-wifi.dtsi"
+-#include "sb-ucm-imx8-lvds-lcdif.dtsi"
+-
+-/ {
+-	model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
+-	compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
+-};
+-
+-&dcss {
+-	disp-dev = "hdmi_disp";
+-	status = "okay";
+-};
+-&lcdif {
+-	status = "disabled";
+-};
+-&hdmi {
+-	status = "okay";
+-};
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-dcss.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-dcss.dts
+index d67d7c6..bdc169d 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-dcss.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-dcss.dts
+@@ -18,8 +18,20 @@
+ #include "sb-ucm-imx8.dtsi"
+ #include "ucm-imx8-wifi.dtsi"
+ #include "sb-ucm-imx8-lvds-dcss.dtsi"
++#include "sb-ucm-imx8-touchscreen-gt911.dtsi"
+ 
+ / {
+ 	model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
+ 	compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
+ };
++
++&dcss {
++	status = "okay";
++	disp-dev = "mipi_disp";
++};
++&lcdif {
++	status = "disabled";
++};
++&hdmi {
++	status = "disabled";
++};
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-lcdif.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-lcdif.dts
+new file mode 100644
+index 0000000..a735c4f
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-lcdif.dts
+@@ -0,0 +1,36 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++/dts-v1/;
++
++#include "ucm-imx8.dtsi"
++#include "sb-ucm-imx8.dtsi"
++#include "ucm-imx8-wifi.dtsi"
++#include "sb-ucm-imx8-lvds-lcdif.dtsi"
++#include "sb-ucm-imx8-touchscreen-gt911.dtsi"
++
++/ {
++	model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
++	compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
++};
++
++&dcss {
++	status = "disabled";
++};
++&lcdif {
++	status = "okay";
++};
++&hdmi {
++	status = "disabled";
++};
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-sd-card.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-sd-card.dts
+index b8381e2..c6e5afb 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-sd-card.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-sd-card.dts
+@@ -23,3 +23,15 @@
+ 	model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
+ 	compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
+ };
++
++// Default video output: HDMI
++&dcss {
++	disp-dev = "hdmi_disp";
++	status = "okay";
++};
++&lcdif {
++	status = "disabled";
++};
++&hdmi {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts
+index 4294d64..c02026e 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts
+@@ -23,3 +23,15 @@
+ 	model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
+ 	compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
+ };
++
++// Default video output: HDMI
++&dcss {
++	disp-dev = "hdmi_disp";
++	status = "okay";
++};
++&lcdif {
++	status = "disabled";
++};
++&hdmi {
++	status = "okay";
++};
+-- 
+1.9.1
+

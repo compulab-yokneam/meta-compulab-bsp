@@ -1,0 +1,143 @@
+From 7bf0325270406d10ec07a96545a9b07b06c27341 Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Sun, 7 Oct 2018 20:55:45 +0300
+Subject: [PATCH 88/96] sb-ucm-imx8: dts: Enable Sterling-LWB5 Wi-Fi over SDIO
+
+Enable Wi-Fi over SDIO using Sterling-LWB5 Dual-Band 802.11ac Wi-Fi +
+Bluetooth v4.2 Combo Module
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi  | 42 +---------------------
+ arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts | 32 +++++++++++++++--
+ 2 files changed, 30 insertions(+), 44 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+index 41b000a..d01b978 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+@@ -39,22 +39,7 @@
+ 			regulator-name = "VSD_3V3";
+ 			regulator-min-microvolt = <3300000>;
+ 			regulator-max-microvolt = <3300000>;
+-			gpio = <&gpio2 19 GPIO_ACTIVE_HIGH>;
+-			enable-active-high;
+ 		};
+-
+-		reg_gpio_dvfs: regulator-gpio {
+-			compatible = "regulator-gpio";
+-			pinctrl-names = "default";
+-			pinctrl-0 = <&pinctrl_dvfs>;
+-			regulator-min-microvolt = <900000>;
+-			regulator-max-microvolt = <1000000>;
+-			regulator-name = "gpio_dvfs";
+-			regulator-type = "voltage";
+-			gpios = <&gpio1 13 GPIO_ACTIVE_HIGH>;
+-			states = <900000 0x1 1000000 0x0>;
+-		};
+-
+ 	};
+ 
+ 	simple_sound: sound {
+@@ -320,7 +305,7 @@
+ 			>;
+ 		};
+ 
+-		pinctrl_usdhc2_gpio: usdhc2grpgpio {
++	pinctrl_usdhc2_gpio: usdhc2grpgpio {
+ 			fsl,pins = <
+ 				MX8MQ_IOMUXC_SD2_WP_GPIO2_IO20		0x41
+ 				MX8MQ_IOMUXC_SD2_CD_B_GPIO2_IO12	0x41
+@@ -575,19 +560,6 @@
+ 	status = "okay";
+ };
+ 
+-&usdhc2 {
+-	pinctrl-names = "default", "state_100mhz", "state_200mhz";
+-	pinctrl-0 = <&pinctrl_usdhc2>, <&pinctrl_usdhc2_gpio>;
+-	pinctrl-1 = <&pinctrl_usdhc2_100mhz>, <&pinctrl_usdhc2_gpio>;
+-	pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
+-	bus-width = <4>;
+-	cd-gpios = <&gpio2 12 GPIO_ACTIVE_LOW>;
+-	wp-gpios = <&gpio2 20 GPIO_ACTIVE_HIGH>;
+-	vmmc-supply = <&reg_usdhc2_vmmc>;
+-	no-1-8-v;
+-	status = "okay";
+-};
+-
+ &usb3_phy0 {
+ 	status = "okay";
+ };
+@@ -685,18 +657,6 @@
+ 	reg = <0x0 0xb8000000 0x0 0x10000>;
+ 	status = "okay";
+ };
+-
+-&A53_0 {
+-	operating-points = <
+-		/* kHz    uV */
+-		1500000 1000000
+-		1300000 1000000
+-		1000000 900000
+-		800000  900000
+-	>;
+-	dc-supply = <&reg_gpio_dvfs>;
+-};
+-
+ &resmem {
+     linux,cma {
+         compatible = "shared-dma-pool";
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts
+index a6d5846..ec3826e 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts
+@@ -16,13 +16,34 @@
+ #include "sb-ucm-imx8.dtsi"
+ 
+ / {
+-    model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
+-    compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
++	model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
++	compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
++
++	bcmdhd_wlan_0: bcmdhd_wlan@0 {
++		compatible = "android,bcmdhd_wlan";
++		bcmdhd_fw = "/lib/firmware/brcm/bcm4339/brcmfmac4339-sdio.bin";
++		bcmdhd_nv = "/lib/firmware/brcm/bcm4339/bcmdhd.cal";
++		wlreg_on-supply = <&wlreg_on>;
++	};
++	regulators {
++
++		wlreg_on: wlregon-regulator {
++			compatible = "regulator-fixed";
++			regulator-min-microvolt = <3300000>;
++			regulator-max-microvolt = <3300000>;
++			regulator-name = "wlreg_on";
++			gpio = <&gpio1 3 0>;
++			startup-delay-us = <100>;
++			enable-active-high;
++			status = "okay";
++		};
++	};
++
+ };
+ 
+ &usdhc2 {
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_usdhc2>, <&pinctrl_usdhc2_gpio>, <&pinctrl_murata>;
++	pinctrl-0 = <&pinctrl_usdhc2>;
+ 	bus-width = <4>;
+ 	non-removable;
+ 	wifi-host;
+@@ -32,3 +53,8 @@
+ 	status = "okay";
+ };
+ 
++&reg_usdhc2_vmmc {
++	gpio = <&gpio1 13 GPIO_ACTIVE_LOW>;
++	enable-active-low;
++};
++
+-- 
+1.9.1
+

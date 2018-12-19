@@ -86,5 +86,16 @@ SRC_URI_append = " \
 	file://0084-sb-imx8-dts-ov5640-Added-known-issues-comments.patch \
 	file://0085-sb-ucm-imx8-dts-Add-ov5640-support.patch \
 	file://0086-ucm-imx8-touch-Add-an-option-for-another-pendown-int.patch \
+	file://0087-sb-ucm-imx8-dts-Correct-spelling-of-licence-headers.patch \
+	file://0088-sb-ucm-imx8-dts-Enable-Sterling-LWB5-Wi-Fi-over-SDIO.patch \
+	file://0089-sb-ucm-imx8-dts-Reorder-the-file-tree.patch \
+	file://0090-sb-ucm-imx8-dts-Enable-SD-card-reader.patch \
+	file://0091-sb-ucm-imx8-dts-Fix-PCIe1.patch \
+	file://0092-cl-som-imx8-Fix-the-platform-reset-path.patch \
+	file://0093-cl-som-imx8-dts-Reorder-the-file-tree-for-cl-som-DT-.patch \
+	file://0094-ucm-imx8-dts-Add-BT-dummy-regulator.patch \
+	file://0095-ucm-imx8-dts-Add-HDMI-support.patch \
+	file://0096-ucm-imx8-dts-Designate-HDMI-display-as-default.patch \
+	file://0097-ucm-imx8-config-Add-defconfig-for-ucm-imx8.patch \
 	file://defconfig \
 "

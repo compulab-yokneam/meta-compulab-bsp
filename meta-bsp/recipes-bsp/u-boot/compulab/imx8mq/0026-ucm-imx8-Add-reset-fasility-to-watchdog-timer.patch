@@ -1,0 +1,77 @@
+From 566a1898971fd37e58325990ea7f325d56edd119 Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Tue, 11 Dec 2018 16:20:24 +0200
+Subject: [PATCH 1/1] ucm-imx8: Add reset fasility to watchdog timer
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ arch/arm/dts/cl-som-imx8.dts             | 8 ++++++++
+ arch/arm/lib/reset.c                     | 6 +++---
+ board/compulab/cl-som-imx8/cl-som-imx8.c | 3 ---
+ 3 files changed, 11 insertions(+), 6 deletions(-)
+
+diff --git a/arch/arm/dts/cl-som-imx8.dts b/arch/arm/dts/cl-som-imx8.dts
+index 2a7f2fad12..4481266a7e 100644
+--- a/arch/arm/dts/cl-som-imx8.dts
++++ b/arch/arm/dts/cl-som-imx8.dts
+@@ -346,6 +346,12 @@
+ 				MX8MQ_IOMUXC_SPDIF_RX_SPDIF1_IN		0xd6
+ 			>;
+ 		};
++
++		pinctrl_wdog: wdoggrp {
++			fsl,pins = <
++				MX8MQ_IOMUXC_GPIO1_IO02_WDOG1_WDOG_B 0xc6
++			>;
++		};
+ 	};
+ };
+ 
+@@ -621,6 +627,8 @@
+ };
+ 
+ &wdog1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_wdog>;
+ 	fsl,ext-reset-output;
+ 	status = "okay";
+ };
+diff --git a/arch/arm/lib/reset.c b/arch/arm/lib/reset.c
+index 9a95f08504..ef1b6207c7 100644
+--- a/arch/arm/lib/reset.c
++++ b/arch/arm/lib/reset.c
+@@ -27,7 +27,7 @@ __weak void reset_misc(void)
+ {
+ }
+ 
+-int do_reset(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
++int __noreturn do_reset(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
+ {
+ 	puts ("resetting ...\n");
+ 
+@@ -38,6 +38,6 @@ int do_reset(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
+ 	reset_misc();
+ 	reset_cpu(0);
+ 
+-	/*NOTREACHED*/
+-	return 0;
++	while (1)
++		;
+ }
+diff --git a/board/compulab/cl-som-imx8/cl-som-imx8.c b/board/compulab/cl-som-imx8/cl-som-imx8.c
+index c50cf3a928..efe1955800 100644
+--- a/board/compulab/cl-som-imx8/cl-som-imx8.c
++++ b/board/compulab/cl-som-imx8/cl-som-imx8.c
+@@ -297,9 +297,6 @@ static void board_reset(void)
+ 	imx_iomux_v3_setup_multiple_pads(board_rst_pads, ARRAY_SIZE(board_rst_pads));
+ 	gpio_request(IMX_GPIO_NR(3, 15), "board_reset");
+ 	gpio_direction_output(IMX_GPIO_NR(3, 15), 0);
+-
+-	while (1)
+-		;
+ }
+ 
+ void reset_misc() { board_reset(); }
+-- 
+2.11.0
+

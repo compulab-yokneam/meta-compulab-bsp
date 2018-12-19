@@ -1,0 +1,508 @@
+From 8f12f63fafa95ae643ea3549e2ccf30c947b5761 Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Sun, 28 Oct 2018 15:30:13 +0200
+Subject: [PATCH 89/96] sb-ucm-imx8: dts: Reorder the file tree
+
+---
+ arch/arm64/boot/dts/compulab/Makefile              |  3 +-
+ .../boot/dts/compulab/sb-ucm-imx8-lvds-dcss.dtsi   | 17 ++++++
+ .../boot/dts/compulab/sb-ucm-imx8-lvds-lcdif.dtsi  | 17 ++++++
+ arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds.dtsi | 35 +++++++++++++
+ arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi      | 12 ++---
+ .../boot/dts/compulab/sbc-ucm-imx8-lvds-dcss.dts   | 25 +++++++++
+ arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds.dts | 44 ----------------
+ arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts | 60 ----------------------
+ arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts      | 10 ++--
+ arch/arm64/boot/dts/compulab/ucm-imx8-wifi.dtsi    | 55 ++++++++++++++++++++
+ arch/arm64/boot/dts/compulab/ucm-imx8.dts          | 39 +-------------
+ arch/arm64/boot/dts/compulab/ucm-imx8.dtsi         | 51 ++++++++++++++++++
+ 12 files changed, 216 insertions(+), 152 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds-dcss.dtsi
+ create mode 100644 arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds-lcdif.dtsi
+ create mode 100644 arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds.dtsi
+ create mode 100644 arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-dcss.dts
+ delete mode 100644 arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds.dts
+ delete mode 100644 arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts
+ create mode 100644 arch/arm64/boot/dts/compulab/ucm-imx8-wifi.dtsi
+ create mode 100644 arch/arm64/boot/dts/compulab/ucm-imx8.dtsi
+
+diff --git a/arch/arm64/boot/dts/compulab/Makefile b/arch/arm64/boot/dts/compulab/Makefile
+index 51ca4fb..d0d6104 100644
+--- a/arch/arm64/boot/dts/compulab/Makefile
++++ b/arch/arm64/boot/dts/compulab/Makefile
+@@ -4,8 +4,7 @@ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-lvds-dcss.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-lvds-lcdif.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += ucm-imx8.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8.dtb
+-dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8-wifi.dtb
+-dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8-lvds.dtb
++dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8-lvds-dcss.dtb
+ 
+ always		:= $(dtb-y)
+ subdir-y	:= $(dts-dirs)
+diff --git a/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds-dcss.dtsi b/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds-dcss.dtsi
+new file mode 100644
+index 0000000..e824da2
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds-dcss.dtsi
+@@ -0,0 +1,17 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++#include "compulab-imx8mq-lvds-mipi.dtsi"
++#include "compulab-imx8mq-mipi-dcss.dtsi"
++#include "sb-ucm-imx8-lvds.dtsi"
+diff --git a/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds-lcdif.dtsi b/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds-lcdif.dtsi
+new file mode 100644
+index 0000000..a3e353d
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds-lcdif.dtsi
+@@ -0,0 +1,17 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++#include "compulab-imx8mq-lvds-mipi.dtsi"
++#include "compulab-imx8mq-mipi-lcdif.dtsi"
++#include "sb-ucm-imx8-lvds.dtsi"
+diff --git a/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds.dtsi b/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds.dtsi
+new file mode 100644
+index 0000000..78e9c06
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/sb-ucm-imx8-lvds.dtsi
+@@ -0,0 +1,35 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++&ti_bridge {
++    enable-gpios = <&pca9555 10 GPIO_ACTIVE_HIGH>;
++};
++
++&i2c4 {
++    status = "okay";
++    goodix_ts@5d {
++        compatible = "goodix,gt911";
++        reg = <0x5d>;
++
++        pinctrl-names = "default";
++        pinctrl-0 = <&touchscreen_pins>;
++
++        interrupt-parent = <&gpio5>;
++        interrupts = <25 IRQ_TYPE_EDGE_FALLING>;
++
++        irq-gpios = <&gpio5 25 GPIO_ACTIVE_HIGH>;
++        reset-gpios = <&pca9555 14 GPIO_ACTIVE_HIGH>;
++        status = "okay";
++    };
++};
+diff --git a/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi b/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi
+index 15ef354..7587700 100644
+--- a/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi
++++ b/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi
+@@ -16,7 +16,7 @@
+ 	sb-ucm-imx8 {
+ 		pinctrl_pca95xx: pca95xx {
+ 			fsl,pins = <
+-		        MX8MQ_IOMUXC_GPIO1_IO15_GPIO1_IO15 0x16
++			MX8MQ_IOMUXC_GPIO1_IO15_GPIO1_IO15 0x16
+ 			>;
+ 		};
+ 		touchscreen_pins: touchscreen-pins {
+@@ -24,7 +24,7 @@
+ 				MX8MQ_IOMUXC_UART2_TXD_GPIO5_IO25 0x17059
+ 			>;
+ 		};
+-    };
++	};
+ };
+ 
+ &pcie0 {
+@@ -66,10 +66,10 @@
+ };
+ 
+ sbc_i2c_lvds: &i2c4 {
+-    clock-frequency = <400000>;
+-    pinctrl-names = "default";
+-    pinctrl-0 = <&pinctrl_i2c4>;
+-    status = "okay";
++	clock-frequency = <400000>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c4>;
++	status = "okay";
+ 
+ 	wm8731_ucm: wm8731@1a {
+ 		#sound-dai-cells = <0>;
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-dcss.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-dcss.dts
+new file mode 100644
+index 0000000..d67d7c6
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds-dcss.dts
+@@ -0,0 +1,25 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++/dts-v1/;
++
++#include "ucm-imx8.dtsi"
++#include "sb-ucm-imx8.dtsi"
++#include "ucm-imx8-wifi.dtsi"
++#include "sb-ucm-imx8-lvds-dcss.dtsi"
++
++/ {
++	model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
++	compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
++};
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds.dts
+deleted file mode 100644
+index 4acf56b..0000000
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds.dts
++++ /dev/null
+@@ -1,44 +0,0 @@
+-/*
+- * Copyright (C) 2018 CompuLab Ltd.
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License
+- * as published by the Free Software Foundation; either version 2
+- * of the License, or (at your option) any later version.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+- * GNU General Public License for more details.
+- */
+-
+-#include "sbc-ucm-imx8.dts"
+-#include "compulab-imx8mq-lvds-mipi.dtsi"
+-#include "compulab-imx8mq-mipi-lcdif.dtsi"
+-
+-/ {
+-    model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8 + LVDS";
+-    compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
+-};
+-
+-&ti_bridge {
+-    enable-gpios = <&pca9555 10 GPIO_ACTIVE_HIGH>;
+-};
+-
+-&i2c4 {
+-    status = "okay";
+-    goodix_ts@5d {
+-        compatible = "goodix,gt911";
+-        reg = <0x5d>;
+-
+-        pinctrl-names = "default";
+-        pinctrl-0 = <&touchscreen_pins>;
+-
+-        interrupt-parent = <&gpio5>;
+-        interrupts = <25 IRQ_TYPE_EDGE_FALLING>;
+-
+-        irq-gpios = <&gpio5 25 GPIO_ACTIVE_HIGH>;
+-        reset-gpios = <&pca9555 14 GPIO_ACTIVE_HIGH>;
+-        status = "okay";
+-    };
+-};
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts
+deleted file mode 100644
+index ec3826e..0000000
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts
++++ /dev/null
+@@ -1,60 +0,0 @@
+-/*
+- * Copyright (C) 2018 CompuLab Ltd.
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License
+- * as published by the Free Software Foundation; either version 2
+- * of the License, or (at your option) any later version.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+- * GNU General Public License for more details.
+- */
+-
+-#include "ucm-imx8.dts"
+-#include "sb-ucm-imx8.dtsi"
+-
+-/ {
+-	model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
+-	compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
+-
+-	bcmdhd_wlan_0: bcmdhd_wlan@0 {
+-		compatible = "android,bcmdhd_wlan";
+-		bcmdhd_fw = "/lib/firmware/brcm/bcm4339/brcmfmac4339-sdio.bin";
+-		bcmdhd_nv = "/lib/firmware/brcm/bcm4339/bcmdhd.cal";
+-		wlreg_on-supply = <&wlreg_on>;
+-	};
+-	regulators {
+-
+-		wlreg_on: wlregon-regulator {
+-			compatible = "regulator-fixed";
+-			regulator-min-microvolt = <3300000>;
+-			regulator-max-microvolt = <3300000>;
+-			regulator-name = "wlreg_on";
+-			gpio = <&gpio1 3 0>;
+-			startup-delay-us = <100>;
+-			enable-active-high;
+-			status = "okay";
+-		};
+-	};
+-
+-};
+-
+-&usdhc2 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_usdhc2>;
+-	bus-width = <4>;
+-	non-removable;
+-	wifi-host;
+-	cd-post;
+-	pm-ignore-notify;
+-	vmmc-supply = <&reg_usdhc2_vmmc>;
+-	status = "okay";
+-};
+-
+-&reg_usdhc2_vmmc {
+-	gpio = <&gpio1 13 GPIO_ACTIVE_LOW>;
+-	enable-active-low;
+-};
+-
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts
+index 41f68f0..4294d64 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts
+@@ -12,10 +12,14 @@
+  * GNU General Public License for more details.
+  */
+ 
+-#include "ucm-imx8.dts"
++/dts-v1/;
++
++#include "ucm-imx8.dtsi"
+ #include "sb-ucm-imx8.dtsi"
++#include "ucm-imx8-wifi.dtsi"
++#include "sb-ucm-imx8-lvds-lcdif.dtsi"
+ 
+ / {
+-    model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
+-    compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
++	model = "CompuLab UCM-iMX8 on SBC-UCM-iMX8";
++	compatible = "compulab,sbc-ucm-imx8", "compulab,ucm-imx8", "fsl,imx8mq";
+ };
+diff --git a/arch/arm64/boot/dts/compulab/ucm-imx8-wifi.dtsi b/arch/arm64/boot/dts/compulab/ucm-imx8-wifi.dtsi
+new file mode 100644
+index 0000000..a5d0fae
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/ucm-imx8-wifi.dtsi
+@@ -0,0 +1,55 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++&usdhc2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_usdhc2>;
++	bus-width = <4>;
++	non-removable;
++	wifi-host;
++	cd-post;
++	pm-ignore-notify;
++	vmmc-supply = <&reg_usdhc2_vmmc>;
++	status = "okay";
++};
++
++/ {
++	bcmdhd_wlan_0: bcmdhd_wlan@0 {
++		compatible = "android,bcmdhd_wlan";
++		bcmdhd_fw = "/lib/firmware/brcm/bcm4339/brcmfmac4339-sdio.bin";
++		bcmdhd_nv = "/lib/firmware/brcm/bcm4339/bcmdhd.cal";
++		wlreg_on-supply = <&wlreg_on>;
++	};
++	regulators {
++
++		wlreg_on: wlregon-regulator {
++			compatible = "regulator-fixed";
++			regulator-min-microvolt = <3300000>;
++			regulator-max-microvolt = <3300000>;
++			regulator-name = "wlreg_on";
++			gpio = <&gpio1 3 0>;
++			startup-delay-us = <100>;
++			enable-active-high;
++			status = "okay";
++		};
++	};
++
++};
++
++&reg_usdhc2_vmmc {
++	gpio = <&gpio1 13 GPIO_ACTIVE_LOW>;
++	enable-active-low;
++};
++
++
+diff --git a/arch/arm64/boot/dts/compulab/ucm-imx8.dts b/arch/arm64/boot/dts/compulab/ucm-imx8.dts
+index f6742a9..8f29a30 100644
+--- a/arch/arm64/boot/dts/compulab/ucm-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/ucm-imx8.dts
+@@ -14,45 +14,10 @@
+ 
+ /dts-v1/;
+ 
+-#include "compulab-imx8mq.dtsi"
++#include "ucm-imx8.dtsi"
++#include "ucm-imx8-wifi.dtsi"
+ 
+ / {
+ 	model = "CompuLab UCM-iMX8";
+ 	compatible = "compulab,ucm-imx8", "fsl,imx8mq";
+ };
+-
+-&iomuxc {
+-	ucm-imx8 {
+-	pinctrl_pcie1: pcie1grp {
+-		fsl,pins = <
+-			MX8MQ_IOMUXC_GPIO1_IO01_GPIO1_IO1	0x16 /* WIFI rest-gpio    pin#23 */
+-		>;
+-	};
+-	pinctrl_murata: muratagrp {
+-		fsl,pins = <
+-			MX8MQ_IOMUXC_NAND_CE2_B_GPIO3_IO3	0x17059
+-			MX8MQ_IOMUXC_NAND_CE3_B_GPIO3_IO4	0x17059
+-		>;
+-	};
+-
+-    };
+-};
+-
+-&em3027 {
+-	status = "disabled";
+-};
+-
+-&i2c2 {
+-    rtc@69 {
+-        compatible = "ab1805";
+-        reg = <0x69>;
+-        pagesize = <16>;
+-    };
+-};
+-
+-&pcie1 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_pcie1>;
+-	reset-gpio = <&gpio1 1 GPIO_ACTIVE_LOW>;    /* pin#23 */
+-	status = "okay";
+-};
+diff --git a/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi b/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi
+new file mode 100644
+index 0000000..a1858f9
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi
+@@ -0,0 +1,51 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++#include "compulab-imx8mq.dtsi"
++
++&iomuxc {
++	ucm-imx8 {
++	pinctrl_pcie1: pcie1grp {
++		fsl,pins = <
++			MX8MQ_IOMUXC_GPIO1_IO01_GPIO1_IO1	0x16 /* WIFI rest-gpio    pin#23 */
++		>;
++	};
++	pinctrl_murata: muratagrp {
++		fsl,pins = <
++			MX8MQ_IOMUXC_NAND_CE2_B_GPIO3_IO3	0x17059
++			MX8MQ_IOMUXC_NAND_CE3_B_GPIO3_IO4	0x17059
++		>;
++	};
++
++    };
++};
++
++&em3027 {
++	status = "disabled";
++};
++
++&i2c2 {
++    rtc@69 {
++        compatible = "ab1805";
++        reg = <0x69>;
++        pagesize = <16>;
++    };
++};
++
++&pcie1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pcie1>;
++	reset-gpio = <&gpio1 1 GPIO_ACTIVE_LOW>;    /* pin#23 */
++	status = "okay";
++};
+-- 
+1.9.1
+

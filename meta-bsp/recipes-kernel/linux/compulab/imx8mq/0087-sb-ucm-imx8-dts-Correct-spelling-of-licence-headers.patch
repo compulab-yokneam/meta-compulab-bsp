@@ -1,0 +1,369 @@
+From 1aab8f32a481600eefbf146bb2c944c5453a881d Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Thu, 25 Oct 2018 19:45:36 +0300
+Subject: [PATCH 87/96] sb-ucm-imx8: dts: Correct spelling of licence headers.
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/cl-som-imx8-dual.dts            | 4 ++--
+ arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-dcss.dts       | 4 ++--
+ arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dts      | 4 ++--
+ arch/arm64/boot/dts/compulab/cl-som-imx8.dts                 | 4 ++--
+ arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi  | 4 ++--
+ arch/arm64/boot/dts/compulab/compulab-imx8mq-mipi-dcss.dtsi  | 4 ++--
+ arch/arm64/boot/dts/compulab/compulab-imx8mq-mipi-lcdif.dtsi | 4 ++--
+ arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi            | 4 ++--
+ arch/arm64/boot/dts/compulab/sb-imx8.dtsi                    | 4 ++--
+ arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi                | 4 ++--
+ arch/arm64/boot/dts/compulab/sbc-imx8-lvds-dcss.dts          | 4 ++--
+ arch/arm64/boot/dts/compulab/sbc-imx8-lvds-lcdif.dts         | 4 ++--
+ arch/arm64/boot/dts/compulab/sbc-imx8.dts                    | 4 ++--
+ arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds.dts           | 4 ++--
+ arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts           | 4 ++--
+ arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts                | 4 ++--
+ arch/arm64/boot/dts/compulab/ucm-imx8.dts                    | 4 ++--
+ 17 files changed, 34 insertions(+), 34 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8-dual.dts b/arch/arm64/boot/dts/compulab/cl-som-imx8-dual.dts
+index 4d80029..894bae0 100644
+--- a/arch/arm64/boot/dts/compulab/cl-som-imx8-dual.dts
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8-dual.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-dcss.dts b/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-dcss.dts
+index 037c51c..7c14b91 100644
+--- a/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-dcss.dts
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-dcss.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dts b/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dts
+index 5df3e0a..cf502c5 100644
+--- a/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dts
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8.dts b/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
+index 549aada..e2720ec 100644
+--- a/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2017 CopuLab Ltd.
++ * Copyright (C) 2017 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi
+index d2b695e..8f4b3db 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq-mipi-dcss.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq-mipi-dcss.dtsi
+index f6c37e6..54ad09a 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq-mipi-dcss.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq-mipi-dcss.dtsi
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq-mipi-lcdif.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq-mipi-lcdif.dtsi
+index 0820082..32cf68b 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq-mipi-lcdif.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq-mipi-lcdif.dtsi
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+index d28cd67..41b000a 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2017 CopuLab Ltd.
++ * Copyright (C) 2017 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/sb-imx8.dtsi b/arch/arm64/boot/dts/compulab/sb-imx8.dtsi
+index d181721..164f93d 100644
+--- a/arch/arm64/boot/dts/compulab/sb-imx8.dtsi
++++ b/arch/arm64/boot/dts/compulab/sb-imx8.dtsi
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi b/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi
+index 560b787..15ef354 100644
+--- a/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi
++++ b/arch/arm64/boot/dts/compulab/sb-ucm-imx8.dtsi
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-dcss.dts b/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-dcss.dts
+index db04d7c..e2b11b4 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-dcss.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-dcss.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-lcdif.dts b/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-lcdif.dts
+index f779ba2..5cfed0e 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-lcdif.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-lcdif.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/sbc-imx8.dts b/arch/arm64/boot/dts/compulab/sbc-imx8.dts
+index 8371668..0cd6f57 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-imx8.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds.dts
+index 293d48a..4acf56b 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-lvds.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts
+index 45d89e4..a6d5846 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8-wifi.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts
+index bfec093..41f68f0 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-ucm-imx8.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+diff --git a/arch/arm64/boot/dts/compulab/ucm-imx8.dts b/arch/arm64/boot/dts/compulab/ucm-imx8.dts
+index c216054..f6742a9 100644
+--- a/arch/arm64/boot/dts/compulab/ucm-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/ucm-imx8.dts
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2018 CopuLab Ltd.
++ * Copyright (C) 2018 CompuLab Ltd.
+  *
+  * This program is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+@@ -8,7 +8,7 @@
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  */
+ 
+-- 
+1.9.1
+

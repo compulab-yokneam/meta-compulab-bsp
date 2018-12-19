@@ -1,0 +1,53 @@
+From f313ee84102b0969b9075533ff302e008a573db6 Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Mon, 5 Nov 2018 16:14:12 +0200
+Subject: [PATCH 92/96] cl-som-imx8: Fix the platform reset path
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi | 8 ++++++++
+ arch/arm64/mach-imx/mach-cl_som_imx8.c            | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+index d01b978..43aa32c 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+@@ -362,6 +362,12 @@
+ 				MX8MQ_IOMUXC_SPDIF_RX_SPDIF1_IN		0xd6
+ 			>;
+ 		};
++
++		pinctrl_wdog: wdoggrp {
++			fsl,pins = <
++				MX8MQ_IOMUXC_GPIO1_IO02_WDOG1_WDOG_B 0xc6
++			>;
++		};
+ 	};
+ };
+ 
+@@ -632,6 +638,8 @@
+ };
+ 
+ &wdog1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_wdog>;
+ 	fsl,ext-reset-output;
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/mach-imx/mach-cl_som_imx8.c b/arch/arm64/mach-imx/mach-cl_som_imx8.c
+index eb3535a..8132d49 100644
+--- a/arch/arm64/mach-imx/mach-cl_som_imx8.c
++++ b/arch/arm64/mach-imx/mach-cl_som_imx8.c
+@@ -32,7 +32,7 @@ static void gpr_init(void)
+ static int cl_som_imx8_init(void)
+ {
+ 	struct device_node *np =
+-		of_find_compatible_node(NULL, NULL, "compulab,cl-som-imx8");
++		of_find_compatible_node(NULL, NULL, "compulab,cl-som-imx8,rev1.0");
+ 
+ 	if (!np)
+ 		return 0;
+-- 
+1.9.1
+

@@ -1,0 +1,488 @@
+From dec81216c3270ea706e157485fef79a209e15543 Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Mon, 5 Nov 2018 19:18:36 +0200
+Subject: [PATCH 93/96] cl-som-imx8: dts: Reorder the file tree for cl-som DT
+ (proposition)
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/Makefile              |  2 +-
+ arch/arm64/boot/dts/compulab/cl-som-imx8-dual.dtsi | 29 +++++++++
+ .../boot/dts/compulab/cl-som-imx8-lvds-dcss.dtsi   | 29 +++++++++
+ .../boot/dts/compulab/cl-som-imx8-lvds-lcdif.dts   | 24 --------
+ .../boot/dts/compulab/cl-som-imx8-lvds-lcdif.dtsi  | 29 +++++++++
+ arch/arm64/boot/dts/compulab/cl-som-imx8.dts       | 42 +------------
+ arch/arm64/boot/dts/compulab/cl-som-imx8.dtsi      | 70 ++++++++++++++++++++++
+ .../dts/compulab/compulab-imx8mq-lvds-mipi.dtsi    |  2 +-
+ arch/arm64/boot/dts/compulab/sbc-imx8-dual.dts     | 24 ++++++++
+ arch/arm64/boot/dts/compulab/sbc-imx8-gt911.dtsi   | 31 ++++++++++
+ .../arm64/boot/dts/compulab/sbc-imx8-lvds-dcss.dts | 26 +++-----
+ .../boot/dts/compulab/sbc-imx8-lvds-lcdif.dts      | 35 -----------
+ arch/arm64/boot/dts/compulab/sbc-imx8.dts          |  5 +-
+ 13 files changed, 226 insertions(+), 122 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/compulab/cl-som-imx8-dual.dtsi
+ create mode 100644 arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-dcss.dtsi
+ delete mode 100644 arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dts
+ create mode 100644 arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dtsi
+ create mode 100644 arch/arm64/boot/dts/compulab/cl-som-imx8.dtsi
+ create mode 100644 arch/arm64/boot/dts/compulab/sbc-imx8-dual.dts
+ create mode 100644 arch/arm64/boot/dts/compulab/sbc-imx8-gt911.dtsi
+ delete mode 100644 arch/arm64/boot/dts/compulab/sbc-imx8-lvds-lcdif.dts
+
+diff --git a/arch/arm64/boot/dts/compulab/Makefile b/arch/arm64/boot/dts/compulab/Makefile
+index 08f3621..a37f887 100644
+--- a/arch/arm64/boot/dts/compulab/Makefile
++++ b/arch/arm64/boot/dts/compulab/Makefile
+@@ -1,7 +1,7 @@
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += cl-som-imx8.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-lvds-dcss.dtb
+-dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-lvds-lcdif.dtb
++dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-dual.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += ucm-imx8.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-ucm-imx8-sd-card.dtb
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8-dual.dtsi b/arch/arm64/boot/dts/compulab/cl-som-imx8-dual.dtsi
+new file mode 100644
+index 0000000..1365a46
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8-dual.dtsi
+@@ -0,0 +1,29 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++#include "compulab-imx8mq-lvds-mipi.dtsi"
++#include "compulab-imx8mq-mipi-lcdif.dtsi"
++#include "sbc-imx8-gt911.dtsi"
++
++&lcdif {
++	status = "okay";
++};
++
++&dcss {
++	status = "disabled";
++};
++
++&hdmi {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-dcss.dtsi b/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-dcss.dtsi
+new file mode 100644
+index 0000000..004344d
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-dcss.dtsi
+@@ -0,0 +1,29 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++#include "compulab-imx8mq-lvds-mipi.dtsi"
++#include "compulab-imx8mq-mipi-dcss.dtsi"
++#include "sbc-imx8-gt911.dtsi"
++
++&dcss {
++	status = "okay";
++};
++
++&lcdif {
++	status = "disabled";
++};
++
++&hdmi {
++	status = "disabled";
++};
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dts b/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dts
+deleted file mode 100644
+index cf502c5..0000000
+--- a/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dts
++++ /dev/null
+@@ -1,24 +0,0 @@
+-/*
+- * Copyright (C) 2018 CompuLab Ltd.
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License
+- * as published by the Free Software Foundation; either version 2
+- * of the License, or (at your option) any later version.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+- * GNU General Public License for more details.
+- */
+-
+-#include "cl-som-imx8.dts"
+-#include "compulab-imx8mq-lvds-lcdif.dtsi"
+-
+-&dcss {
+-	status = "disabled";
+-};
+-
+-&hdmi {
+-	status = "disabled";
+-};
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dtsi b/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dtsi
+new file mode 100644
+index 0000000..23c3360
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8-lvds-lcdif.dtsi
+@@ -0,0 +1,29 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++#include "compulab-imx8mq-lvds-mipi.dtsi"
++#include "compulab-imx8mq-mipi-lcdif.dtsi"
++#include "sbc-imx8-gt911.dtsi"
++
++&lcdif {
++	status = "okay";
++};
++
++&dcss {
++	status = "disabled";
++};
++
++&hdmi {
++	status = "disabled";
++};
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8.dts b/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
+index e2720ec..80bbe87 100644
+--- a/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
+@@ -14,49 +14,9 @@
+ 
+ /dts-v1/;
+ 
+-#include "compulab-imx8mq.dtsi"
++#include "cl-som-imx8.dtsi"
+ 
+ / {
+ 	model = "CompuLab CL-SOM-iMX8";
+ 	compatible = "compulab,cl-som-imx8", "fsl,imx8mq";
+-
+-	bcmdhd_wlan_0: bcmdhd_wlan@0 {
+-		compatible = "android,bcmdhd_wlan";
+-		bcmdhd_fw = "/lib/firmware/bcm/1CX_BCM4356/fw_bcmdhd.bin";
+-		bcmdhd_nv = "/lib/firmware/bcm/1CX_BCM4356/bcmdhd.cal";
+-	};
+-};
+-
+-&iomuxc {
+-	cl-som-imx8 {
+-		pinctrl_pcie1: pcie1grp {
+-			fsl,pins = <
+-				MX8MQ_IOMUXC_GPIO1_IO02_GPIO1_IO2	0x16 /* WIFI clkreq-gpio  pin#39 */
+-				MX8MQ_IOMUXC_SAI3_RXC_GPIO4_IO29 	0x16 /* WIFI disable-gpio pin#41 */
+-				MX8MQ_IOMUXC_GPIO1_IO01_GPIO1_IO1	0x16 /* WIFI rest-gpio    pin#23 */
+-
+-				MX8MQ_IOMUXC_GPIO1_IO03_GPIO1_IO3	0x16
+-				MX8MQ_IOMUXC_GPIO1_IO00_ANAMIX_REF_CLK_32K 0x16
+-			>;
+-		};
+-	};
+-};
+-
+-&pcie0 {
+-	status = "okay";
+-};
+-
+-&pcie1 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_pcie1>;
+-	clkreq-gpio = <&gpio1 2 GPIO_ACTIVE_LOW>;   /* pin#39 */
+-	disable-gpio = <&gpio4 29 GPIO_ACTIVE_LOW>; /* pin#41 */
+-	reset-gpio = <&gpio1 1 GPIO_ACTIVE_LOW>;    /* pin#23 */
+-	ext_osc = <0>;
+-	hard-wired = <1>;
+-	status = "okay";
+-};
+-
+-&wm8731 {
+-    status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8.dtsi b/arch/arm64/boot/dts/compulab/cl-som-imx8.dtsi
+new file mode 100644
+index 0000000..2625b66
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8.dtsi
+@@ -0,0 +1,70 @@
++/*
++ * Copyright (C) 2017 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++#include "compulab-imx8mq.dtsi"
++
++/ {
++	bcmdhd_wlan_0: bcmdhd_wlan@0 {
++		compatible = "android,bcmdhd_wlan";
++		bcmdhd_fw = "/lib/firmware/bcm/1CX_BCM4356/fw_bcmdhd.bin";
++		bcmdhd_nv = "/lib/firmware/bcm/1CX_BCM4356/bcmdhd.cal";
++	};
++};
++
++&iomuxc {
++	cl-som-imx8 {
++		pinctrl_pcie1: pcie1grp {
++			fsl,pins = <
++				MX8MQ_IOMUXC_GPIO1_IO02_GPIO1_IO2	0x16 /* WIFI clkreq-gpio  pin#39 */
++				MX8MQ_IOMUXC_SAI3_RXC_GPIO4_IO29 	0x16 /* WIFI disable-gpio pin#41 */
++				MX8MQ_IOMUXC_GPIO1_IO01_GPIO1_IO1	0x16 /* WIFI rest-gpio    pin#23 */
++
++				MX8MQ_IOMUXC_GPIO1_IO03_GPIO1_IO3	0x16
++				MX8MQ_IOMUXC_GPIO1_IO00_ANAMIX_REF_CLK_32K 0x16
++			>;
++		};
++	};
++};
++
++&usdhc2 {
++	pinctrl-names = "default", "state_100mhz", "state_200mhz";
++	pinctrl-0 = <&pinctrl_usdhc2>, <&pinctrl_usdhc2_gpio>;
++	pinctrl-1 = <&pinctrl_usdhc2_100mhz>, <&pinctrl_usdhc2_gpio>;
++	pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
++	bus-width = <4>;
++	cd-gpios = <&gpio2 12 GPIO_ACTIVE_LOW>;
++	wp-gpios = <&gpio2 20 GPIO_ACTIVE_HIGH>;
++	vmmc-supply = <&reg_usdhc2_vmmc>;
++	no-1-8-v;
++	status = "okay";
++};
++
++&pcie0 {
++	status = "okay";
++};
++
++&pcie1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pcie1>;
++	clkreq-gpio = <&gpio1 2 GPIO_ACTIVE_LOW>;   /* pin#39 */
++	disable-gpio = <&gpio4 29 GPIO_ACTIVE_LOW>; /* pin#41 */
++	reset-gpio = <&gpio1 1 GPIO_ACTIVE_LOW>;    /* pin#23 */
++	ext_osc = <0>;
++	hard-wired = <1>;
++	status = "okay";
++};
++
++&wm8731 {
++    status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi
+index 8f4b3db..e76fec56 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq-lvds-mipi.dtsi
+@@ -33,7 +33,7 @@
+         ti,height-mm = <93>;
+         enable-gpios = <&gpio1 6 GPIO_ACTIVE_HIGH>;
+         pinctrl-names = "default";
+-        pinctrl-0 = <&pinctrl_dsi_lvds>;
++        pinctrl-0 = <&pinctrl_dsi_lvds>; 
+         status = "okay";
+ 
+         display-timings {
+diff --git a/arch/arm64/boot/dts/compulab/sbc-imx8-dual.dts b/arch/arm64/boot/dts/compulab/sbc-imx8-dual.dts
+new file mode 100644
+index 0000000..70e15a6
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/sbc-imx8-dual.dts
+@@ -0,0 +1,24 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++/dts-v1/;
++
++#include "cl-som-imx8.dtsi"
++#include "sb-imx8.dtsi"
++#include "cl-som-imx8-dual.dtsi"
++
++/ {
++    model = "CompuLab CL-SOM-iMX8 on SBC-iMX8";
++    compatible = "compulab,sbc-imx8", "compulab,cl-som-imx8", "fsl,imx8mq";
++};
+diff --git a/arch/arm64/boot/dts/compulab/sbc-imx8-gt911.dtsi b/arch/arm64/boot/dts/compulab/sbc-imx8-gt911.dtsi
+new file mode 100644
+index 0000000..ac66cff
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/sbc-imx8-gt911.dtsi
+@@ -0,0 +1,31 @@
++/*
++ * Copyright (C) 2018 CompuLab Ltd.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version 2
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ * GNU General Public License for more details.
++ */
++
++&i2c3 {
++    status = "okay";
++    goodix_ts@5d {
++    compatible = "goodix,gt911";
++        reg = <0x5d>;
++
++        interrupt-parent = <&gpio3>;
++        interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
++
++        pinctrl-names = "default";
++        pinctrl-0 = <&touchscreen_pins>;
++
++        irq-gpios = <&gpio3 3 GPIO_ACTIVE_HIGH>;
++        reset-gpios = <&gpio3 4 GPIO_ACTIVE_HIGH>;
++        status = "okay";
++    };
++};
+diff --git a/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-dcss.dts b/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-dcss.dts
+index e2b11b4..a74b623 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-dcss.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-dcss.dts
+@@ -12,25 +12,13 @@
+  * GNU General Public License for more details.
+  */
+ 
+-#include "sbc-imx8.dts"
+-#include "compulab-imx8mq-lvds-mipi.dtsi"
+-#include "compulab-imx8mq-mipi-dcss.dtsi"
++/dts-v1/;
+ 
+-&i2c3 {
+-    status = "okay";
+-    goodix_ts@5d {
+-    compatible = "goodix,gt911";
+-        reg = <0x5d>;
++#include "cl-som-imx8.dtsi"
++#include "sb-imx8.dtsi"
++#include "cl-som-imx8-lvds-dcss.dtsi"
+ 
+-        interrupt-parent = <&gpio3>;
+-        interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
+-
+-        pinctrl-names = "default";
+-        pinctrl-0 = <&touchscreen_pins>;
+-
+-        irq-gpios = <&gpio3 3 GPIO_ACTIVE_HIGH>;
+-        reset-gpios = <&gpio3 4 GPIO_ACTIVE_HIGH>;
+-        status = "okay";
+-    };
++/ {
++    model = "CompuLab CL-SOM-iMX8 on SBC-iMX8";
++    compatible = "compulab,sbc-imx8", "compulab,cl-som-imx8", "fsl,imx8mq";
+ };
+-
+diff --git a/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-lcdif.dts b/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-lcdif.dts
+deleted file mode 100644
+index 5cfed0e..0000000
+--- a/arch/arm64/boot/dts/compulab/sbc-imx8-lvds-lcdif.dts
++++ /dev/null
+@@ -1,35 +0,0 @@
+-/*
+- * Copyright (C) 2018 CompuLab Ltd.
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU General Public License
+- * as published by the Free Software Foundation; either version 2
+- * of the License, or (at your option) any later version.
+- *
+- * This program is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+- * GNU General Public License for more details.
+- */
+-
+-#include "sbc-imx8.dts"
+-#include "compulab-imx8mq-lvds-mipi.dtsi"
+-#include "compulab-imx8mq-mipi-lcdif.dtsi"
+-
+-&i2c3 {
+-    status = "okay";
+-    goodix_ts@5d {
+-    compatible = "goodix,gt911";
+-        reg = <0x5d>;
+-
+-        interrupt-parent = <&gpio3>;
+-        interrupts = <3 IRQ_TYPE_EDGE_FALLING>;
+-
+-        pinctrl-names = "default";
+-        pinctrl-0 = <&touchscreen_pins>;
+-
+-        irq-gpios = <&gpio3 3 GPIO_ACTIVE_HIGH>;
+-        reset-gpios = <&gpio3 4 GPIO_ACTIVE_HIGH>;
+-        status = "okay";
+-    };
+-};
+diff --git a/arch/arm64/boot/dts/compulab/sbc-imx8.dts b/arch/arm64/boot/dts/compulab/sbc-imx8.dts
+index 0cd6f57..199a8d6 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-imx8.dts
+@@ -12,8 +12,11 @@
+  * GNU General Public License for more details.
+  */
+ 
+-#include "cl-som-imx8.dts"
++/dts-v1/;
++
++#include "cl-som-imx8.dtsi"
+ #include "sb-imx8.dtsi"
++#include "cl-som-imx8-lvds-lcdif.dtsi"
+ 
+ / {
+     model = "CompuLab CL-SOM-iMX8 on SBC-iMX8";
+-- 
+1.9.1
+
