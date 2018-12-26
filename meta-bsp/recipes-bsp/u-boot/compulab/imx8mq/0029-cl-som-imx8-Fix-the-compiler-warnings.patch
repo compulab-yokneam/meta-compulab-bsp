@@ -1,0 +1,57 @@
+From d70af22870d16d5a807b3ad37c857afef67b535d Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Thu, 1 Nov 2018 14:20:34 +0200
+Subject: [PATCH 29/30] cl-som-imx8: Fix the compiler warnings
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ board/compulab/cl-som-imx8/cl-som-imx8.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/board/compulab/cl-som-imx8/cl-som-imx8.c b/board/compulab/cl-som-imx8/cl-som-imx8.c
+index 407a1c0..d5854f8 100644
+--- a/board/compulab/cl-som-imx8/cl-som-imx8.c
++++ b/board/compulab/cl-som-imx8/cl-som-imx8.c
+@@ -64,7 +64,7 @@ static phys_size_t imx8_ddr_size(void)
+ {
+     unsigned long mem = 0x3d400000;
+ 	unsigned long value = readl(mem+0x200);
+-	phys_size_t dram_size;
++	phys_size_t dram_size = 0x0;
+ 
+     switch (value) {
+     case 0x1f:
+@@ -148,12 +148,6 @@ static int handle_mac_address(char *env_var, uint eeprom_bus)
+ 	return eth_setenv_enetaddr(env_var, enetaddr);
+ }
+ 
+-static inline void setup_mac_address()
+-{
+-	if (handle_mac_address("ethaddr", 0))
+-		printf(NO_MAC_ADDR, "primary NIC");
+-}
+-
+ static int setup_fec(void)
+ {
+ 	setup_iomux_fec();
+@@ -164,7 +158,7 @@ static int setup_fec(void)
+ 	return set_clk_enet(ENET_125MHz);
+ }
+ 
+-static void setup_fec_mac() {
++static void setup_fec_mac(void) {
+ 	if (handle_mac_address("ethaddr", /*CONFIG_SYS_I2C_EEPROM_BUS*/0))
+ 		printf(NO_MAC_ADDR, "primary NIC");
+ }
+@@ -181,7 +175,7 @@ int board_phy_config(struct phy_device *phydev)
+ 	if (phydev->drv->config)
+ 		phydev->drv->config(phydev);
+ 
+-	setup_mac_address();
++	setup_fec_mac();
+ 
+ 	return 0;
+ }
+-- 
+1.9.1
+

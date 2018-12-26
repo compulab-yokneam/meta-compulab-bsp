@@ -1,0 +1,39 @@
+From c5db43eeb15fb15068d6c29faa552d3526451c65 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Thu, 1 Nov 2018 11:17:49 +0200
+Subject: [PATCH 28/30] cl-som-imx8: dts: Enable wdog1 for reset
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm/dts/cl-som-imx8.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/arch/arm/dts/cl-som-imx8.dts b/arch/arm/dts/cl-som-imx8.dts
+index 89cd5d2..81e6f8c 100644
+--- a/arch/arm/dts/cl-som-imx8.dts
++++ b/arch/arm/dts/cl-som-imx8.dts
+@@ -198,6 +198,12 @@
+ 			>;
+ 		};
+ 
++		pinctrl_wdog: wdoggrp {
++			fsl,pins = <
++				MX8MQ_IOMUXC_GPIO1_IO02_WDOG1_WDOG_B 0xc6
++			>;
++		};
++
+ 	};
+ };
+ 
+@@ -392,6 +398,8 @@
+ };
+ 
+ &wdog1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_wdog>;
+ 	fsl,ext-reset-output;
+ 	status = "okay";
+ };
+-- 
+1.9.1
+
