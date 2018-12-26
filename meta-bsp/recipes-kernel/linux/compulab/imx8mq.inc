@@ -86,5 +86,22 @@ SRC_URI_append = " \
 	file://0084-sb-imx8-dts-ov5640-Added-known-issues-comments.patch \
 	file://0085-sb-ucm-imx8-dts-Add-ov5640-support.patch \
 	file://0086-ucm-imx8-touch-Add-an-option-for-another-pendown-int.patch \
+	file://0087-compulab-imx8mq-Enable-spdif2.patch \
+	file://0088-cl-som-imx8-Board-function-to-work-with-rev1.0-only.patch \
+	file://0089-cl-som-imx8-Update-pcie1-for-rev1.1.patch \
+	file://0090-compulab-imx8mq-Make-wdog1-work-for-rev1.1.patch \
+	file://0091-cl-som-imx8-config-Enable-iwlwifi-for-rev1.1.patch \
+	file://0092-compulab-imx8mq-Change-dvfs-gpio.patch \
+	file://0093-compulab-imx8mq-Remove-unused-typecgrp.patch \
+	file://0094-compulab-imx8mq-Expand-Audio-PLL-asigned-clock-range.patch \
+	file://0095-cl-som-imx8-Enable-USBNET-for-ATP.patch \
+	file://0096-compulab-imx8mq-Define-eeprom_wp-regulator.patch \
+	file://0097-cl-som-imx8-dts-Add-revision-number.patch \
+	file://0098-cl-som-imx8-dts-Add-usb_mux-switch-for-enabling-blue.patch \
+	file://0099-cl-som-imx8-defconfig-Enable-HCIUART_INTEL-for-bluet.patch \
+	file://0100-cl-som-imx8-dts-Add-usb_mux-regulator.patch \
+	file://0101-Revert-drm_atomic_helper-DRM_MODE_DPMS_ON.patch \
+	file://0102-compulab-imx8mq-dts-Change-teperature-trip-points.patch \
+	file://0103-compulab-imx8mq-pinmux-Fix-a-confilct-caused-by-GPIO.patch \
 	file://defconfig \
 "

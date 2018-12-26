@@ -1,0 +1,33 @@
+From 3700e1493bdf134e350cc7ec64ca6f55d6794aa5 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Tue, 25 Dec 2018 10:41:25 +0200
+Subject: [PATCH 102/103] compulab-imx8mq: dts: Change teperature trip points
+
+The trip points were left too high after thermal testing by mistake.
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+index b1a8d45..b3dc171 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+@@ -688,11 +688,11 @@
+ };
+ 
+ &cpu_alert0 {
+-	temperature = <125000>;
++	temperature = <95000>;
+ };
+ 
+ &cpu_crit0 {
+-	temperature = <165000>;
++	temperature = <105000>;
+ };
+ 
+ &rpmsg {
+-- 
+1.9.1
+

@@ -1,0 +1,44 @@
+From 83111492a63dad9b72a868dadc4cddc19b3f0f8d Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Thu, 29 Nov 2018 11:24:02 +0200
+Subject: [PATCH 097/103] cl-som-imx8: dts: Add revision number
+
+Add revision number to the model and to the compatible strings.
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/cl-som-imx8.dts | 4 ++--
+ arch/arm64/boot/dts/compulab/sbc-imx8.dts    | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/cl-som-imx8.dts b/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
+index a61cd032..1451f2c 100644
+--- a/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/cl-som-imx8.dts
+@@ -17,8 +17,8 @@
+ #include "compulab-imx8mq.dtsi"
+ 
+ / {
+-	model = "CompuLab CL-SOM-iMX8";
+-	compatible = "compulab,cl-som-imx8", "fsl,imx8mq";
++	model = "CompuLab CL-SOM-iMX8 rev1.1";
++	compatible = "compulab,cl-som-imx8,rev1.1", "compulab,cl-som-imx8", "fsl,imx8mq";
+ 
+ 	bcmdhd_wlan_0: bcmdhd_wlan@0 {
+ 		compatible = "android,bcmdhd_wlan";
+diff --git a/arch/arm64/boot/dts/compulab/sbc-imx8.dts b/arch/arm64/boot/dts/compulab/sbc-imx8.dts
+index 8371668..6ce425f 100644
+--- a/arch/arm64/boot/dts/compulab/sbc-imx8.dts
++++ b/arch/arm64/boot/dts/compulab/sbc-imx8.dts
+@@ -16,6 +16,6 @@
+ #include "sb-imx8.dtsi"
+ 
+ / {
+-    model = "CompuLab CL-SOM-iMX8 on SBC-iMX8";
+-    compatible = "compulab,sbc-imx8", "compulab,cl-som-imx8", "fsl,imx8mq";
++    model = "CompuLab CL-SOM-iMX8 rev1.1 on SBC-iMX8";
++    compatible = "compulab,sbc-imx8", "compulab,cl-som-imx8,rev1.1", "compulab,cl-som-imx8", "fsl,imx8mq";
+ };
+-- 
+1.9.1
+

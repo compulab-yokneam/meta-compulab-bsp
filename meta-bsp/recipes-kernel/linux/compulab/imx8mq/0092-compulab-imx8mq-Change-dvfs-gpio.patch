@@ -1,0 +1,43 @@
+From ad856f157688668902585db5d92f5da029d10607 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Sun, 4 Nov 2018 11:36:47 +0200
+Subject: [PATCH 092/103] compulab-imx8mq: Change dvfs gpio
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+index 1673bbc..e05b5ec 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+@@ -51,7 +51,7 @@
+ 			regulator-max-microvolt = <1000000>;
+ 			regulator-name = "gpio_dvfs";
+ 			regulator-type = "voltage";
+-			gpios = <&gpio1 13 GPIO_ACTIVE_HIGH>;
++			gpios = <&gpio3 15 GPIO_ACTIVE_HIGH>;
+ 			states = <900000 0x1 1000000 0x0>;
+ 		};
+ 
+@@ -159,7 +159,6 @@
+ 		pinctrl_hog: hoggrp {
+ 			fsl,pins = <
+ 				MX8MQ_IOMUXC_GPIO1_IO12_GPIO1_IO12	0x16
+-				MX8MQ_IOMUXC_NAND_RE_B_GPIO3_IO15	0x16
+ 			>;
+ 		};
+ 
+@@ -237,7 +236,7 @@
+ 
+ 		pinctrl_dvfs: dvfsgrp {
+ 			fsl,pins = <
+-				MX8MQ_IOMUXC_GPIO1_IO13_GPIO1_IO13	0x16
++				MX8MQ_IOMUXC_NAND_RE_B_GPIO3_IO15	0x16
+ 			>;
+ 		};
+ 
+-- 
+1.9.1
+

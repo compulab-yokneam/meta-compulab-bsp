@@ -1,0 +1,26 @@
+From ffe6c06beddefe75edddf41b74438a3f740ab8e0 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Wed, 31 Oct 2018 12:32:20 +0200
+Subject: [PATCH 088/103] cl-som-imx8: Board function to work with rev1.0 only
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm64/mach-imx/mach-cl_som_imx8.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/mach-imx/mach-cl_som_imx8.c b/arch/arm64/mach-imx/mach-cl_som_imx8.c
+index eb3535a..8132d49 100644
+--- a/arch/arm64/mach-imx/mach-cl_som_imx8.c
++++ b/arch/arm64/mach-imx/mach-cl_som_imx8.c
+@@ -32,7 +32,7 @@ static void gpr_init(void)
+ static int cl_som_imx8_init(void)
+ {
+ 	struct device_node *np =
+-		of_find_compatible_node(NULL, NULL, "compulab,cl-som-imx8");
++		of_find_compatible_node(NULL, NULL, "compulab,cl-som-imx8,rev1.0");
+ 
+ 	if (!np)
+ 		return 0;
+-- 
+1.9.1
+
