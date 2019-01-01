@@ -1,0 +1,32 @@
+From 0213d90ab25329212b4250b9f3a858987cbede59 Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Mon, 24 Dec 2018 18:26:02 +0200
+Subject: [PATCH 98/101] cl: imx8: Decrease the thresholds of the CPU thermal
+ zones
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+index 26558d395062..460c86bf0eb4 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+@@ -649,11 +649,11 @@
+ };
+ 
+ &cpu_alert0 {
+-	temperature = <125000>;
++	temperature = <95000>;
+ };
+ 
+ &cpu_crit0 {
+-	temperature = <165000>;
++	temperature = <105000>;
+ };
+ 
+ &rpmsg {
+-- 
+2.11.0
+

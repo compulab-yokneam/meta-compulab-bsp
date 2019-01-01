@@ -1,7 +1,7 @@
 From 260fc28be5b5732533422cdb141a2f6d74fd8333 Mon Sep 17 00:00:00 2001
 From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
 Date: Thu, 13 Dec 2018 12:01:52 +0200
-Subject: [PATCH 1/1] ucm-imx8: config: Add defconfig for ucm-imx8
+Subject: [PATCH 97/101] ucm-imx8: config: Add defconfig for ucm-imx8
 
 Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
 ---

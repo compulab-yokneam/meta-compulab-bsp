@@ -10,5 +10,6 @@ do_configure_append () {
 }
 
 KERNEL_MODULE_AUTOLOAD += "goodix"
+KERNEL_MODULE_AUTOLOAD += "bcmdhd"
 
 COMPATIBLE_MACHINE = "(cl-som-imx8|ucm-imx8)"

@@ -1,0 +1,28 @@
+From f57613136ad1e1b7276db70129afde28e571f214 Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Thu, 27 Dec 2018 22:08:44 +0200
+Subject: [PATCH 99/101] sb-ucm-imx8: dts: Fix nvram path for Sterling-LWB5 Wi-Fi
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/ucm-imx8-wifi.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/ucm-imx8-wifi.dtsi b/arch/arm64/boot/dts/compulab/ucm-imx8-wifi.dtsi
+index 422ad88280a9..b8bb45c56df6 100644
+--- a/arch/arm64/boot/dts/compulab/ucm-imx8-wifi.dtsi
++++ b/arch/arm64/boot/dts/compulab/ucm-imx8-wifi.dtsi
+@@ -27,8 +27,8 @@
+ / {
+ 	bcmdhd_wlan_0: bcmdhd_wlan@0 {
+ 		compatible = "android,bcmdhd_wlan";
+-		bcmdhd_fw = "/lib/firmware/brcm/bcm4339/brcmfmac4339-sdio.bin";
+-		bcmdhd_nv = "/lib/firmware/brcm/bcm4339/bcmdhd.cal";
++		bcmdhd_fw = "/lib/firmware/brcm/brcmfmac4339-sdio.bin";
++		bcmdhd_nv = "/lib/firmware/brcm/brcmfmac4339-sdio.txt";
+ 		wlreg_on-supply = <&wlreg_on>;
+ 	};
+ 	regulators {
+-- 
+2.11.0
+

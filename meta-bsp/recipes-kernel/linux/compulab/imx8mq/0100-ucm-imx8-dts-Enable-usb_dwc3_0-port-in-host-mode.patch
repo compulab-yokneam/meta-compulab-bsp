@@ -1,0 +1,26 @@
+From f205bdcc7fccb2abf2c202c08a94c747ab12169f Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Thu, 27 Dec 2018 22:14:02 +0200
+Subject: [PATCH 100/101] ucm-imx8: dts: Enable usb_dwc3_0 port in 'host' mode
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/ucm-imx8.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi b/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi
+index 38e8a2cb12ca..45aec8a797c4 100644
+--- a/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi
++++ b/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi
+@@ -49,3 +49,8 @@
+         pagesize = <16>;
+     };
+ };
++
++&usb_dwc3_0 {
++	status = "okay";
++	dr_mode = "host";
++};
+-- 
+2.11.0
+

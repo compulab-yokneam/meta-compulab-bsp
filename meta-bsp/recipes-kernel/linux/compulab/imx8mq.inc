@@ -97,5 +97,9 @@ SRC_URI_append = " \
 	file://0095-ucm-imx8-dts-Add-HDMI-support.patch \
 	file://0096-ucm-imx8-dts-Designate-HDMI-display-as-default.patch \
 	file://0097-ucm-imx8-config-Add-defconfig-for-ucm-imx8.patch \
+	file://0098-cl-imx8-Decrease-the-thresholds-of-the-CPU-thermal-z.patch \
+	file://0099-sb-ucm-imx8-dts-Fix-nvram-path-for-Sterling-LWB5-Wi-.patch \
+	file://0100-ucm-imx8-dts-Enable-usb_dwc3_0-port-in-host-mode.patch \
+	file://0101-ucm-imx8-dts-Remove-unnecessary-lines.patch \
 	file://defconfig \
 "

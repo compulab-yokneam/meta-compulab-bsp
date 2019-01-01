@@ -1,0 +1,41 @@
+From 49a46c4ce19cab1c21a7ed12393ab37878f490cf Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Fri, 28 Dec 2018 22:23:59 +0200
+Subject: [PATCH 101/101] ucm-imx8: dts: Remove unnecessary lines
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/ucm-imx8.dtsi | 17 -----------------
+ 1 file changed, 17 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi b/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi
+index 03904d35b250..b16e08b41df5 100644
+--- a/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi
++++ b/arch/arm64/boot/dts/compulab/ucm-imx8.dtsi
+@@ -14,23 +14,6 @@
+ 
+ #include "compulab-imx8mq.dtsi"
+ 
+-&iomuxc {
+-	ucm-imx8 {
+-	pinctrl_pcie1: pcie1grp {
+-		fsl,pins = <
+-			MX8MQ_IOMUXC_GPIO1_IO01_GPIO1_IO1	0x16 /* WIFI rest-gpio    pin#23 */
+-		>;
+-	};
+-	pinctrl_murata: muratagrp {
+-		fsl,pins = <
+-			MX8MQ_IOMUXC_NAND_CE2_B_GPIO3_IO3	0x17059
+-			MX8MQ_IOMUXC_NAND_CE3_B_GPIO3_IO4	0x17059
+-		>;
+-	};
+-
+-    };
+-};
+-
+ &em3027 {
+ 	status = "disabled";
+ };
+-- 
+2.11.0
+
