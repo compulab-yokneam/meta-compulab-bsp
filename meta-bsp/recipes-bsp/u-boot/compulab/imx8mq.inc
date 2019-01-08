@@ -30,6 +30,7 @@ SRC_URI_append = " \
     file://0028-cl-som-imx8-dts-Enable-wdog1-for-reset.patch \
     file://0029-cl-som-imx8-Fix-the-compiler-warnings.patch \
     file://0030-cl-som-imx8-config-Set-local-version-1.1.patch \
+    file://0031-cl-som-imx8-Enable-HDMI-output.patch \
 "
 
 SRC_URI_append-cl-som-imx8 = " \
