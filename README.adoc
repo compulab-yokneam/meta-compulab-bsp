@@ -29,9 +29,5 @@ source ../sources/meta-compulab-bsp/meta-bsp-imx8mm/tools/setup-compulab-env
 bitbake -k core-image-minimal
 
 # For Developers
-
-## Kernel & U-Boot source how to
-https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-U-Boot-&-Kernel-Source-(4.9.123)
-
-## U-Boot Build how to
-https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-imx-boot-image-build
+## https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-U-Boot-&-Kernel-Source-(4.9.123)[iMX8MM U-Boot & Kernel Source]
+## https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-imx-boot-image-build[iMX8MM imx-boot image build]
