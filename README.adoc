@@ -33,5 +33,5 @@ bitbake -k core-image-minimal
 ## Kernel & U-Boot source how to
 https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-U-Boot-&-Kernel-Source-(4.9.123)
 
-## U-Boot Build how To
+## U-Boot Build how to
 https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-imx-boot-image-build
