@@ -2,53 +2,31 @@
 
 ## Supported CompuLab Machines
 
-* `cl-som-imx8`
-* `ucm-imx8`
-* `cl-som-imx7`
-* `cl-som-imx6ul`
+* `ucm-imx8m-mini`
 
 # Prepare NXP BSP
 [source,console]
-repo init -u git://source.codeaurora.org/external/imx/imx-manifest.git -b imx-linux-rocko -m imx-4.9.88-2.0.0_ga.xml
+repo init -u git://source.codeaurora.org/external/imx/imx-manifest.git -b imx-linux-rocko -m imx-4.9.123-2.3.0-8mm_ga.xml
 repo sync
 
 # Download CompuLab meta layer
 [source,console]
-git clone -b devel-rev1.1 https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
+git clone -b devel-imx8mm https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
 
 # Set a desire machine
-* `cl-som-imx8`
+* `ucm-imx8m-mini`
 [source,console]
-COMPULAB_MACHINE=cl-som-imx8
-
-* `ucm-imx8`
-[source,console]
-COMPULAB_MACHINE=ucm-imx8
-
-* `cl-som-imx7`
-[source,console]
-COMPULAB_MACHINE=cl-som-imx7
-
-* `cl-som-imx6ul`
-[source,console]
-COMPULAB_MACHINE=cl-som-imx6ul
+COMPULAB_MACHINE=ucm-imx8m-mini
 
 # Build Images
-Refer to the https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree/imx/README?h=rocko-4.9.88-2.0.0_ga#n73[`NXP Readme`] for details about how to select a correct `backend` & `distro`.
+Refer to the https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree/imx/README?h=rocko-4.9.123-2.3.0_8mm_ga[`NXP Readme`] for details about how to select a correct `backend` & `distro`.
 
-## imx7/imx8
-This example shows how to build a Wayland image for a supported CompuLab machine with the Qt5 support.
+## imx8mm
+This example shows how to build a core image for a supported CompuLab machine.
 [source,console]
 MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-wayland source ./fsl-setup-release.sh -b build-wayland
-source ../sources/meta-compulab-bsp/tools/setup-compulab-env
-bitbake -k fsl-image-qt5-validation-imx
-
-## imx6ul
-This example shows how to build an X11 image for a supported CompuLab machine with the Qt5 support.
-[source,console]
-MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-x11 source ./fsl-setup-release.sh -b build-x11
-source ../sources/meta-compulab-bsp/tools/setup-compulab-env
-bitbake -k fsl-image-qt5-validation-imx
+source ../sources/meta-compulab-bsp/meta-bsp-imx8mm/tools/setup-compulab-env
+bitbake -k core-image-minimal
 
 # Wiki Page (TBD)
 https://github.com/compulab-yokneam/meta-compulab-bsp/wiki[meta-compulab-bsp wiki]
