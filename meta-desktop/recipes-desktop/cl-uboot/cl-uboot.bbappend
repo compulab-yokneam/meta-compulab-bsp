@@ -17,4 +17,4 @@ do_install_prepend() {
 
 RDEPENDS_${PN}_remove  = " mtd-utils u-boot-compulab "
 RDEPENDS_${PN}_append  = " imx-boot "
-COMPATIBLE_MACHINE = "(cl-som-imx8|ucm-imx8)"
+COMPATIBLE_MACHINE = "(cl-som-imx8|ucm-imx8|ucm-imx8m-mini)"
