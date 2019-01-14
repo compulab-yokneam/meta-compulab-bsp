@@ -26,7 +26,7 @@ This example shows how to build a core image for a supported CompuLab machine.
 [source,console]
 MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-wayland source ./fsl-setup-release.sh -b build-wayland
 source ../sources/meta-compulab-bsp/meta-bsp-imx8mm/tools/setup-compulab-env
-bitbake -k core-image-minimal
+bitbake -k core-image-full-cmdline
 
 # For Developers
 ## https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-U-Boot-&-Kernel-Source-(4.9.123)[iMX8MM U-Boot & Kernel Source]
