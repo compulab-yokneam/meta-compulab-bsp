@@ -1,17 +1,17 @@
 # Simple recipe to add desktop icon and executable to run
 # CompuLab U-Boot Tool
 
-DESCRIPTION = "CompuLab U-Boot Tool for cl-som-imx8"
+DESCRIPTION = "CompuLab U-Boot Tool for imx8 SoC"
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
 SRC_URI += "\
-    file://cl-uboot.cl-som-imx8.work \
+    file://cl-uboot.imx8.work \
 "
 
 S = "${WORKDIR}"
 
 do_install_prepend() {
-    mv ${S}/cl-uboot.cl-som-imx8.work ${S}/cl-uboot.work
+    mv ${S}/cl-uboot.imx8.work ${S}/cl-uboot.work
 }
 
 
