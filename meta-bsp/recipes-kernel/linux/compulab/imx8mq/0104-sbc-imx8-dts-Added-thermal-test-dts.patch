@@ -1,0 +1,46 @@
+From f248e39e0033d8a0b0ec16ea7748b03547ff357c Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Mon, 21 Jan 2019 12:11:23 +0200
+Subject: [PATCH 104/105] sbc-imx8: dts: Added thermal test dts
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/Makefile             |  1 +
+ arch/arm64/boot/dts/compulab/sbc-imx8-thermal.dts | 14 ++++++++++++++
+ 2 files changed, 15 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/compulab/sbc-imx8-thermal.dts
+
+diff --git a/arch/arm64/boot/dts/compulab/Makefile b/arch/arm64/boot/dts/compulab/Makefile
+index eaf1b29..4953903 100644
+--- a/arch/arm64/boot/dts/compulab/Makefile
++++ b/arch/arm64/boot/dts/compulab/Makefile
+@@ -1,5 +1,6 @@
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += cl-som-imx8.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8.dtb
++dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-thermal.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-bluetooth.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-lvds-dcss.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-lvds-lcdif.dtb
+diff --git a/arch/arm64/boot/dts/compulab/sbc-imx8-thermal.dts b/arch/arm64/boot/dts/compulab/sbc-imx8-thermal.dts
+new file mode 100644
+index 0000000..b67eb19
+--- /dev/null
++++ b/arch/arm64/boot/dts/compulab/sbc-imx8-thermal.dts
+@@ -0,0 +1,14 @@
++#include "sbc-imx8.dts"
++
++/ {
++    model = "CompuLab CL-SOM-iMX8 rev1.1 (thernmal) on SBC-iMX8";
++    compatible = "compulab,sbc-imx8", "compulab,cl-som-imx8,rev1.1", "compulab,cl-som-imx8", "fsl,imx8mq";
++};
++
++&cpu_alert0 {
++       temperature = <125000>;
++};
++
++&cpu_crit0 {
++       temperature = <165000>;
++};
+-- 
+1.9.1
+

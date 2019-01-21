@@ -103,5 +103,7 @@ SRC_URI_append = " \
 	file://0101-Revert-drm_atomic_helper-DRM_MODE_DPMS_ON.patch \
 	file://0102-compulab-imx8mq-dts-Change-teperature-trip-points.patch \
 	file://0103-compulab-imx8mq-pinmux-Fix-a-confilct-caused-by-GPIO.patch \
+	file://0104-sbc-imx8-dts-Added-thermal-test-dts.patch \
+	file://0105-cl-som-imx8-dts-Added-ecspi-uart-sample-s-dts.patch \
 	file://defconfig \
 "
