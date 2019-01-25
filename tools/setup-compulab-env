@@ -104,11 +104,14 @@ type ${distro_function} &>/dev/null
 [[ $? -eq 0 ]] && ${distro_function}
 
 # Modify local.conf
-CORE_IMAGE_EXTRA_INSTALL_append+=" cl-deploy cl-uboot bt-start dhcp-client imx-gpu-viv-demos"
+CORE_IMAGE_EXTRA_INSTALL_append+=" cl-deploy cl-uboot u-boot-fw-utils dhcp-client imx-gpu-viv-demos"
 IMAGE_FEATURES_append+=" package-management ssh-server-openssh"
 
-sed -i "$ a CORE_IMAGE_EXTRA_INSTALL += \"${CORE_IMAGE_EXTRA_INSTALL_append}\"" ${LOCAL_CONF}
-sed -i "$ a IMAGE_FEATURES += \"${IMAGE_FEATURES_append}\"" ${LOCAL_CONF}
+cat << eof >> ${LOCAL_CONF}
+CORE_IMAGE_EXTRA_INSTALL += "${CORE_IMAGE_EXTRA_INSTALL_append}"
+IMAGE_FEATURES += "${IMAGE_FEATURES_append}"
+PREFERRED_RPROVIDER_u-boot-fw-utils = "u-boot-fw-utils"
+eof
 
 cat << eom
     Note: Files ${BBLAYERS_CONF} and ${LOCAL_CONF} updated successfully.
