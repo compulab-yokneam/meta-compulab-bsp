@@ -6,7 +6,7 @@
 
 # Prepare NXP BSP
 [source,console]
-repo init -u git://source.codeaurora.org/external/imx/imx-manifest.git -b imx-linux-rocko -m imx-4.9.123-2.3.0-8mm_ga.xml
+repo init -u git://source.codeaurora.org/external/imx/imx-manifest.git -b imx-linux-rocko -m imx-4.14.78-1.0.0_ga.xml
 repo sync
 
 # Download CompuLab meta layer
@@ -19,15 +19,15 @@ git clone -b devel-imx8mm https://github.com/compulab-yokneam/meta-compulab-bsp.
 COMPULAB_MACHINE=ucm-imx8m-mini
 
 # Build Images
-Refer to the https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree/imx/README?h=rocko-4.9.123-2.3.0_8mm_ga[`NXP Readme`] for details about how to select a correct `backend` & `distro`.
+Refer to the https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree/imx/README?h=sumo-4.14.78-1.0.0_ga[`NXP Readme`] for details about how to select a correct `backend` & `distro`.
 
 ## imx8mm
 This example shows how to build a core image for a supported CompuLab machine.
 [source,console]
-MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-wayland source ./fsl-setup-release.sh -b build-wayland
+MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-xwayland source ./fsl-setup-release.sh -b build-xwayland
 source ../sources/meta-compulab-bsp/meta-bsp-imx8mm/tools/setup-compulab-env
-bitbake -k core-image-full-cmdline
+bitbake -k fsl-image-qt5-validation-imx
 
 # For Developers
-## https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-U-Boot-&-Kernel-Source-(4.9.123)[iMX8MM U-Boot & Kernel Source]
+## https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-U-Boot-&-Kernel-Source-(4.14.78)[iMX8MM U-Boot & Kernel Source]
 ## https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-imx-boot-image-build[iMX8MM imx-boot image build]
