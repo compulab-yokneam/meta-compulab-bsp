@@ -6,7 +6,7 @@
 
 # Prepare NXP BSP
 [source,console]
-repo init -u git://source.codeaurora.org/external/imx/imx-manifest.git -b imx-linux-rocko -m imx-4.14.78-1.0.0_ga.xml
+repo init -u git://source.codeaurora.org/external/imx/imx-manifest.git -b imx-linux-sumo -m imx-4.14.78-1.0.0_ga.xml
 repo sync
 
 # Download CompuLab meta layer
