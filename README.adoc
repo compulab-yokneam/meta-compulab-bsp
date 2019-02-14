@@ -24,8 +24,7 @@ Refer to the https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tre
 ## imx8mm
 This example shows how to build a core image for a supported CompuLab machine.
 [source,console]
-MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-xwayland source ./fsl-setup-release.sh -b build-xwayland
-source ../sources/meta-compulab-bsp/meta-bsp-imx8mm/tools/setup-compulab-env
+MACHINE=${COMPULAB_MACHINE} source sources/meta-compulab-bsp/meta-bsp-imx8mm/tools/setup-imx8mm-env -b build-xwayland
 bitbake -k fsl-image-qt5-validation-imx
 
 # For Developers
