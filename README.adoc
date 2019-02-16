@@ -22,7 +22,7 @@ COMPULAB_MACHINE=ucm-imx8m-mini
 Refer to the https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree/imx/README?h=sumo-4.14.78-1.0.0_ga[`NXP Readme`] for details about how to select a correct `backend` & `distro`.
 
 ## imx8mm
-This example shows how to build a core image for a supported CompuLab machine.
+This example shows how to build an NXP supported image for the `${COMPULAB_MACHINE}`
 [source,console]
 MACHINE=${COMPULAB_MACHINE} source sources/meta-compulab-bsp/meta-bsp-imx8mm/tools/setup-imx8mm-env -b build-xwayland
 bitbake -k fsl-image-qt5-validation-imx
