@@ -37,9 +37,9 @@ COMPULAB_MACHINE=cl-som-imx6ul
 Refer to the https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree/imx/README?h=rocko-4.9.88-2.0.0_ga#n73[`NXP Readme`] for details about how to select a correct `backend` & `distro`.
 
 ## imx7/imx8
-This example shows how to build a Wayland image for a supported CompuLab machine with the Qt5 support.
+This example shows how to build an XWayland image for a supported CompuLab machine with the Qt5 support.
 [source,console]
-MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-wayland source ./fsl-setup-release.sh -b build-wayland
+MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-xwayland source ./fsl-setup-release.sh -b build-wayland
 source ../sources/meta-compulab-bsp/tools/setup-compulab-env
 bitbake -k fsl-image-qt5-validation-imx
 
