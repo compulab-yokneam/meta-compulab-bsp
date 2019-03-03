@@ -39,7 +39,7 @@ Refer to the https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tre
 ## imx7/imx8
 This example shows how to build an XWayland image for a supported CompuLab machine with the Qt5 support.
 [source,console]
-MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-xwayland source ./fsl-setup-release.sh -b build-wayland
+MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-xwayland source ./fsl-setup-release.sh -b build-xwayland
 source ../sources/meta-compulab-bsp/tools/setup-compulab-env
 bitbake -k fsl-image-qt5-validation-imx
 
