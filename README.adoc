@@ -43,6 +43,16 @@ MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-xwayland source ./fsl-setup-release.s
 source ../sources/meta-compulab-bsp/tools/setup-compulab-env
 bitbake -k fsl-image-qt5-validation-imx
 
+## imx8
+This example shows how to build an x11 image for a supported CompuLab machine.
+[source,console]
+MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-x11 source ./fsl-setup-release.sh -b build-x11
+source ../sources/meta-compulab-bsp/tools/setup-compulab-env
+bitbake -k compulab-image-xfce
+
+`NOTE: For demo purpose only. x11 is not supported by NXP for imx8.`
+`https://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree/imx/README?h=rocko-4.9.88-2.0.0_ga#n84`
+
 ## imx6ul
 This example shows how to build an X11 image for a supported CompuLab machine with the Qt5 support.
 [source,console]
