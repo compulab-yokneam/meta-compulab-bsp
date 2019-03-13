@@ -12,8 +12,35 @@ git clone -b ${branch} ${meta_url} ${meta_cpl_dir}
 fi
 }
 
+add_bbmask() {
+declare -a bbmask=( 'meta-compulab/recipes-xfce' )
+
+for i in  ${bbmask[@]}; do
+cat << eof | tee -a ${LOCAL_CONF} > /dev/null
+BBMASK += "${i}"
+eof
+done
+}
+
+fsl_imx_fb() {
+add_bbmask
+}
+
+fsl_imx_xwayland() {
+add_bbmask
+}
+
+fsl_imx_wayland() {
+add_bbmask
+}
+
 fsl_imx_x11() {
 CORE_IMAGE_EXTRA_INSTALL_append+=" xf86-video-fbdev"
+# Optional xfce layers; provides compulab-image-xfce image
+sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-openembedded/meta-xfce "' ${BBLAYERS_CONF}
+sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-xfce "' ${BBLAYERS_CONF}
+# A mandatory layer; fixes x11 distro build failures
+sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-add-ons "' ${BBLAYERS_CONF}
 }
 
 cl_som_imx6ul() {
@@ -42,9 +69,16 @@ sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-bsp "' ${BBLAYE
 sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-desktop "' ${BBLAYERS_CONF}
 # An optional multimedia layer; fixes sample rate for pulseaudio
 sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-multimedia "' ${BBLAYERS_CONF}
-# Optional xfce layers; provides compulab-image-xfce image
-sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-openembedded/meta-xfce "' ${BBLAYERS_CONF}
-sed -i '$aBBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-xfce "' ${BBLAYERS_CONF}
+}
+
+add_bbmask() {
+declare -a bbmask=( 'meta-compulab/recipes-xfce' )
+
+for i in  ${bbmask[@]}; do
+cat << eof | tee -a ${LOCAL_CONF} > /dev/null
+BBMASK += "${i}"
+eof
+done
 }
 
 CWD=$(pwd)
@@ -111,6 +145,7 @@ cat << eof >> ${LOCAL_CONF}
 CORE_IMAGE_EXTRA_INSTALL += "${CORE_IMAGE_EXTRA_INSTALL_append}"
 IMAGE_FEATURES += "${IMAGE_FEATURES_append}"
 PREFERRED_RPROVIDER_u-boot-fw-utils = "u-boot-fw-utils"
+LICENSE_FLAGS_WHITELIST = "commercial"
 eof
 
 cat << eom
