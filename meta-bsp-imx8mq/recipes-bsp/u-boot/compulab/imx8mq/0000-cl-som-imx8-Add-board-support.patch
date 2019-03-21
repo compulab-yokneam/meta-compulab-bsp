@@ -1,7 +1,7 @@
 From 1f0b2b23adaacd5da8e0f4bb5a2d832cd4dee85f Mon Sep 17 00:00:00 2001
 From: Valentin Raevsky <valentin@compulab.co.il>
 Date: Fri, 8 Mar 2019 11:56:48 +0200
-Subject: [PATCH] cl-som-imx8: Add board support
+Subject: [PATCH 0/2] cl-som-imx8: Add board support
 
 Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
 ---
