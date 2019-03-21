@@ -20,12 +20,13 @@ get_meta_compulab
 # A mandatory bsp layer: kernel, u-boot, imx-boot
 cat << eof | tee -a ${BBLAYERS_CONF} > /dev/null
 BBLAYERS += " \\
-	\${BSPDIR}/sources/meta-compulab-bsp/meta-bsp-imx8mq \\
-	\${BSPDIR}/sources/meta-compulab-bsp/meta-desktop \\
 	\${BSPDIR}/sources/meta-compulab \\
+	\${BSPDIR}/sources/meta-compulab-bsp/meta-bsp-imx8mq \\
         \${BSPDIR}/sources/meta-compulab-bsp/meta-add-ons \\
-        \${BSPDIR}/sources/meta-openembedded/meta-xfce \\
+	\${BSPDIR}/sources/meta-compulab-bsp/meta-desktop \\
+	\${BSPDIR}/sources/meta-compulab-bsp/meta-multimedia \\
         \${BSPDIR}/sources/meta-compulab-bsp/meta-xfce \\
+        \${BSPDIR}/sources/meta-openembedded/meta-xfce \\
 "
 eof
 }
