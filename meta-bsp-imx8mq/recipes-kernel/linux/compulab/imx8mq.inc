@@ -8,5 +8,10 @@ SRC_URI_append_cl-som-imx8 = " \
 	file://0006-cl-som-imx8-Simple-Sound-Support.patch \
 	file://0007-cl-som-imx8-dts-Device-tree-refactoring.patch \
 	file://0008-cl-som-imx8-defconfig-Update-defconfig.patch \
+	file://0009-cl-som-imx8-Fix-SD1_RESET.patch \
+	file://0010-imx-sdma-Add-sdma-firmware.patch \
+	file://0011-cl-som-imx8-defconfig-FRAMEBUFFER_CONSOLE_ROTATION-y.patch \
+	file://0012-cl-som-imx8-sb-Add-hubpwren-regulator.patch \
+	file://0013-cl-som-imx8-defconfig-Update-defconfig.patch \
 	file://defconfig \
 "
