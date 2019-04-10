@@ -26,3 +26,10 @@ This example shows how to build an NXP supported image for the `${COMPULAB_MACHI
 [source,console]
 MACHINE=${COMPULAB_MACHINE} source sources/meta-compulab-bsp/meta-bsp-imx8mq/tools/setup-imx8mq-env -b build-xwayland
 bitbake -k fsl-image-qt5-validation-imx compulab-image-xfce
+
+## Device Trees and available features
+* sbc-imx8.dtb -- U-Boot default
+* sbc-imx8-bluetooth.dtb -- i8265 BT instead of usb2 hub
+* sbc-imx8-lvds-dcss.dtb -- LVDS on dcss
+* sbc-imx8-lvds-lcdif.dtb -- LVDS on lcdif
+* sbc-imx8-dual.dtb -- LVDS on lcdif and HDMI on dcss
