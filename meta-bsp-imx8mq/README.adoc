@@ -39,14 +39,13 @@ bitbake -k fsl-image-qt5-validation-imx compulab-image-xfce
 [source,console]
 setenv fdt_file sbc-imx8-bluetooth.dtb
 
-NOTE: U-Boot default environment device is the botloader boot device.
+NOTE: In `U-Boot` boot environment device is the botloader boot device.
 
 * Linux
 [source,console]
 fw_setenv fdt_file sbc-imx8-bluetooth.dtb
 
-NOTE: Linux default environment device is eMMC. Refer to `/etc/fw_env.config` for details.
-
+NOTE: In `Linux` boot environment device defined by the `/etc/fw_env.config` file.
 
 ## Pre- built image
 * https://drive.google.com/open?id=1fP_EMmb8MRLJ3oShSnmPJy1uT3m_MzAm[Xwayland Qt5 Image]
