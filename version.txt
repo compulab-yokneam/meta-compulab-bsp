@@ -1,0 +1,10 @@
+UCM-iMX8M-Mini Yocto Linux release: 1.1.0
+
+Component                    | Description        | Version
+-----------------------------+--------------------+----------------------------
+meta-compulab                |Compulab Yocto      | 1.1
+                             |layer               |
+Kernel 4.14.78               |                    | 4.14.78+g66620c3d281c
+User Space (rootfs)          |Freescale i.MX      | 4.14.78_1.0.0
+                             |Release Distro      |
+U-Boot                       |                    | 2018.03-ucm-imx8m-mini-1.0-imx_v2018.03_4.14.78_1.0.0_ga+g654088cc21
