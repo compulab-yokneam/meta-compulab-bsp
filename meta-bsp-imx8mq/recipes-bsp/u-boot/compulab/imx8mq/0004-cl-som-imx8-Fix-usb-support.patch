@@ -1,0 +1,128 @@
+From 732838f1d1b6a3fd5a40863b1387ba900f2a6040 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Sun, 7 Apr 2019 17:17:27 +0300
+Subject: [PATCH 4/5] cl-som-imx8: Fix usb support
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm/dts/cl-som-imx8.dts             | 20 +++++++++++++++++--
+ board/compulab/cl-som-imx8/cl-som-imx8.c | 34 ++++++++++++++++++++++++++++++--
+ 2 files changed, 50 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm/dts/cl-som-imx8.dts b/arch/arm/dts/cl-som-imx8.dts
+index 0749f83..b59ad01 100644
+--- a/arch/arm/dts/cl-som-imx8.dts
++++ b/arch/arm/dts/cl-som-imx8.dts
+@@ -51,6 +51,18 @@
+ 			gpio = <&gpio2 19 GPIO_ACTIVE_HIGH>;
+ 			enable-active-high;
+ 		};
++
++		reg_usb_mux: usb_mux {
++			compatible = "regulator-fixed";
++			pinctrl-names = "default";
++			pinctrl-0 = <&pinctrl_usbimux1>;
++			regulator-name = "usb_mux";
++			regulator-min-microvolt = <3300000>;
++			regulator-max-microvolt = <3300000>;
++			gpio = <&gpio1 4 GPIO_ACTIVE_HIGH>;
++			regulator-always-on;
++			enable-active-low;
++		};
+ 	};
+ 
+ 	simple_sound: sound {
+@@ -112,6 +124,12 @@
+ 			>;
+ 		};
+ 
++		pinctrl_usbimux1: usbmux1grp {
++			fsl,pins = <
++				MX8MQ_IOMUXC_GPIO1_IO04_GPIO1_IO4	0x16
++			>;
++		};
++
+ 		pinctrl_fec1: fec1grp {
+ 			fsl,pins = <
+ 				MX8MQ_IOMUXC_ENET_MDC_ENET1_MDC		0x3
+@@ -544,7 +562,6 @@
+ 	dr_mode = "peripheral";
+ };
+ 
+-#if 0
+ &usb3_phy1 {
+ 	status = "okay";
+ };
+@@ -557,7 +574,6 @@
+ 	status = "okay";
+ 	dr_mode = "host";
+ };
+-#endif
+ 
+ &sai2 {
+ 	#sound-dai-cells = <0>;
+diff --git a/board/compulab/cl-som-imx8/cl-som-imx8.c b/board/compulab/cl-som-imx8/cl-som-imx8.c
+index a46b40d..7523ac3 100644
+--- a/board/compulab/cl-som-imx8/cl-som-imx8.c
++++ b/board/compulab/cl-som-imx8/cl-som-imx8.c
+@@ -237,11 +237,19 @@ static void dwc3_nxp_usb_phy_init(struct dwc3_device *dwc3)
+ 	RegData &= ~(USB_PHY_CTRL1_RESET | USB_PHY_CTRL1_ATERESET);
+ 	writel(RegData, dwc3->base + USB_PHY_CTRL1);
+ }
++#endif
+ 
++#if defined(CONFIG_USB_DWC3) || defined(CONFIG_USB_XHCI_IMX8M)
+ int board_usb_init(int index, enum usb_init_type init)
+ {
+-	dwc3_nxp_usb_phy_init(&dwc3_device_data);
+-	return dwc3_uboot_init(&dwc3_device_data);
++	int ret = 0;
++	imx8m_usb_power(index, true);
++
++	if (index == 0 && init == USB_INIT_DEVICE) {
++		dwc3_nxp_usb_phy_init(&dwc3_device_data);
++		return dwc3_uboot_init(&dwc3_device_data);
++	}
++	return ret;
+ }
+ 
+ int board_usb_cleanup(int index, enum usb_init_type init)
+@@ -251,6 +259,23 @@ int board_usb_cleanup(int index, enum usb_init_type init)
+ }
+ #endif
+ 
++static iomux_v3_cfg_t const usbmux_pads[] = {
++	IMX8MQ_PAD_GPIO1_IO04__GPIO1_IO4 | MUX_PAD_CTRL(NO_PAD_CTRL),
++};
++
++static void setup_iomux_usbmux(void)
++{
++	imx_iomux_v3_setup_multiple_pads(usbmux_pads, ARRAY_SIZE(usbmux_pads));
++
++	gpio_request(IMX_GPIO_NR(1, 4), "usb_mux");
++	gpio_direction_output(IMX_GPIO_NR(1, 4), 0);
++}
++
++static void setup_usbmux(void)
++{
++	setup_iomux_usbmux();
++}
++
+ int board_init(void)
+ {
+ 
+@@ -264,6 +289,11 @@ int board_init(void)
+ 	/* Configure #0 bus in order to read an #0x54 eeprom */
+ 	setup_i2c(0, CONFIG_SYS_I2C_SPEED, 0x7f, &i2c_pad_info0);
+ 
++	setup_usbmux();
++
++#if defined(CONFIG_USB_DWC3) || defined(CONFIG_USB_XHCI_IMX8M)
++	init_usb_clk();
++#endif
+ 	return 0;
+ }
+ 
+-- 
+1.9.1
+

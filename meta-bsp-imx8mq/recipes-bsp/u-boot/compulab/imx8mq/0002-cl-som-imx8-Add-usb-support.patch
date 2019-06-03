@@ -1,0 +1,59 @@
+From 23657778cb5e5d23cad75d1d398cac82080ac23b Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Thu, 21 Mar 2019 11:44:28 +0200
+Subject: [PATCH 2/5] cl-som-imx8: Add usb support
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm/dts/cl-som-imx8.dts  | 5 ++++-
+ configs/cl-som-imx8_defconfig | 2 ++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/dts/cl-som-imx8.dts b/arch/arm/dts/cl-som-imx8.dts
+index 29b9f2d..0749f83 100644
+--- a/arch/arm/dts/cl-som-imx8.dts
++++ b/arch/arm/dts/cl-som-imx8.dts
+@@ -18,6 +18,7 @@
+ /memreserve/ 0x40000000 0x00020000;
+ 
+ #include "fsl-imx8mq.dtsi"
++#include "fsl-imx8mq-u-boot.dtsi"
+ 
+ / {
+ 	model = "CompuLab CL-SOM-iMX8";
+@@ -540,9 +541,10 @@
+ 
+ &usb_dwc3_0 {
+ 	status = "okay";
+-	dr_mode = "host";
++	dr_mode = "peripheral";
+ };
+ 
++#if 0
+ &usb3_phy1 {
+ 	status = "okay";
+ };
+@@ -555,6 +557,7 @@
+ 	status = "okay";
+ 	dr_mode = "host";
+ };
++#endif
+ 
+ &sai2 {
+ 	#sound-dai-cells = <0>;
+diff --git a/configs/cl-som-imx8_defconfig b/configs/cl-som-imx8_defconfig
+index 52eaa28..0a025cb 100644
+--- a/configs/cl-som-imx8_defconfig
++++ b/configs/cl-som-imx8_defconfig
+@@ -45,6 +45,8 @@ CONFIG_DM_THERMAL=y
+ CONFIG_NXP_TMU=y
+ CONFIG_USB=y
+ CONFIG_DM_USB=y
++CONFIG_USB_XHCI_HCD=y
++CONFIG_USB_XHCI_DWC3=y
+ CONFIG_USB_EHCI_HCD=y
+ CONFIG_USB_DWC3=y
+ CONFIG_USB_DWC3_GADGET=y
+-- 
+1.9.1
+

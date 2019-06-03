@@ -1,0 +1,24 @@
+From 23d0b3c38a04a13b3792dfc75970f65b4bad1837 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Tue, 26 Feb 2019 14:42:02 +0200
+Subject: [PATCH 05/15] cl-som-imx8: dtb: Update Makefile
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/Makefile | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/Makefile b/arch/arm64/boot/dts/compulab/Makefile
+index b9cc045..4953903 100644
+--- a/arch/arm64/boot/dts/compulab/Makefile
++++ b/arch/arm64/boot/dts/compulab/Makefile
+@@ -1,6 +1,4 @@
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += cl-som-imx8.dtb
+-dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += cl-som-imx8-uarts.dtb
+-dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += cl-som-imx8-ecspi.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-thermal.dtb
+ dtb-$(CONFIG_ARCH_FSL_IMX8MQ) += sbc-imx8-bluetooth.dtb
+-- 
+1.9.1
+
