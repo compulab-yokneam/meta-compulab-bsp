@@ -2,7 +2,7 @@
 
 ## Supported CompuLab Machines
 
-* `ucm-imx8m-mini`
+* `cl-som-imx8`
 
 # Prepare NXP BSP
 [source,console]
@@ -11,22 +11,30 @@ repo sync
 
 # Download CompuLab meta layer
 [source,console]
-git clone -b devel-imx8mm-4.14.78 https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
+git clone -b devel-imx8mq-4.14.78 https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
 
-# Set a desire machine
-* `ucm-imx8m-mini`
+# Set a requiered machine
+* `cl-som-imx8`
 [source,console]
-COMPULAB_MACHINE=ucm-imx8m-mini
+COMPULAB_MACHINE=cl-som-imx8
 
 # Build Images
 Refer to the http://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree/imx/README?h=sumo-4.14.98-2.0.0_ga[`NXP Readme`] for details about how to select a correct `backend` & `distro`.
 
-## imx8mm
-This example shows how to build an NXP supported image for the `${COMPULAB_MACHINE}`
+## imx8mq
+* Setup build environment:
 [source,console]
-MACHINE=${COMPULAB_MACHINE} source sources/meta-compulab-bsp/meta-bsp-imx8mm/tools/setup-imx8mm-env -b build-xwayland
+MACHINE=${COMPULAB_MACHINE} source sources/meta-compulab-bsp/meta-bsp-imx8mq/tools/setup-imx8mq-env -b build-xwayland
+
+* Build `fsl-image-qt5-validation-imx` image:
+[source,console]
 bitbake -k fsl-image-qt5-validation-imx
 
+* Build `compulab-image-xfce` image:
+[source,console]
+bitbake -k compulab-image-xfce
+
 # For Developers
-## https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-U-Boot-&-Kernel-Source-(4.14.98)[iMX8MM U-Boot & Kernel Source]
-## https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-imx-boot-image-build[iMX8MM imx-boot image build]
+## https://github.com/compulab-yokneam/Documentation/wiki/iMX8M-U-Boot-&-Kernel-Source-(4.14.98)[iMX8M U-Boot & Kernel Source]
+## https://github.com/compulab-yokneam/Documentation/wiki/iMX8M-imx-boot-image-build[iMX8M imx-boot image build]
+## https://github.com/compulab-yokneam/Documentation/wiki/iMX8M-Linux-Kernel-Build[iMX8M Linux Kernel Build]
