@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-## Supported CompuLab Machines
+## Supported CompuLab Machine
 
 * `ucm-imx8m-mini`
 
@@ -11,10 +11,9 @@ repo sync
 
 # Download CompuLab meta layer
 [source,console]
-git clone -b devel-imx8mm-4.14.78 https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
+git clone -b devel-imx8mm-4.14.98 https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
 
-# Set a desire machine
-* `ucm-imx8m-mini`
+# Set a desired machine
 [source,console]
 COMPULAB_MACHINE=ucm-imx8m-mini
 
@@ -25,8 +24,8 @@ Refer to the http://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree
 This example shows how to build an NXP supported image for the `${COMPULAB_MACHINE}`
 [source,console]
 MACHINE=${COMPULAB_MACHINE} source sources/meta-compulab-bsp/meta-bsp-imx8mm/tools/setup-imx8mm-env -b build-xwayland
-bitbake -k fsl-image-qt5-validation-imx
+bitbake -k compulab-ucm-imx8m-mini
 
 # For Developers
-## https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-U-Boot-&-Kernel-Source-(4.14.98)[iMX8MM U-Boot & Kernel Source]
-## https://github.com/compulab-yokneam/Documentation/wiki/iMX8MM-imx-boot-image-build[iMX8MM imx-boot image build]
+## https://github.com/compulab-yokneam/meta-compulab-bsp/blob/devel-imx8mm-4.14.98/Documentation/linux_kernel_build.md[iMX8MM Kernel building]
+## https://github.com/compulab-yokneam/meta-compulab-bsp/blob/devel-imx8mm-4.14.98/Documentation/imx_boot_image_build.md[iMX8MM imx-boot image building]
