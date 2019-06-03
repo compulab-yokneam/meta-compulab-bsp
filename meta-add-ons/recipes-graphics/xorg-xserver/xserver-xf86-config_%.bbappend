@@ -1,26 +1,12 @@
-do_package_fix() {
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-if [ ${DISTRO} = fsl-imx-x11 ];then
-	install -d ${WORKDIR}/image/etc/X11 
+SRC_URI_append = " \
+    file://xorg.conf.mod \
+"
 
-cat << eom > ${WORKDIR}/image/etc/X11/xorg.conf
-Section "Device"
-    Identifier  "i.MX DRM Device"
-    Driver      "fbdev"
-    Option      "kmsdev"     "/dev/dri/card0"
-EndSection
+S = "${WORKDIR}"
 
-Section "ServerFlags"
-    Option "BlankTime"  "0"
-    Option "StandbyTime"  "0"
-    Option "SuspendTime"  "0"
-    Option "OffTime"  "0"
-    Option "Xinerama"  "off"
-    Option "Clone"  "on"
-    Option "SWcursor"  "true"
-EndSection
-eom
-
-fi
+do_install_append() {
+    mkdir -p ${D}/etc/X11/
+    cp ${S}/xorg.conf.mod ${D}/etc/X11/xorg.conf
 }
-addtask package_fix before do_package after do_install
