@@ -1,4 +1,4 @@
-# UCM-iMX8M-Mini Linux Kernel Build
+# UCM-iMX8M-Mini Linux Kernel Building
 
 Supported machines:
 
