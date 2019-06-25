@@ -1,11 +1,11 @@
-From 8771adfba2dcd3727695f1c99643502dfe5fc926 Mon Sep 17 00:00:00 2001
+From e50ef32733bf3cc67fa1197a84a243111b353a00 Mon Sep 17 00:00:00 2001
 From: Valentin Raevsky <valentin@compulab.co.il>
 Date: Sun, 2 Jun 2019 18:01:34 +0300
-Subject: [PATCH 6/6] cl-som-imx8: Update memory init code
+Subject: [PATCH 5/7] cl-som-imx8: Update memory init code
 
 Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
 ---
- board/compulab/cl-som-imx8/Kconfig                 |   39 +-
+ board/compulab/cl-som-imx8/Kconfig                 |   69 -
  board/compulab/cl-som-imx8/Makefile                |    2 +-
  board/compulab/cl-som-imx8/ddr/ddr.h               |   31 +-
  board/compulab/cl-som-imx8/ddr/ddr_init.c          |  382 -----
@@ -17,7 +17,8 @@ Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
  board/compulab/cl-som-imx8/spl.c                   |   29 +-
  board/compulab/imx8/Kconfig                        |   36 +-
  configs/cl-som-imx8_defconfig                      |    1 +
- 12 files changed, 3499 insertions(+), 1640 deletions(-)
+ 12 files changed, 3498 insertions(+), 1671 deletions(-)
+ delete mode 100644 board/compulab/cl-som-imx8/Kconfig
  delete mode 100644 board/compulab/cl-som-imx8/ddr/ddr_init.c
  delete mode 100644 board/compulab/cl-som-imx8/ddr/ddrphy_train.c
  delete mode 100644 board/compulab/cl-som-imx8/ddr/helper.c
@@ -26,22 +27,40 @@ Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
  delete mode 100644 board/compulab/cl-som-imx8/ddr/wait_ddrphy_training_complete.c
 
 diff --git a/board/compulab/cl-som-imx8/Kconfig b/board/compulab/cl-som-imx8/Kconfig
-index 96a4183..2f9b34f 100644
+deleted file mode 100644
+index 96a4183..0000000
 --- a/board/compulab/cl-som-imx8/Kconfig
-+++ b/board/compulab/cl-som-imx8/Kconfig
-@@ -11,7 +11,7 @@ config SYS_CONFIG_NAME
- 
- choice
- 	prompt "RAM Volume select"
++++ /dev/null
+@@ -1,69 +0,0 @@
+-if TARGET_CL_SOM_IMX8
+-
+-config SYS_BOARD
+-	default "cl-som-imx8"
+-
+-config SYS_VENDOR
+-	default "compulab"
+-
+-config SYS_CONFIG_NAME
+-	default "cl-som-imx8"
+-
+-choice
+-	prompt "RAM Volume select"
 -	default RAM_2_1G
-+	default RAM_2G
- 	help
- 	 This option configures 2G RAM only
- 
-@@ -27,43 +27,6 @@ config RAM_2G
- 	help
- 	 This option configures 2G RAM only
- 
+-	help
+-	 This option configures 2G RAM only
+-
+-config RAM_1G
+-	bool "RAM_1G"
+-	select RAM_SET_1G
+-	help
+-	 This option configures 1G RAM only
+-
+-config RAM_2G
+-	bool "RAM_2G"
+-	select RAM_SET_2G
+-	help
+-	 This option configures 2G RAM only
+-
 -config RAM_2_1G
 -	bool "RAM_2_1G"
 -	select RAM_SET_2G
@@ -70,8 +89,8 @@ index 96a4183..2f9b34f 100644
 -	help
 -	 This option configures 4G RAM if no luck then 2G if no luck then 1G (does not work yet)
 -
- endchoice
- 
+-endchoice
+-
 -config RAM_SET_4G
 -	bool
 -
@@ -81,7 +100,7 @@ index 96a4183..2f9b34f 100644
 -config RAM_SET_1G
 -	bool
 -
- endif
+-endif
 diff --git a/board/compulab/cl-som-imx8/Makefile b/board/compulab/cl-som-imx8/Makefile
 index 083b87c..35caf15 100644
 --- a/board/compulab/cl-som-imx8/Makefile

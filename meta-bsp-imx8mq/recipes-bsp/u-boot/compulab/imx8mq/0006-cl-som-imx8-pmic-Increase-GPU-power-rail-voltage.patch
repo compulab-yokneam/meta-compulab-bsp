@@ -1,0 +1,32 @@
+From b632cc7deb370438386a38167aaaf131fa79a12e Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Fri, 21 Jun 2019 14:49:49 +0300
+Subject: [PATCH 6/7] cl-som-imx8: pmic: Increase GPU power rail voltage
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ board/compulab/cl-som-imx8/spl.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/board/compulab/cl-som-imx8/spl.c b/board/compulab/cl-som-imx8/spl.c
+index 4b4f32b..4b4a2d0 100644
+--- a/board/compulab/cl-som-imx8/spl.c
++++ b/board/compulab/cl-som-imx8/spl.c
+@@ -186,6 +186,14 @@ int power_init_board(void)
+ 	pmic_reg_read(p, PFUZE100_DEVICEID, &reg);
+ 	printf("PMIC:  PFUZE100 ID=0x%02x\n", reg);
+ 
++	/* Increase the GPU rail voltage */
++	pmic_reg_read(p, PFUZE100_SW1ABVOL, &reg);
++	if ((reg & 0x3f) != 0x1C) {
++		reg &= ~0x3f;
++		reg |= 0x1C;
++		pmic_reg_write(p, PFUZE100_SW1ABVOL, reg);
++	}
++
+ 	pmic_reg_read(p, PFUZE100_SW3AVOL, &reg);
+ 	if ((reg & 0x3f) != 0x18) {
+ 		reg &= ~0x3f;
+-- 
+1.9.1
+
