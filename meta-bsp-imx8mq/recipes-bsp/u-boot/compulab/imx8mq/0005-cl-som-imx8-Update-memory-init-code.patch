@@ -1,7 +1,7 @@
 From e50ef32733bf3cc67fa1197a84a243111b353a00 Mon Sep 17 00:00:00 2001
 From: Valentin Raevsky <valentin@compulab.co.il>
 Date: Sun, 2 Jun 2019 18:01:34 +0300
-Subject: [PATCH 5/7] cl-som-imx8: Update memory init code
+Subject: [PATCH 5/8] cl-som-imx8: Update memory init code
 
 Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
 ---

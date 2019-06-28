@@ -1,7 +1,7 @@
-From 732838f1d1b6a3fd5a40863b1387ba900f2a6040 Mon Sep 17 00:00:00 2001
+From c19c6ea28ff5fed253005d37afc8c08d852d4ab7 Mon Sep 17 00:00:00 2001
 From: Valentin Raevsky <valentin@compulab.co.il>
 Date: Sun, 7 Apr 2019 17:17:27 +0300
-Subject: [PATCH 4/5] cl-som-imx8: Fix usb support
+Subject: [PATCH 4/8] cl-som-imx8: Fix usb support
 
 Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
 ---
@@ -62,7 +62,7 @@ index 0749f83..b59ad01 100644
  &sai2 {
  	#sound-dai-cells = <0>;
 diff --git a/board/compulab/cl-som-imx8/cl-som-imx8.c b/board/compulab/cl-som-imx8/cl-som-imx8.c
-index a46b40d..7523ac3 100644
+index 583585b..101a540 100644
 --- a/board/compulab/cl-som-imx8/cl-som-imx8.c
 +++ b/board/compulab/cl-som-imx8/cl-som-imx8.c
 @@ -237,11 +237,19 @@ static void dwc3_nxp_usb_phy_init(struct dwc3_device *dwc3)

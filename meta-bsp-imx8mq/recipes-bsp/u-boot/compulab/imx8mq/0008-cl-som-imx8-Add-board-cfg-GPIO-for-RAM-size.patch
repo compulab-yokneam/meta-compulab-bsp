@@ -1,0 +1,95 @@
+From dc14bcdb96e95000833a68caa3001c1f6ad31afe Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Fri, 28 Jun 2019 12:06:33 +0300
+Subject: [PATCH 8/8] cl-som-imx8: Add board cfg GPIO for RAM size
+
+!!!ATP/Production use only!!!
+
+Add board cfg GPIO for RAM size.
+Read the GPIO5_IO29 value in order to distinguish between
+D1/D2 ram configs. GPIO ~ DRAM size: 0 - D2; 1 - D1;
+SB-iMX8 P20.15 UART4_TXD Configured as an input GPIO.
+SPL reads it value and applies a ddr_init settings accordingly.
+Incorrect settings can cause the board boot up failure.
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ board/compulab/cl-som-imx8/spl.c | 29 ++++++++++++++++++++++++++++-
+ board/compulab/imx8/Kconfig      |  6 +++---
+ 2 files changed, 31 insertions(+), 4 deletions(-)
+
+diff --git a/board/compulab/cl-som-imx8/spl.c b/board/compulab/cl-som-imx8/spl.c
+index 4513fb7..cc07a24 100644
+--- a/board/compulab/cl-som-imx8/spl.c
++++ b/board/compulab/cl-som-imx8/spl.c
+@@ -29,6 +29,26 @@ DECLARE_GLOBAL_DATA_PTR;
+ #define CL_SOM_IMX8_1G 0x1
+ #define CL_SOM_IMX8_2G 0x2
+ 
++static iomux_v3_cfg_t const cfg_pads[] = {
++    IMX8MQ_PAD_UART4_TXD__GPIO5_IO29| MUX_PAD_CTRL(NO_PAD_CTRL),
++};
++
++#define CFG_GPIO IMX_GPIO_NR(5, 29)
++static int get_baseboard_cfg(void)
++{
++    unsigned int cfg_gpio;
++    imx_iomux_v3_setup_multiple_pads(cfg_pads, ARRAY_SIZE(cfg_pads));
++    gpio_request(CFG_GPIO, "cfg_gpio");
++    cfg_gpio = gpio_get_value(CFG_GPIO);
++    printf("%s > CFG P20.15 [GPIO5_IO29]: [ 0 (GND) - D2 ; 1 (3V3) - D1 ]\n",__func__);
++    printf("%s > CFG P20.15 [GPIO5_IO29]: [ %s ]\n",__func__,((cfg_gpio==0) ? "D2" : "D1"));
++
++    if (cfg_gpio)
++        return CL_SOM_IMX8_1G;
++    else
++        return CL_SOM_IMX8_2G;
++}
++
+ static int get_baseboard_id(void)
+ {
+ #ifdef CONFIG_RAM_1G
+@@ -40,14 +60,21 @@ static int get_baseboard_id(void)
+ #ifdef BOARD_ID
+ 	return BOARD_ID;
+ #else
+-#error Invalid memory configuration
++	return get_baseboard_cfg();
+ #endif
+ }
+ 
++#define TCM_BOARD_CFG 0x7e0000
++static void set_baseboard_tcm(int board_id)
++{
++	writel(board_id, TCM_BOARD_CFG);
++}
++
+ void spl_dram_init(void)
+ {
+ 	/* ddr init */
+ 	int board_id = get_baseboard_id();
++	set_baseboard_tcm(board_id);
+ 
+ 	/* ddr init */
+ 	if ((board_id == CL_SOM_IMX8_2G))
+diff --git a/board/compulab/imx8/Kconfig b/board/compulab/imx8/Kconfig
+index f9364ba..d0b102e 100644
+--- a/board/compulab/imx8/Kconfig
++++ b/board/compulab/imx8/Kconfig
+@@ -38,10 +38,10 @@ config RAM_2G
+ 	help
+ 	 This option configures 2G RAM only
+ 
+-config RAM_4G
+-	bool "RAM_4G"
++config RAM_BOARD_CFG
++	bool "RAM_BOARD_CFG"
+ 	help
+-	 This option configures 4G RAM only
++	 Read board configuration GPIO for RAM size
+ 
+ endchoice
+ 
+-- 
+1.9.1
+
