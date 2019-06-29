@@ -1,0 +1,37 @@
+From 1604265f856e00a39e5799c072976c8196b7c28d Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Fri, 21 Jun 2019 13:50:25 +0300
+Subject: [PATCH 17/18] cl-som-imx8: rmpms: Removed the rpmsg pingpong area
+
+Removed the rpmsg pingpong area.
+A separate file will be created for m4 pingpong demo.
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+index ac772e7..b482598 100644
+--- a/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
++++ b/arch/arm64/boot/dts/compulab/compulab-imx8mq.dtsi
+@@ -668,16 +668,6 @@
+ 	status = "okay";
+ };
+ 
+-&rpmsg {
+-	/*
+-	 * 64K for one rpmsg instance:
+-	 * --0xb8000000~0xb800ffff: pingpong
+-	 */
+-	vdev-nums = <1>;
+-	reg = <0x0 0xb8000000 0x0 0x10000>;
+-	status = "okay";
+-};
+-
+ &A53_0 {
+ 	operating-points = <
+ 		/* kHz    uV */
+-- 
+1.9.1
+

@@ -16,5 +16,7 @@ SRC_URI_append_cl-som-imx8 = " \
 	file://0014-cl-som-imx8-defconfig-Update-defconfig.patch \
 	file://0015-cl-som-imx8-defconfig-Enable-wm8731-with-sdma-as-a-m.patch \
 	file://0016-cl-som-imx8-Remove-unused-dvfs-regulator.patch \
+	file://0017-cl-som-imx8-rmpms-Removed-the-rpmsg-pingpong-area.patch \
+	file://0018-cl-som-imx8-dts-m4-Added-sbc-imx8-m4-file.patch \
 	file://defconfig \
 "
