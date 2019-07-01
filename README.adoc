@@ -36,5 +36,5 @@ bitbake -k compulab-image-xfce
 
 # For Developers
 ## https://github.com/compulab-yokneam/Documentation/wiki/iMX8M-U-Boot-&-Kernel-Source-(4.14.98)[iMX8M U-Boot & Kernel Source]
-## https://github.com/compulab-yokneam/Documentation/wiki/iMX8M-imx-boot-image-build[iMX8M imx-boot image build]
-## https://github.com/compulab-yokneam/Documentation/wiki/iMX8M-Linux-Kernel-Build[iMX8M Linux Kernel Build]
+## https://github.com/compulab-yokneam/Documentation/wiki/iMX8M-imx-boot-image-build-(ga2)[iMX8M imx-boot image build]
+## https://github.com/compulab-yokneam/Documentation/wiki/CL-SOM-iMX8-Linux-Kernel-Build-(ga2)[iMX8M Linux Kernel Build]
