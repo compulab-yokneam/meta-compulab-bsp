@@ -1,0 +1,26 @@
+From d009a5b2bef9dec9654f79ed6351104a9307f776 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Tue, 2 Jul 2019 07:22:54 +0300
+Subject: [PATCH 12/12] cl-som-imx8: defconfig: Add rev# to LOCAL_VERSION
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ configs/cl-som-imx8_defconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configs/cl-som-imx8_defconfig b/configs/cl-som-imx8_defconfig
+index 7a7911c..94c242f 100644
+--- a/configs/cl-som-imx8_defconfig
++++ b/configs/cl-som-imx8_defconfig
+@@ -4,7 +4,7 @@ CONFIG_SYS_TEXT_BASE=0x40200000
+ CONFIG_SYS_MALLOC_F_LEN=0x2000
+ CONFIG_TARGET_COMPULAB_IMX8=y
+ CONFIG_DEFAULT_DEVICE_TREE="cl-som-imx8"
+-CONFIG_LOCALVERSION="-cl-som-imx8-1.1"
++CONFIG_LOCALVERSION="-cl-som-imx8-rev1.1-1.0"
+ CONFIG_FIT=y
+ CONFIG_SPL_LOAD_FIT=y
+ CONFIG_SYS_EXTRA_OPTIONS="IMX_CONFIG=arch/arm/mach-imx/spl_sd.cfg"
+-- 
+1.9.1
+
