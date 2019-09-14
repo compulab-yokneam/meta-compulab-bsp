@@ -2,39 +2,4 @@
 
 ## Supported CompuLab Machines
 
-* `cl-som-imx8`
-
-# Prepare NXP BSP
-[source,console]
-repo init -u git://source.codeaurora.org/external/imx/imx-manifest.git -b imx-linux-sumo -m imx-4.14.98-2.0.0_ga.xml
-repo sync
-
-# Download CompuLab meta layer
-[source,console]
-git clone -b devel-imx8mq-4.14.78 https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
-
-# Set a requiered machine
-* `cl-som-imx8`
-[source,console]
-COMPULAB_MACHINE=cl-som-imx8
-
-# Build Images
-Refer to the http://source.codeaurora.org/external/imx/meta-fsl-bsp-release/tree/imx/README?h=sumo-4.14.98-2.0.0_ga[`NXP Readme`] for details about how to select a correct `backend` & `distro`.
-
-## imx8mq
-* Setup build environment:
-[source,console]
-MACHINE=${COMPULAB_MACHINE} source sources/meta-compulab-bsp/meta-bsp-imx8mq/tools/setup-imx8mq-env -b build-xwayland
-
-* Build `fsl-image-qt5-validation-imx` image:
-[source,console]
-bitbake -k fsl-image-qt5-validation-imx
-
-* Build `compulab-image-xfce` image:
-[source,console]
-bitbake -k compulab-image-xfce
-
-# For Developers
-## https://github.com/compulab-yokneam/Documentation/wiki/iMX8M-U-Boot-&-Kernel-Source-(4.14.98)[iMX8M U-Boot & Kernel Source]
-## https://github.com/compulab-yokneam/Documentation/wiki/iMX8M-imx-boot-image-build-(ga2)[iMX8M imx-boot image build]
-## https://github.com/compulab-yokneam/Documentation/wiki/CL-SOM-iMX8-Linux-Kernel-Build-(ga2)[iMX8M Linux Kernel Build]
+* https://github.com/compulab-yokneam/meta-bsp-imx8mq[`cl-som-imx8`]
