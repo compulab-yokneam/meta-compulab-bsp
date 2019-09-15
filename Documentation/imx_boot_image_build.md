@@ -86,7 +86,7 @@ unset ARCH CROSS_COMPILE
 cd ${SRC_ROOT}/imx-mkimage/iMX8M
 sed "s/\(^dtbs = \).*/\1${MACHINE}.dtb/;s/\(mkimage\)_uboot/\1/" soc.mak > Makefile
 make clean
-make flash_evk SOC=iMX8MQ
+make flash_evk SOC=iMX8MM
 </pre>
 
 ## Flashing
