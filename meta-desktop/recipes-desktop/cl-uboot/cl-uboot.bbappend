@@ -10,8 +10,16 @@ SRC_URI += "\
 
 S = "${WORKDIR}"
 
-do_install_prepend() {
+install_cl_uboot_work() {
     mv ${S}/cl-uboot.imx8.work ${S}/cl-uboot.work
+}
+
+do_install_prepend_cl-som-imx8() {
+    install_cl_uboot_work
+}
+
+do_install_prepend_ucm-imx8m-mini() {
+    install_cl_uboot_work
 }
 
 
