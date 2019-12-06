@@ -2,7 +2,6 @@
 
 ## Supported CompuLab Machines
 
-* `cl-som-imx8`
 * `cl-som-imx7`
 
 # Prepare NXP BSP
@@ -12,13 +11,9 @@ repo sync
 
 # Download CompuLab meta layer
 [source,console]
-git clone -b master https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
+git clone -b cl-som-imx7 https://github.com/compulab-yokneam/meta-compulab-bsp.git sources/meta-compulab-bsp
 
 # Set a desire machine
-* `cl-som-imx8`
-[source,console]
-COMPULAB_MACHINE=cl-som-imx8
-
 * `cl-som-imx7`
 [source,console]
 COMPULAB_MACHINE=cl-som-imx7
@@ -31,15 +26,6 @@ This example shows how to build an XWayland image for a supported CompuLab machi
 MACHINE=${COMPULAB_MACHINE} DISTRO=fsl-imx-xwayland source ./fsl-setup-release.sh -b build-xwayland
 source ../sources/meta-compulab-bsp/tools/setup-compulab-env
 bitbake -k fsl-image-qt5-validation-imx
-
-# Pre-Built Development Image
-* https://drive.google.com/open?id=187E3H1E_aNsXcwhJvN0RY40Sk2ZVtu0S[`cl-som-imx8/fsl-imx-xwayland/fsl-image-qt5-validation-imx`]
-
-# Boot from SD-card
-* Insert a created SD card into the SD socket `P13` (SB-iMX8 print side).
-* Power on the board
-* Press and hold `SW5` and `SW6`
-* Release `SW5` and then `SW6`
 
 # Wiki Page (TBD)
 https://github.com/compulab-yokneam/meta-compulab-bsp/wiki[meta-compulab-bsp wiki]
