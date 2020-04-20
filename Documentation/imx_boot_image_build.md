@@ -45,7 +45,7 @@ git -C imx-atf checkout rel_imx_4.14.98_2.0.0_ga
 </pre>
 * Make bl31.bin
 <pre>
-make -C imx-atf PLAT=imx8mm bl31
+make -C imx-atf PLAT=imx8mm SPD=opteed bl31
 cp -v imx-atf/build/imx8mm/release/bl31.bin ${SRC_ROOT}/imx-mkimage/iMX8M/
 </pre>
 
