@@ -76,6 +76,26 @@ make -C uboot-imx
 cp -v $(find uboot-imx | awk '/u-boot-spl.bin$|u-boot.bin$|u-boot-nodtb.bin$|cl-som.*\.dtb$|mkimage$/' ORS=" ") ${SRC_ROOT}/imx-mkimage/iMX8M/                                                                     
 </pre>
 
+## OP-TEE Setup
+Download the OP-TEE from:
+<pre>
+git clone https://source.codeaurora.org/external/imx/imx-optee-os
+git -C imx-optee-os checkout rel_imx_4.14.98_2.0.0_ga
+</pre>
+
+* Set environment variables:
+<pre>
+export ARCH=arm
+export CROSS_COMPILE=/usr/bin/arm-linux-gnu-
+</pre>
+
+* Make tee.bin
+<pre>
+cd imx-optee-os
+./scripts/imx_build.sh mx8mmevk
+cp -v build.mx8mmevk/core/tee.bin ${SRC_ROOT}/imx-mkimage/iMX8M/
+</pre>
+
 ## Compiling the **flash.bin** imx-boot image:
 * Unset these variables:
 <pre>
