@@ -27,7 +27,7 @@ export SRC_ROOT=$(pwd)
 * Download CompuLab BSP
 <pre>
 git clone -b master https://github.com/compulab-yokneam/meta-bsp-imx8mm.git
-export PATCHES=$(pwd)/meta-bsp-imx8mm/recipes-bsp/u-boot/compulab/imx8mm
+export LAYER_DIR=$(pwd)/meta-bsp-imx8mm
 </pre>
 
 ## Mkimage Setup
@@ -42,6 +42,7 @@ Download the ATF from:
 <pre>
 git clone https://source.codeaurora.org/external/imx/imx-atf.git
 git -C imx-atf checkout rel_imx_4.14.98_2.0.0_ga
+git -C imx-atf am ${LAYER_DIR}/recipes-bsp/imx-atf/compulab/imx8mm/*.patch
 </pre>
 * Make bl31.bin
 <pre>
@@ -62,7 +63,7 @@ cp -v $(find firmware* | awk '/train|hdmi_imx8|dp_imx8/' ORS=" ") ${SRC_ROOT}/im
 <pre>
 git clone https://source.codeaurora.org/external/imx/uboot-imx.git
 git -C uboot-imx checkout rel_imx_4.14.98_2.0.0_ga
-git -C uboot-imx am ${PATCHES}/*.patch
+git -C uboot-imx am ${LAYER_DIR}/recipes-bsp/u-boot/compulab/imx8mm/*.patch
 </pre>
 
 * Compile the U-Boot
@@ -81,12 +82,14 @@ Download the OP-TEE from:
 <pre>
 git clone https://source.codeaurora.org/external/imx/imx-optee-os
 git -C imx-optee-os checkout rel_imx_4.14.98_2.0.0_ga
+git -C imx-atf am ${LAYER_DIR}/recipes-security/optee-imx/compulab/imx8mm/*.patch
 </pre>
 
 * Set environment variables:
 <pre>
 export ARCH=arm
 export CROSS_COMPILE=/usr/bin/arm-linux-gnu-
+export CROSS_COMPILE64=/usr/bin/arm-linux-gnu-
 </pre>
 
 * Make tee.bin
