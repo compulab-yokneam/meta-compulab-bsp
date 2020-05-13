@@ -1,3 +1,9 @@
+
+# Important
+
+NOTE: This is an obsolete layer.
+Please use this layer `https://github.com/compulab-yokneam/meta-bsp-imx7`
+
 # Quick Start Guide
 
 ## Supported CompuLab Machines
