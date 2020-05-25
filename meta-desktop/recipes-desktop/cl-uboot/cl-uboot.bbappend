@@ -22,8 +22,11 @@ do_install_prepend_ucm-imx8m-mini() {
     install_cl_uboot_work
 }
 
+do_install_prepend_mcm-imx8m-mini() {
+    install_cl_uboot_work
+}
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 RDEPENDS_${PN}_remove  = " mtd-utils u-boot-compulab "
 RDEPENDS_${PN}_append  = " imx-boot mmc-utils "
-COMPATIBLE_MACHINE = "(cl-som-imx8|ucm-imx8m-mini)"
+COMPATIBLE_MACHINE = "(cl-som-imx8|ucm-imx8m-mini|mcm-imx8m-mini)"
