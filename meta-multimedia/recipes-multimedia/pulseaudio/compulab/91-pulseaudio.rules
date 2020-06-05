@@ -1,0 +1,9 @@
+SUBSYSTEM!="sound", GOTO="pulseaudio_end"
+ACTION!="change", GOTO="pulseaudio_end"
+KERNEL!="card*", GOTO="pulseaudio_end"
+
+SUBSYSTEM=="sound", ATTR{id}=="mcmimx8mmini", ENV{PULSE_PROFILE_SET}="pulseaudio-compulab.conf"
+SUBSYSTEM=="sound", ATTR{id}=="ucmimx8mmini", ENV{PULSE_PROFILE_SET}="pulseaudio-compulab.conf"
+SUBSYSTEM=="sound", ATTR{id}=="compulabimx8mq", ENV{PULSE_PROFILE_SET}="pulseaudio-compulab.conf"
+
+LABEL="pulseaudio_end"
