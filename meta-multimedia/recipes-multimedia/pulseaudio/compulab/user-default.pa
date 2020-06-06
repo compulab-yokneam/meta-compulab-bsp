@@ -1,0 +1,14 @@
+# Sample file ~/.config/pulse/default.pa
+# Can be used if the bluetooth modules
+# are not described in the default.pa.
+# PulseAudio 11.1 works w/out this file.
+
+.include /etc/pulse/default.pa
+
+.ifexists module-bluetooth-policy.so
+load-module module-bluetooth-policy
+.endif
+
+.ifexists module-bluetooth-discover.so
+load-module module-bluetooth-discover
+.endif
