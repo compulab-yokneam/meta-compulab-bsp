@@ -7,7 +7,13 @@ do_ro_fix() {
     done
 }
 
+do_logind_patch() {
+    if [[ -f ${D}/etc/systemd/logind.conf ]];then
+        sed -i '/^HandlePowerKey=ignore/d' ${D}/etc/systemd/logind.conf
+    fi
+}
+
 do_install_append() {
-    sed  -i '/^HandlePowerKey=ignore/d' ${D}/etc/systemd/logind.conf
+    do_logind_patch
     do_ro_fix
 }
