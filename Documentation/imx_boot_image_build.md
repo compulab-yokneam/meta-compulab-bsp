@@ -96,7 +96,7 @@ export CROSS_COMPILE64=/usr/bin/arm-linux-gnu-
 <pre>
 cd imx-optee-os
 ./scripts/imx_build.sh mx8mmevk
-cp -v build.mx8mmevk/core/tee.bin ${SRC_ROOT}/imx-mkimage/iMX8M/
+cp -v build.mx8mmevk/tee.bin ${SRC_ROOT}/imx-mkimage/iMX8M/
 </pre>
 
 ## Compiling the **flash.bin** imx-boot image:
