@@ -26,7 +26,7 @@ export SRC_ROOT=$(pwd)
 
 * Download CompuLab BSP
 <pre>
-git clone -b master https://github.com/compulab-yokneam/meta-bsp-imx8mm.git
+git clone -b  release_1.3-next https://github.com/compulab-yokneam/meta-bsp-imx8mm.git
 export LAYER_DIR=$(pwd)/meta-bsp-imx8mm
 </pre>
 
@@ -82,7 +82,7 @@ Download the OP-TEE from:
 <pre>
 git clone https://source.codeaurora.org/external/imx/imx-optee-os
 git -C imx-optee-os checkout rel_imx_4.14.98_2.0.0_ga
-git -C imx-atf am ${LAYER_DIR}/recipes-security/optee-imx/compulab/imx8mm/*.patch
+git -C imx-optee-os am ${LAYER_DIR}/recipes-security/optee-imx/compulab/imx8mm/*.patch
 </pre>
 
 * Set environment variables:
