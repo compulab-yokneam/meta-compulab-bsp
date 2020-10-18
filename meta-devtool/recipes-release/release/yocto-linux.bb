@@ -40,16 +40,18 @@ do_deploy() {
         cp -L ${file} ${DESTDIR}/images/
     done
 
+    cp -L ${DEPLOY_DIR_IMAGE}/${MACHINE}.tar.bz2 ${DESTDIR}/images/rootfs.tar.bz2
+
     BOOT_LOADER=$(strings ${DEPLOY_DIR_IMAGE}/u-boot.* | awk '/^U-Boot [[:digit:]]/' | head -1)
     LINUX_KERNEL=$(awk '(/kernel-image-[[:digit:]]/)&&($0=$1)' ${DESTDIR}/images/*.manifest | sort -u)
 
 cat << eof > ${DESTDIR}/version.txt
-DISTRO_VERSION: ${DISTRO_VERSION}
-   BOOT_LOADER: ${BOOT_LOADER}
-  LINUX_KERNEL: ${LINUX_KERNEL}
+DISTRO_VERSION:	${DISTRO_VERSION}
+BOOT_LOADER:	${BOOT_LOADER}
+LINUX_KERNEL:	${LINUX_KERNEL}
 eof
     cd ${DEPLOY_DIR_IMAGE}/..
-    tree ${RELEASE_NAME} -o ${RELEASE_NAME}.tree
+    tree --noreport ${RELEASE_NAME} -o ${RELEASE_NAME}.tree
     cd -
 }
 
