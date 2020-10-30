@@ -7,6 +7,7 @@ FILE_LIST = " \
 	file://user-default.pa \
 "
 
+SRC_URI_append_mcm-imx8m-nano += "${FILE_LIST}"
 SRC_URI_append_mcm-imx8m-mini += "${FILE_LIST}"
 SRC_URI_append_ucm-imx8m-mini += "${FILE_LIST}"
 SRC_URI_append_cl-som-imx8    += "${FILE_LIST}"
@@ -26,6 +27,10 @@ do_install_compulab () {
 	install -m 0644 ${WORKDIR}/91-pulseaudio.rules ${D}${base_libdir}/udev/rules.d/91-pulseaudio.rules
 
 	sed -i -e's/^\(ConditionUser=!root\)/#\1/g' ${D}/usr/lib/systemd/user/pulseaudio.service
+}
+
+do_install_append_mcm-imx8m-nano () {
+	do_install_compulab
 }
 
 do_install_append_mcm-imx8m-mini () {
