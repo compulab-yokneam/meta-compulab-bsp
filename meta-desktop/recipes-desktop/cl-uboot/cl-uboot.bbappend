@@ -12,6 +12,7 @@ S = "${WORKDIR}"
 
 install_cl_uboot_work() {
     mv ${S}/cl-uboot.imx8.work ${S}/cl-uboot.work
+    sed -i "s|##SEEK##|${IMX_BOOT_SEEK}|" ${S}/cl-uboot.work
 }
 
 do_install_prepend_cl-som-imx8() {
