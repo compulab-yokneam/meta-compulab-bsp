@@ -1,0 +1,26 @@
+From 62afffab32f42a0ac13400797eee42369242ac56 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Sun, 1 Nov 2020 14:15:20 +0200
+Subject: [PATCH] Makefile: Take CC from the environment if defined
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index baf0860..57d5ff7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -23,7 +23,7 @@ PATCHLEVEL = 0
+ EEPROM_UTIL_VERSION = $(VERSION).$(MINORVER).$(PATCHLEVEL)
+ 
+ CROSS_COMPILE ?=
+-CC = $(CROSS_COMPILE)gcc
++CC ?= $(CROSS_COMPILE)gcc
+ 
+ OBJDIR := obj
+ DEPDIR := dep
+-- 
+2.11.0
+
