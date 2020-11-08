@@ -18,6 +18,7 @@ DEPLOY_DIR=${DEPLOY_DIR}
 DEPLOY_DIR_IMAGE=${DEPLOY_DIR_IMAGE}
 MACHINE=${MACHINE}
 YOCTO_LIST=${YEBIAN}/local/yocto.list
+IMX_BOOT_SEEK=${IMX_BOOT_SEEK}
 eof
 
 ls -tr ${DEPLOY_DIR}/deb | awk '($0="#deb [trusted=yes] http://localhost:5678/"$0" /")' > ${YEBIAN}/local/yocto.list
