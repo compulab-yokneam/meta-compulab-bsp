@@ -10,19 +10,20 @@ S = "${WORKDIR}/git"
 
 do_compile () {
 YEBIAN=${DEPLOY_DIR_IMAGE}/yebian
-mkdir -p ${YEBIAN}/local ${YEBIAN}/scripts
+CONF=conf SCRIPTS=scripts
+mkdir -p ${YEBIAN}/${CONF} ${YEBIAN}/${SCRIPTS}
 
-cat << eof > ${YEBIAN}/local/local.conf
+cat << eof > ${YEBIAN}/${CONF}/local.conf
 YEBIAN=${YEBIAN}
 DEPLOY_DIR=${DEPLOY_DIR}
 DEPLOY_DIR_IMAGE=${DEPLOY_DIR_IMAGE}
 MACHINE=${MACHINE}
-YOCTO_LIST=${YEBIAN}/local/yocto.list
+YOCTO_LIST=${YEBIAN}/${CONF}/yocto.list
 IMX_BOOT_SEEK=${IMX_BOOT_SEEK}
 eof
 
-ls -tr ${DEPLOY_DIR}/deb | awk '($0="#deb [trusted=yes] http://localhost:5678/"$0" /")' > ${YEBIAN}/local/yocto.list
-cp -a ${S}/* ${YEBIAN}/scripts
+ls -tr ${DEPLOY_DIR}/deb | awk '($0="#deb [trusted=yes] http://localhost:5678/"$0" /")' > ${YEBIAN}/${CONF}/yocto.list
+cp -a ${S}/* ${YEBIAN}/${SCRIPTS}
 }
 
 RDEPENDS_${PN} = " kernel kernel-modules kernel-devicetree firmware-imx-sdma linux-firmware-ax200 cl-uboot cl-deploy u-boot-imx-fw-utils eeprom-util mbpoll "
