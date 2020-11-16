@@ -14,7 +14,7 @@ bitbake yebian
 
 * Issue this script in order to create a Debian image:
 ```
-${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.do-all.sh
+${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.cmd
 ```
 
 * Deploy the created image to an sd-card. The image is at:
