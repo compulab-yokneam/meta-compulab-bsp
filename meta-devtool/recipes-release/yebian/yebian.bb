@@ -36,4 +36,4 @@ ls -tr ${DEPLOY_DIR}/deb | awk '($0="#deb [trusted=yes] http://localhost:5678/"$
 cp -a ${S}/* ${YEBIAN}/${SCRIPTS}
 }
 
-RDEPENDS_${PN} = " kernel kernel-modules kernel-devicetree firmware-imx-sdma linux-firmware-ax200 cl-uboot cl-deploy u-boot-imx-fw-utils eeprom-util mbpoll "
+RDEPENDS_${PN} = " kernel kernel-modules kernel-devicetree cl-uboot cl-deploy "
