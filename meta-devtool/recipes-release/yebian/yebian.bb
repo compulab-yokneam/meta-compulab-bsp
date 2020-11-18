@@ -13,7 +13,7 @@ YEBIAN=${DEPLOY_DIR_IMAGE}/yebian
 CONF=conf SCRIPTS=scripts
 mkdir -p ${YEBIAN}/${CONF} ${YEBIAN}/${SCRIPTS}
 
-IMX_BOOT_SEEK=${IMX_BOOT_SEEK:-2}
+IMX_BOOT_SEEK=${IMX_BOOT_SEEK:-1}
 
 rc=$(echo ${MACHINE} | awk -F "imx8" '{ print NF }')
 if [ ${rc} -eq 2 ]; then
