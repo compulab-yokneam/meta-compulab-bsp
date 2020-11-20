@@ -12,6 +12,7 @@ SRC_URI_append_mcm-imx8m-nano += "${FILE_LIST}"
 SRC_URI_append_mcm-imx8m-mini += "${FILE_LIST}"
 SRC_URI_append_ucm-imx8m-mini += "${FILE_LIST}"
 SRC_URI_append_cl-som-imx8    += "${FILE_LIST}"
+SRC_URI_append_cl-som-imx6    += "${FILE_LIST}"
 
 do_install_compulab () {
 	install -d ${D}${sysconfdir}/pulse
@@ -52,4 +53,8 @@ do_install_append_cl-som-imx8 () {
 	do_install_compulab
 }
 
-PACKAGE_ARCH_mx8 = "${MACHINE_SOCARCH}"
+do_install_append_cl-som-imx6 () {
+	do_install_compulab
+}
+
+PACKAGE_ARCH = "${MACHINE_SOCARCH}"
