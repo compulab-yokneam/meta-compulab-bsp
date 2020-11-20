@@ -6,5 +6,6 @@ SUBSYSTEM=="sound", ATTR{id}=="mcmimx8mnano", ENV{PULSE_PROFILE_SET}="pulseaudio
 SUBSYSTEM=="sound", ATTR{id}=="mcmimx8mmini", ENV{PULSE_PROFILE_SET}="pulseaudio-compulab.conf"
 SUBSYSTEM=="sound", ATTR{id}=="ucmimx8mmini", ENV{PULSE_PROFILE_SET}="pulseaudio-compulab.conf"
 SUBSYSTEM=="sound", ATTR{id}=="compulabimx8mq", ENV{PULSE_PROFILE_SET}="pulseaudio-compulab.conf"
+SUBSYSTEM=="sound", ATTR{id}=="clsomimx6", ENV{PULSE_PROFILE_SET}="pulseaudio-compulab.conf"
 
 LABEL="pulseaudio_end"
