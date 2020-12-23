@@ -1,0 +1,22 @@
+#!/bin/bash
+
+eval $(aplay -l | awk -F":" '(/wm8731/)&&($0=$1)&&(gsub(/ /,"="))')
+# Unmute the analog output
+[[ -n ${card} ]] && amixer -c ${card} cset numid=13 1
+
+select_string=$(pactl list sinks | awk '(/Name/)&&($0=$NF)' ORS=" ")" << "
+default_sink=$(pactl info | awk '(/Default Sink/)&&($0=$NF)')
+
+PS3="Sound sink [ ${default_sink} ] > "
+select i in $select_string
+do
+case $i in
+	"<<")
+	break
+	;;
+	*)
+	pactl set-default-sink ${i}
+	break
+	;;
+	esac
+done

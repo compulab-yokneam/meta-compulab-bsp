@@ -1,0 +1,75 @@
+#!/bin/bash
+
+function econfig() {
+cat << eom
+Analog input is not available.
+wm8731 codec is not found.
+eom
+exit 1
+}
+
+eval $(aplay -l | awk -F":" '(/wm8731/)&&($0=$1)&&(gsub(/ /,"="))')
+
+[[ -z ${card} ]] && econfig
+
+select_string="linein mic << "
+default_in="linein"
+
+PS3="Select in src [ ${default_in} ] > "
+select i in $select_string
+do
+case $i in
+	"<<")
+	break
+	;;
+	*)
+	selected_in=${i}
+	break
+	;;
+	esac
+done
+
+if [ ${selected_in} == 'linein' ]
+then
+declare aset=(
+	[1]=120
+	[3]=30
+	[4]=1
+	[6]=0
+	[11]=1
+	[8]=0
+	[10]=0
+	[12]=0
+	[13]=1
+	[14]=0
+)
+else
+declare aset=(
+	[1]=120
+	[3]=30
+	[4]=0
+	[6]=1
+	[11]=1
+	[8]=1
+	[10]=1
+	[12]=0
+	[13]=1
+	[14]=1
+)
+fi
+
+for i in  ${!aset[@]};do
+amixer -c ${card} cset numid=${i} ${aset[${i}]};
+done
+
+pactl set-default-sink alsa_output.platform-sound.analog-stereo
+pactl set-default-source alsa_input.platform-sound.analog-stereo
+pactl set-source-port alsa_input.platform-sound.analog-stereo analog-input-${selected_in}
+
+cat << eof
+# Sample command to issue
+* Recording:
+	timeout 60 parecord -vv -d alsa_input.platform-sound.analog-stereo filename.wav
+* Playback:
+	amixer -c ${card} cset numid=11 0; parecord -vv -p filename.wav
+eof
