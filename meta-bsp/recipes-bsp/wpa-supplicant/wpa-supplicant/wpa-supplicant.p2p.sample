@@ -1,0 +1,7 @@
+systemctl stop wpa_supplicant
+
+rfkill unblock all
+
+wpa_supplicant -B -i wlan0 -Dnl80211 -c /opt/wpa-supplicant/p2p.conf -dt
+
+wpa_cli -i wlan0
