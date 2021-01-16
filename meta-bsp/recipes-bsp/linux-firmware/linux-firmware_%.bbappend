@@ -68,7 +68,10 @@ LIC_FILES_CHKSUM = " \
         file://LICENSE.QualcommAtheros_ath10k;md5=cb42b686ee5f5cb890275e4321db60a8 \
         file://LICENSE.radeon;md5=68ec28bacb3613200bca44f404c69b16 \
         file://LICENSE.sdma_firmware;md5=51e8c19ecc2270f4b8ea30341ad63ce9 \
-        file://WHENCE;md5=5cb5f2792b385b4dd165b35d312141ec \
+"
+
+LIC_FILES_CHKSUM += " \
+        file://WHENCE;md5=${@bb.utils.contains('DISTRO_CODENAME', 'dunfell', '03f0fad70b8b557b56084e3090198021', '5cb5f2792b385b4dd165b35d312141ec', d)} \
 "
 
 FILES_${PN}-ax200 += " \
