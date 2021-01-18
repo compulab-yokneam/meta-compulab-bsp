@@ -10,6 +10,7 @@ PV = "1.0+git${SRCPV}"
 SRCREV = "b1c41c55fe183db211c8e73780673c8d82fc6d74"
 
 S = "${WORKDIR}/git"
+CREATE_LINKS = "${@bb.utils.contains('DISTRO_CODENAME', 'dunfell', 'false', 'true', d)}"
 
 do_install () {
 	install -d ${D}${base_libdir}/firmware/brcm/bcm4339
@@ -22,7 +23,9 @@ do_install () {
 
 	ln -s bcm4339/brcmfmac4339-sdio.txt ../brcmfmac4339-sdio.txt
 	ln -s bcm4339/brcmfmac4339-sdio.txt ../brcmfmac4339-sdio.compulab-${MACHINE}.txt
+	if [ '${CREATE_LINKS}' = 'true' ];then
 	ln -s bcm4339/brcmfmac4339-sdio.bin ../brcmfmac4339-sdio.bin
+	fi
 	ln -s bcm4339/4339.hcd ../4339.hcd
 }
 
