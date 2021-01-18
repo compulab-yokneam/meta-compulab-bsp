@@ -23,16 +23,17 @@ REQUIRED_DISTRO_FEATURES = "x11"
 CORE_IMAGE_EXTRA_INSTALL += " \
     packagegroup-core-full-cmdline \
     packagegroup-tools-bluetooth \
-    packagegroup-fsl-tools-audio \
-    packagegroup-fsl-tools-gpu \
-    packagegroup-fsl-tools-testapps \
-    packagegroup-fsl-tools-benchmark \
-    packagegroup-fsl-gstreamer1.0 \
-    packagegroup-fsl-gstreamer1.0-full \
     packagegroup-xfce-base \
     packagegroup-xfce-extended \
-    imx-gpu-viv-demos \
     xf86-video-fbdev \
 "
+
+CORE_IMAGE_EXTRA_INSTALL += "${@bb.utils.contains('DISTRO_CODENAME', 'dunfell', ' ', 'imx-gpu-viv-demos \
+packagegroup-fsl-tools-audio \
+packagegroup-fsl-tools-gpu \
+packagegroup-fsl-tools-testapps \
+packagegroup-fsl-tools-benchmark \
+packagegroup-fsl-gstreamer1.0 \
+packagegroup-fsl-gstreamer1.0-full' , d)}"
 
 PACKAGE_EXCLUDE = "xfce-polkit"
