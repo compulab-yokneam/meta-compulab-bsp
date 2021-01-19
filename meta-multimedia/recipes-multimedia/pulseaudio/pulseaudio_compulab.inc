@@ -1,20 +1,13 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/compulab:"
 
-FILE_LIST = " \
+SRC_URI += " \
 	file://pulseaudio-compulab.conf \
 	file://91-pulseaudio.rules \
 	file://00-default-sample-rate.conf \
 	file://user-default.pa \
 "
 
-SRC_URI_append_iot-gate-imx8 += "${FILE_LIST}"
-SRC_URI_append_mcm-imx8m-nano += "${FILE_LIST}"
-SRC_URI_append_mcm-imx8m-mini += "${FILE_LIST}"
-SRC_URI_append_ucm-imx8m-mini += "${FILE_LIST}"
-SRC_URI_append_cl-som-imx8    += "${FILE_LIST}"
-SRC_URI_append_cl-som-imx6    += "${FILE_LIST}"
-
-do_install_compulab () {
+do_install_append () {
 	install -d ${D}${sysconfdir}/pulse
 	install -m 0644 ${WORKDIR}/user-default.pa ${D}${sysconfdir}/pulse/user-default.pa
 
@@ -32,29 +25,3 @@ do_install_compulab () {
 		sed -i -e's/^\(ConditionUser=!root\)/#\1/g' ${D}/usr/lib/systemd/user/pulseaudio.service
 	fi
 }
-
-do_install_append_iot-gate-imx8 () {
-	do_install_compulab
-}
-
-do_install_append_mcm-imx8m-nano () {
-	do_install_compulab
-}
-
-do_install_append_mcm-imx8m-mini () {
-	do_install_compulab
-}
-
-do_install_append_ucm-imx8m-mini () {
-	do_install_compulab
-}
-
-do_install_append_cl-som-imx8 () {
-	do_install_compulab
-}
-
-do_install_append_cl-som-imx6 () {
-	do_install_compulab
-}
-
-PACKAGE_ARCH = "${MACHINE_SOCARCH}"
