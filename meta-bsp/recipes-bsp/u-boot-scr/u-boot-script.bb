@@ -26,4 +26,3 @@ addtask do_deploy after do_compile before do_build
 RPROVIDES_${PN} += "u-boot-script"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-COMPATIBLE_MACHINE = "(cl-som-imx8|cl-som-imx8x|ucm-imx8m-mini|mcm-imx8m-mini)"
