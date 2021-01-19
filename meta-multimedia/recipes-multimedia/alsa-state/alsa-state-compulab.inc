@@ -1,14 +1,11 @@
-LICENSE = "CLOSED"
-LIC_FILES_CHKSUM = ""
-
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
 
-SRC_URI = "\
+SRC_URI += "\
   file://asound.conf \
   file://asound.state \
 "
 
-do_install() {
+do_install_append() {
 
     install -d ${D}/${localstatedir}/lib/alsa
     install -d ${D}${sysconfdir}
@@ -16,7 +13,5 @@ do_install() {
     install -m 0644 ${WORKDIR}/*.state ${D}${localstatedir}/lib/alsa
 }
 
-FILES_${PN} = "${sysconfdir}/asound.conf ${localstatedir}/lib/alsa "
+FILES_${PN} += "${sysconfdir}/asound.conf ${localstatedir}/lib/alsa "
 CONFFILES_${PN} = "${sysconfdir}/asound.conf"
-
-PACKAGE_ARCH = "${MACHINE_ARCH}"
