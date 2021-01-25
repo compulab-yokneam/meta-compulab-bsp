@@ -17,3 +17,7 @@ do_install_append () {
 
 PROVIDES += "${PN}-p2p"
 RDEPENDS_${PN} += "${PN}-p2p"
+
+DEPENDS_append = " readline"
+
+PACKAGECONFIG ??= "openssl"
