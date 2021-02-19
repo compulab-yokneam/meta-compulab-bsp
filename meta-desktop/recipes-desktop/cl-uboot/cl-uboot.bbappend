@@ -11,4 +11,4 @@ do_install_prepend() {
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 RDEPENDS_${PN}_remove  = " mtd-utils u-boot-compulab "
 RDEPENDS_${PN}_append  = " imx-boot mmc-utils "
-COMPATIBLE_MACHINE = "(cl-som-imx8|ucm-imx8m-mini|mcm-imx8m-mini|iot-gate-imx8|mcm-imx8m-nano)"
+COMPATIBLE_MACHINE = "(cl-som-imx8|ucm-imx8m-mini|mcm-imx8m-mini|iot-gate-imx8|mcm-imx8m-nano|ucm-imx8m-plus)"
