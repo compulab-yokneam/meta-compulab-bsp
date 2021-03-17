@@ -36,4 +36,6 @@ ls -tr ${DEPLOY_DIR}/deb | awk '($0="#deb [trusted=yes] http://localhost:5678/"$
 cp -a ${S}/* ${YEBIAN}/${SCRIPTS}
 }
 
-RDEPENDS_${PN} = " kernel kernel-modules kernel-devicetree cl-uboot cl-deploy "
+RDEPENDS_${PN} = " kernel kernel-modules kernel-devicetree cl-uboot cl-deploy u-boot-fw-utils "
+RDEPENDS_${PN}_ucm-imx8m-mini_append = " firmware-cypress "
+RDEPENDS_${PN}_mcm-imx8m-mini_append = " firmware-cypress "
