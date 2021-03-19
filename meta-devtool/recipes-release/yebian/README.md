@@ -5,6 +5,7 @@
 * Update the conf/bblayers.conf. Add this layer:
 ```
 BBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-devtool"
+BBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-utils"
 ```
 
 * Issue this command in the ${BUILDDIR}:
