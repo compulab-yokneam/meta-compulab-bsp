@@ -8,6 +8,8 @@ SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"
 
+FEATURES = "${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', 'EMPTY:', d)}"
+
 do_compile () {
 YEBIAN=${DEPLOY_DIR_IMAGE}/yebian
 CONF=conf SCRIPTS=scripts
@@ -30,6 +32,7 @@ MACHINE=${MACHINE}
 YOCTO_LIST=${YEBIAN}/${CONF}/yocto.list
 IMX_BOOT_SEEK=${IMX_BOOT_SEEK}
 IMX_BOOT_PATT=${IMX_BOOT_PATT}
+FEATURES=${FEATURES}
 eof
 
 ls -tr ${DEPLOY_DIR}/deb | awk '($0="#deb [trusted=yes] http://localhost:5678/"$0" /")' > ${YEBIAN}/${CONF}/yocto.list
