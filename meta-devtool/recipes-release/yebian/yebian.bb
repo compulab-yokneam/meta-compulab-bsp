@@ -35,7 +35,6 @@ IMX_BOOT_PATT=${IMX_BOOT_PATT}
 FEATURES=${FEATURES}
 eof
 
-ls -tr ${DEPLOY_DIR}/deb | awk '($0="#deb [trusted=yes] http://localhost:5678/"$0" /")' > ${YEBIAN}/${CONF}/yocto.list
 cp -a ${S}/* ${YEBIAN}/${SCRIPTS}
 }
 
