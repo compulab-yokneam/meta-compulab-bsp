@@ -21,7 +21,7 @@ rc=$(echo ${MACHINE} | awk -F "imx8" '{ print NF }')
 if [ ${rc} -eq 2 ]; then
 IMX_BOOT_PATT=imx-boot
 else
-IMX_BOOT_PATT=u-boot
+IMX_BOOT_PATT=u-boot.bin
 fi
 
 cat << eof > ${YEBIAN}/${CONF}/local.conf
