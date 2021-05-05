@@ -75,7 +75,7 @@ do_install_append() {
 }
 
 LIC_FILES_CHKSUM += " \
-        file://WHENCE;md5=${@bb.utils.contains('DISTRO_CODENAME', 'dunfell', '03f0fad70b8b557b56084e3090198021', '5cb5f2792b385b4dd165b35d312141ec', d)} \
+        file://WHENCE;md5=${@bb.utils.contains('DISTRO_CODENAME', 'dunfell', 'ef0565762eac313c409567b59dff00b2', '5cb5f2792b385b4dd165b35d312141ec', d)} \
 "
 
 FILES_${PN}-ax200 += " \
