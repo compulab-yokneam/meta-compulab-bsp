@@ -45,7 +45,7 @@ TITLE+=${CMD}";"
 force_ro=$(cat /sys/class/block/${_device}/force_ro)
 echo 0 > /sys/class/block/${_device}/force_ro
 
-CMD="dd if=${IMX_BOOT} of=${IMX_DEV} bs=1K seek=${OFFSET}}"
+CMD="dd if=${IMX_BOOT} of=${IMX_DEV} bs=1K seek=${OFFSET}"
 TITLE+=${CMD}";"
 
 ${CMD} 2>&1 | ${dialog_app} --backtitle "${TITLE}" --programbox "U Boot flash result:" 12 80
