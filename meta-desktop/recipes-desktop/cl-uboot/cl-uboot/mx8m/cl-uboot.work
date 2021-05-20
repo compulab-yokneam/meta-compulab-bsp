@@ -48,8 +48,6 @@ TITLE+=${CMD}";"
 
 ${CMD} 2>&1 | ${dialog_app} --backtitle "${TITLE}" --programbox "U Boot flash result:" 12 80
 
-command -v cl-migrate-env >/dev/null && cl-migrate-env ${IMX_DEV}
-
 echo ${force_ro} > /sys/class/block/${_device}/force_ro
 
 exit 0
