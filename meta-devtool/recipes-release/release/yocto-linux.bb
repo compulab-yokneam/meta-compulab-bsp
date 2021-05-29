@@ -3,6 +3,8 @@ LIC_FILES_CHKSUM = ""
 
 SRC_URI = ""
 
+DEPENDS += " bzip2 xz "
+
 do_configure () {
     # Specify any needed configure commands here
     :
@@ -11,6 +13,27 @@ do_configure () {
 do_compile () {
     # Specify compilation commands here
     :
+}
+
+get_manifest_name() {
+local fn=$(readlink -f $(ls -tr ${DEPLOY_DIR_IMAGE}/*${MACHINE}.manifest | tail -1))
+export manifest_name=${fn}
+}
+
+get_image_name() {
+local fn=$(readlink -f $(ls -tr ${DEPLOY_DIR_IMAGE}/*${MACHINE}.manifest | tail -1))
+fn=${fn%.*}
+
+for _c in bz2 xz;do
+	for _f in $(ls ${fn}*.${_c} 2>/dev/null);do
+	[ ${_c} = 'xz' ] && C='xz -dc ' || C='bzip2 -dc '
+	${C} ${_f} | file - | grep -q -e partition -e archive && rc=0 || rc=1
+	if [ ${rc} -eq 0 ];then
+		image_name="${image_name} ${_f}"
+	fi
+	done
+done
+export image_name="${image_name}"
 }
 
 do_deploy() {
@@ -30,17 +53,17 @@ do_deploy() {
     cp -L ${DEPLOY_DIR_IMAGE}/modules-${MACHINE}.tgz ${DESTDIR}/kernel/
     cp -L ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.bin ${DESTDIR}/kernel/${KERNEL_IMAGETYPE}-${MACHINE}
 
-    type='manifest'
-    for file in ${DEPLOY_DIR_IMAGE}/*${MACHINE}.${type};do
-        cp -L ${file} ${DESTDIR}/images/
-    done
+    manifest_name='' get_manifest_name
+    if [ -n ${manifest_name} ];then
+        cp -L ${manifest_name} ${DESTDIR}/images/
+    fi
 
-    type='sdcard'
-    for file in ${DEPLOY_DIR_IMAGE}/*${MACHINE}.${type}.*;do
-        cp -L ${file} ${DESTDIR}/images/
+    image_name='' get_image_name
+    for _name in ${image_name};do
+        if [ -n ${_name} ];then
+            cp -L ${_name} ${DESTDIR}/images/
+        fi
     done
-
-    cp -L ${DEPLOY_DIR_IMAGE}/${MACHINE}.tar.bz2 ${DESTDIR}/images/rootfs.tar.bz2
 
     BOOT_LOADER=$(strings ${DEPLOY_DIR_IMAGE}/u-boot.* | awk '/^U-Boot [[:digit:]]/' | head -1)
     LINUX_KERNEL=$(awk '(/kernel-image-[[:digit:]]/)&&($0=$1)' ${DESTDIR}/images/*.manifest | sort -u)
