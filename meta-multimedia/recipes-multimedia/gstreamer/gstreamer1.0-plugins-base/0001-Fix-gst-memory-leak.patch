@@ -1,0 +1,41 @@
+From 32dc7537e932ea15523b7e820b6a0eb6495e2398 Mon Sep 17 00:00:00 2001
+From: Kshitij Shah <kshitij.shah@nxp.com>
+Date: Tue, 27 Apr 2021 21:26:26 -0700
+Subject: [PATCH] Fix gst memory leak
+
+---
+ gst-libs/gst/video/gstvideodecoder.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/gst-libs/gst/video/gstvideodecoder.c b/gst-libs/gst/video/gstvideodecoder.c
+index 1810cc626..b985f881b 100755
+--- a/gst-libs/gst/video/gstvideodecoder.c
++++ b/gst-libs/gst/video/gstvideodecoder.c
+@@ -3334,6 +3334,7 @@ gst_video_decoder_have_frame (GstVideoDecoder * decoder)
+     GST_VIDEO_CODEC_FRAME_SET_SYNC_POINT (priv->current_frame);
+   }
+ 
++
+   /* In reverse playback, just capture and queue frames for later processing */
+   if (decoder->input_segment.rate < 0.0) {
+     priv->parse_gather =
+@@ -3398,9 +3399,15 @@ gst_video_decoder_decode_frame (GstVideoDecoder * decoder,
+   gst_video_codec_frame_ref (frame);
+   priv->frames = g_list_append (priv->frames, frame);
+ 
+-  if (g_list_length (priv->frames) > 10) {
++  if (g_list_length (priv->frames) > 100) {
++    GstVideoCodecFrame * old_frame;	  
+     GST_DEBUG_OBJECT (decoder, "decoder frame list getting long: %d frames,"
+         "possible internal leaking?", g_list_length (priv->frames));
++    old_frame = gst_video_decoder_get_oldest_frame (decoder);
++            if (old_frame)
++                    gst_video_codec_frame_unref (old_frame);
++            gst_video_decoder_drop_frame (decoder, old_frame);
++
+   }
+ 
+   frame->deadline =
+-- 
+2.17.1
+
