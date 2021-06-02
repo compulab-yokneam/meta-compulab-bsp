@@ -28,4 +28,3 @@ FILES_${PN} = " \
 "
 
 RDEPENDS_${PN} = "bash"
-PACKAGE_ARCH = "all"
