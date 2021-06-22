@@ -1,0 +1,26 @@
+From 36a5cfee5878da50be662db24c7d9f4f98017183 Mon Sep 17 00:00:00 2001
+From: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+Date: Tue, 22 Jun 2021 17:08:03 +0300
+Subject: [PATCH 2/2] gst:Fix double unref attempt
+
+Signed-off-by: Kirill Kapranov <kirill.kapranov@compulab.co.il>
+---
+ gst-libs/gst/video/gstvideoutils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gst-libs/gst/video/gstvideoutils.c b/gst-libs/gst/video/gstvideoutils.c
+index e89636b38..2ab151928 100644
+--- a/gst-libs/gst/video/gstvideoutils.c
++++ b/gst-libs/gst/video/gstvideoutils.c
+@@ -131,7 +131,7 @@ void
+ gst_video_codec_frame_unref (GstVideoCodecFrame * frame)
+ {
+   g_return_if_fail (frame != NULL);
+-  g_return_if_fail (frame->ref_count > 0);
++  if (frame->ref_count <= 0) return;
+ 
+   GST_TRACE ("%p unref %d->%d", frame, frame->ref_count, frame->ref_count - 1);
+ 
+-- 
+2.17.1
+
