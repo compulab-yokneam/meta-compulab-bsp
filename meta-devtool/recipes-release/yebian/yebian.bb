@@ -9,11 +9,11 @@ SRCREV = "${AUTOREV}"
 S = "${WORKDIR}/git"
 
 FEATURES = "${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', 'EMPTY:', d)}"
+BSP = "${IMX_DEFAULT_BSP}"
+YEBIAN = "yebian"
 
 do_compile () {
-YEBIAN=${DEPLOY_DIR_IMAGE}/yebian
-CONF=conf SCRIPTS=scripts
-mkdir -p ${YEBIAN}/${CONF} ${YEBIAN}/${SCRIPTS}
+mkdir -p ${WORKDIR}/conf
 
 IMX_BOOT_SEEK=${IMX_BOOT_SEEK:-1}
 
@@ -24,18 +24,28 @@ else
 IMX_BOOT_PATT=u-boot.bin
 fi
 
-cat << eof > ${YEBIAN}/${CONF}/local.conf
-YEBIAN=${YEBIAN}
+cat << eof > ${WORKDIR}/conf/local.conf
+YEBIAN=${DEPLOY_DIR_IMAGE}/${YEBIAN}
 DEPLOY_DIR=${DEPLOY_DIR}
 DEPLOY_DIR_IMAGE=${DEPLOY_DIR_IMAGE}
 MACHINE=${MACHINE}
 IMX_BOOT_SEEK=${IMX_BOOT_SEEK}
 IMX_BOOT_PATT=${IMX_BOOT_PATT}
 FEATURES=${FEATURES}
+BSP=${BSP}
 eof
 
-cp -a ${S}/* ${YEBIAN}/${SCRIPTS}
 }
+
+inherit deploy
+
+do_deploy () {
+    mkdir -p ${DEPLOY_DIR_IMAGE}/${YEBIAN}
+    cp -a ${WORKDIR}/conf ${DEPLOY_DIR_IMAGE}/${YEBIAN}/
+    cp -a ${WORKDIR}/git  ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts
+}
+
+addtask do_deploy after do_compile
 
 RDEPENDS_${PN} = " kernel kernel-modules kernel-devicetree cl-uboot cl-deploy u-boot-fw-utils "
 RDEPENDS_${PN}_ucm-imx8m-mini_append = " firmware-cypress "
