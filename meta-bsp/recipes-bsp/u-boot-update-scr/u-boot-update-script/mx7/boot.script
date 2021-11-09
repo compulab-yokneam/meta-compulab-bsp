@@ -1,0 +1,29 @@
+setenv nload 0x80800000
+setenv oload 0x83000000
+setenv mmcdev 0
+setenv iface mmc
+setenv offset 0x400
+setenv bootloader u-boot.imx
+
+# Load the new booloader from the file system
+# 1) Read a new bootloader from the mmc rootfs/boot/u-boot.imx if exist
+# 2) Read the currect bootloader from the device spi flash.
+# 3) Compare and update if not equal.
+if load ${iface} ${dev}:2 ${nload} boot/${bootloader}
+then
+
+    # Read the current booloader from the boot device
+    sf probe; sf read ${oload} ${offset} ${filesize}
+    # Compare the old & the new one.
+    if cmp.b ${nload} ${oload} ${filesize}
+    then
+        echo Nothing to update
+    else
+        echo Updating the bootloader on spi flash
+        sf probe ; sf erase 0 0xa0000 ; sf write ${nload} ${offset} ${filesize}
+        reset
+    fi
+
+else
+    echo boot/u-boot.imx file not found
+fi

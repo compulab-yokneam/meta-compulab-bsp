@@ -10,10 +10,15 @@ SRC_URI = "\
     file://README \
 "
 
-do_compile() {
+do_compile_mx8() {
 	BOOTLOADER=$(basename $(ls ${WORKDIR}/recipe-sysroot/boot/imx-boot-* | head -1))
 	sed "s|##BOOTLOADER##|${BOOTLOADER}|" ${WORKDIR}/boot.script > ${WORKDIR}/boot.update.in
     mkimage -C none -A arm -T script -d ${WORKDIR}/boot.update.in ${WORKDIR}/boot.update.scr
+}
+
+do_compile_mx7() {
+    cp ${WORKDIR}/boot.script ${WORKDIR}/boot.update.in
+    mkimage -C none -A arm -T script -d ${WORKDIR}/boot.script ${WORKDIR}/boot.update.scr
 }
 
 inherit deploy
@@ -37,4 +42,4 @@ RPROVIDES_${PN} += "u-boot-update-script"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-DEPENDS += "imx-boot"
+DEPENDS_append_mx8 = "imx-boot"
