@@ -1,7 +1,6 @@
 setenv nload 0x80800000
 setenv oload 0x83000000
-setenv mmcdev 0
-setenv iface mmc
+env exist iface || setenv iface mmc
 setenv offset 0x400
 setenv bootloader u-boot.imx
 
@@ -9,7 +8,7 @@ setenv bootloader u-boot.imx
 # 1) Read a new bootloader from the mmc rootfs/boot/u-boot.imx if exist
 # 2) Read the currect bootloader from the device spi flash.
 # 3) Compare and update if not equal.
-if load ${iface} ${dev}:2 ${nload} boot/${bootloader}
+if load ${iface} 0:2 ${nload} boot/${bootloader}
 then
 
     # Read the current booloader from the boot device
