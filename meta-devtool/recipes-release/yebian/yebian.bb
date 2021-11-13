@@ -8,7 +8,8 @@ SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"
 
-FEATURES = "${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', 'EMPTY:', d)}"
+FEATURES+="${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', 'EMPTY:', d)}"
+FEATURES+="${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'MENDER:', 'EMPTY:', d)}"
 BSP = "${IMX_DEFAULT_BSP}"
 YEBIAN = "yebian"
 
@@ -31,7 +32,7 @@ DEPLOY_DIR_IMAGE=${DEPLOY_DIR_IMAGE}
 MACHINE=${MACHINE}
 IMX_BOOT_SEEK=${IMX_BOOT_SEEK}
 IMX_BOOT_PATT=${IMX_BOOT_PATT}
-FEATURES=${FEATURES}
+FEATURES="${FEATURES}"
 BSP=${BSP}
 eof
 
@@ -42,6 +43,9 @@ inherit deploy
 do_deploy () {
     mkdir -p ${DEPLOY_DIR_IMAGE}/${YEBIAN}
     cp -a ${WORKDIR}/conf ${DEPLOY_DIR_IMAGE}/${YEBIAN}/
+    if [ -d ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts ];then
+        mv ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts ${DEPLOY_DIR_IMAGE}/${YEBIAN}/$(date +%Y%m%d_%H%M%S)
+    fi
     cp -a ${WORKDIR}/git  ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts
 }
 
