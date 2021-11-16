@@ -1,7 +1,9 @@
 LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = ""
 
-SRC_URI = "git://github.com/compulab-yokneam/yebian.git;protocol=https"
+YEBIAN_BRANCH ?= "master"
+
+SRC_URI = "git://github.com/compulab-yokneam/yebian.git;protocol=https;branch=${YEBIAN_BRANCH}"
 
 PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
