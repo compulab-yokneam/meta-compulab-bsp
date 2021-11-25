@@ -3,7 +3,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/README;md5=dfca3ff67e8e1b399109eb93e66b346
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-DEPENDS = "u-boot-mkimage-native"
+DEPENDS = " u-boot-mkimage-native "
 
 SRC_URI = "\
     file://boot.script \
