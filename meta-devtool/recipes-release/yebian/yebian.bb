@@ -14,18 +14,13 @@ FEATURES+="${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', 
 FEATURES+="${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'MENDER:', 'EMPTY:', d)}"
 BSP = "${IMX_DEFAULT_BSP}"
 YEBIAN = "yebian"
+IMX_BOOT_PATT_aarch64 = "imx-boot"
+IMX_BOOT_PATT_arm = "u-boot.imx"
 
 do_compile () {
 mkdir -p ${WORKDIR}/conf
 
 IMX_BOOT_SEEK=${IMX_BOOT_SEEK:-1}
-
-rc=$(echo ${MACHINE} | awk -F "imx8" '{ print NF }')
-if [ ${rc} -eq 2 ]; then
-IMX_BOOT_PATT=imx-boot
-else
-IMX_BOOT_PATT=u-boot.imx
-fi
 
 cat << eof > ${WORKDIR}/conf/local.conf
 YEBIAN=${DEPLOY_DIR_IMAGE}/${YEBIAN}
@@ -36,6 +31,8 @@ IMX_BOOT_SEEK=${IMX_BOOT_SEEK}
 IMX_BOOT_PATT=${IMX_BOOT_PATT}
 FEATURES="${FEATURES}"
 BSP=${BSP}
+DPKG_ARCH=${DPKG_ARCH}
+DISTRO_CODENAME=${DISTRO_CODENAME}
 eof
 
 }
