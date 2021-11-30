@@ -7,7 +7,15 @@ SRC_URI += "\
 
 do_install_append() {
 
-    ALSA_MACHINE=$(awk -v M=${MACHINE} 'BEGIN { gsub(/-/,"",M); print M }')
+    case ${MACHINE} in
+    *imx8m-mini)
+        ALSA_MACHINE=climx8mmini
+	;;
+    *)
+        ALSA_MACHINE=$(awk -v M=${MACHINE} 'BEGIN { gsub(/-/,"",M); print M }')
+	;;
+    esac
+
     sed -i "s|##MACHINE##|${ALSA_MACHINE}|g" ${WORKDIR}/asound.conf
     sed -i "s|##MACHINE##|${ALSA_MACHINE}|g" ${WORKDIR}/asound.state
 
