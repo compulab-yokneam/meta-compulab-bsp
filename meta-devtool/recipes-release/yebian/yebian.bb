@@ -10,8 +10,11 @@ SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"
 
-FEATURES+="${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', 'EMPTY:', d)}"
-FEATURES+="${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'MENDER:', 'EMPTY:', d)}"
+FEATURES += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', 'EMPTY:', d)}"
+FEATURES += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'MENDER:', 'EMPTY:', d)}"
+DEPENDS += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'mender-artifact-native', '', d)}"
+NATIVE_TOOLS += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'mender-artifact', '', d)}"
+
 BSP = "${IMX_DEFAULT_BSP}"
 YEBIAN = "yebian"
 IMX_BOOT_PATT_aarch64 = "imx-boot"
@@ -39,16 +42,34 @@ eof
 
 inherit deploy
 
-do_deploy () {
-    mkdir -p ${DEPLOY_DIR_IMAGE}/${YEBIAN}
-    cp -a ${WORKDIR}/conf ${DEPLOY_DIR_IMAGE}/${YEBIAN}/
+do_deploy_native () {
+    for native_tool in ${NATIVE_TOOLS};do
+        mkdir -p ${DEPLOY_DIR_IMAGE}/${YEBIAN}/bin
+        cp ${WORKDIR}/recipe-sysroot-native/usr/bin/${native_tool} ${DEPLOY_DIR_IMAGE}/${YEBIAN}/bin/
+    done
+}
+
+do_deploy_append () {
+    do_deploy_native
+}
+
+do_backup_conf () {
     if [ -d ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts ];then
         mv ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts ${DEPLOY_DIR_IMAGE}/${YEBIAN}/$(date +%Y%m%d_%H%M%S)
     fi
-    cp -a ${WORKDIR}/git  ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts
 }
 
-addtask do_deploy after do_compile
+do_deploy_prepend () {
+    do_backup_conf
+}
+
+do_deploy () {
+    cp -a ${WORKDIR}/conf ${DEPLOY_DIR_IMAGE}/${YEBIAN}/
+    cp -a ${WORKDIR}/git ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts
+}
+
+addtask deploy after do_compile
+addtask deploy_native after do_deploy
 
 RDEPENDS_${PN} = " kernel kernel-modules kernel-devicetree cl-uboot cl-deploy u-boot-fw-utils "
 RDEPENDS_${PN}_ucm-imx8m-mini_append = " firmware-cypress "
