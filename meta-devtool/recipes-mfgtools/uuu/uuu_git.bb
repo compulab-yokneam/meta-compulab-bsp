@@ -6,13 +6,23 @@ SRC_URI = "git://github.com/NXPmicro/mfgtools.git;protocol=https"
 
 # Modify these as desired
 PV = "1.0+git${SRCPV}"
-SRCREV = "fec8bbbc1ac8ab36eb8f2fc8c3264d8046cbe180"
+SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"
 
 DEPENDS = "openssl zlib libusb libzip"
+DEPENDS_class-native = "bzip2-replacement-native zlib-native libusb-native openssl-native zip-native libzip-native"
 
 inherit cmake pkgconfig deploy
 
+BBCLASSEXTEND = "native"
+
 # Specify any options you want to pass to cmake using EXTRA_OECMAKE:
 EXTRA_OECMAKE = ""
+
+do_deploy() {
+    mkdir -p ${DEPLOY_DIR_IMAGE}/${PN}/bin
+    cp ${B}/uuu/uuu ${DEPLOY_DIR_IMAGE}/${PN}/bin
+}
+
+addtask deploy after do_compile
