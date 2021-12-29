@@ -20,18 +20,18 @@ get_manifest_name() {
 }
 
 get_image_name() {
-local fn=$(get_manifest_name)
-fn=${fn%.*}
+	local fn=$(get_manifest_name)
+	fn=${fn%.*}
 
-for _c in bz2 xz;do
-	for _f in $(ls ${fn}*.${_c} 2>/dev/null);do
-	[ ${_c} = 'xz' ] && C='xz -dc ' || C='bzip2 -dc '
-	${C} ${_f} | file - | grep -q -e partition -e archive && rc=0 || rc=1
-	if [ ${rc} -eq 0 ];then
-		image_name="${image_name} ${_f}"
-	fi
+	for _c in bz2 xz;do
+		for _f in  ${fn}*.${_c}; do
+			[ ${_c} = 'xz' ] && C='xz -dc ' || C='bzip2 -dc '
+			${C} ${_f} | file - | grep -q -e partition -e archive && rc=0 || rc=1
+			if [ ${rc} -eq 0 ];then
+				image_name="${image_name} ${_f}"
+			fi
+		done
 	done
-done
 export image_name="${image_name}"
 }
 
