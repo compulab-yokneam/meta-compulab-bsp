@@ -16,12 +16,11 @@ do_compile () {
 }
 
 get_manifest_name() {
-local fn=$(readlink -f $(ls -tr ${DEPLOY_DIR_IMAGE}/*${MACHINE}.manifest | tail -1))
-export manifest_name=${fn}
+	ls ${DEPLOY_DIR_IMAGE}/*${MACHINE}.manifest | awk '(NR == 1 || length < length(shortest)) { shortest = $0 } END { print shortest }'
 }
 
 get_image_name() {
-local fn=$(readlink -f $(ls -tr ${DEPLOY_DIR_IMAGE}/*${MACHINE}.manifest | tail -1))
+local fn=$(get_manifest_name)
 fn=${fn%.*}
 
 for _c in bz2 xz;do
@@ -53,7 +52,7 @@ do_deploy() {
     cp -L ${DEPLOY_DIR_IMAGE}/modules-${MACHINE}.tgz ${DESTDIR}/kernel/
     cp -L ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.bin ${DESTDIR}/kernel/${KERNEL_IMAGETYPE}-${MACHINE}
 
-    manifest_name='' get_manifest_name
+    manifest_name=$(get_manifest_name)
     if [ -n ${manifest_name} ];then
         cp -L ${manifest_name} ${DESTDIR}/images/
     fi
