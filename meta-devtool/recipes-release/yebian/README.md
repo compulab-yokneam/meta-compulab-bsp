@@ -20,7 +20,7 @@ bitbake yebian
 ```
 ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.cmd
 ```
-** Follow the instructions onf the screen dialog:
+* Follow the instructions onf the screen dialog:
 ```
 --- Debootstrap Configuration started --
 conf file : [ ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/conf/debian.debootstrap.inc ]
@@ -81,3 +81,21 @@ stages="cpl" ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.cmd
 ```
 stages="5" ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.cmd
 ```
+
+### Switch to another branch
+* Set the variable `YEBIAN_BRANCH = "devel-next"` in the con/local.conf
+* Issue:
+```
+bitbake yebian -c cleanall
+```
+* Remove the old yebian build folder:
+```
+rm -rf ${BUILDDIR}/tmp/deploy/image/${MACHINE}/yebian
+```
+* Issue
+```
+bitbake yebian
+```
+* Goto the [Configuring the build](#configuring-the-build)
+
+
