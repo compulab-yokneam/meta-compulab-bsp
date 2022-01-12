@@ -19,11 +19,10 @@ BSP = "${IMX_DEFAULT_BSP}"
 YEBIAN = "yebian"
 IMX_BOOT_PATT_aarch64 = "imx-boot"
 IMX_BOOT_PATT_arm = "u-boot.imx"
+IMX_BOOT_SEEK ?= "1"
 
 do_compile () {
 mkdir -p ${WORKDIR}/conf
-
-IMX_BOOT_SEEK=${IMX_BOOT_SEEK:-1}
 
 cat << eof > ${WORKDIR}/conf/local.conf
 YEBIAN=${DEPLOY_DIR_IMAGE}/${YEBIAN}
@@ -64,6 +63,7 @@ do_deploy_prepend () {
 }
 
 do_deploy () {
+    install -d ${DEPLOY_DIR_IMAGE}/${YEBIAN}
     cp -a ${WORKDIR}/conf ${DEPLOY_DIR_IMAGE}/${YEBIAN}/
     cp -a ${WORKDIR}/git ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts
 }
