@@ -25,5 +25,6 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/asound.state ${D}${localstatedir}/lib/alsa
 }
 
+RDEPENDS_${PN} = "alsa-utils"
 FILES_${PN} += "${sysconfdir}/asound.conf ${localstatedir}/lib/alsa "
 CONFFILES_${PN} = "${sysconfdir}/asound.conf"
