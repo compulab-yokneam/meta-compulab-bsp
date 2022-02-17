@@ -1,5 +1,8 @@
 # YEBIAN
 
+|NOTE|The tool is for CompuLab internal use only|
+|:---|:---|
+
 ## How to:
 
 ### Prepare the tool
