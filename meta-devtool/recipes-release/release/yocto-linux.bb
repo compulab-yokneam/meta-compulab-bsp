@@ -5,6 +5,9 @@ SRC_URI = ""
 
 DEPENDS += " bzip2 xz "
 
+BOOTLOADER_arm = "u-boot.imx"
+BOOTLOADER_aarch64 = "imx-boot"
+
 do_configure () {
     # Specify any needed configure commands here
     :
@@ -37,7 +40,7 @@ export image_name="${image_name}"
 
 do_deploy() {
     local RELEASE_NAME=${MACHINE}_${PN}
-    local DIRS='development images kernel/dtb'
+    local DIRS='development images kernel/dtb bootloader'
     local DESTDIR=${DEPLOY_DIR_IMAGE}/../${RELEASE_NAME}
 
     for dir in ${DIRS};do
@@ -51,6 +54,7 @@ do_deploy() {
 
     cp -L ${DEPLOY_DIR_IMAGE}/modules-${MACHINE}.tgz ${DESTDIR}/kernel/
     cp -L ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.bin ${DESTDIR}/kernel/${KERNEL_IMAGETYPE}-${MACHINE}
+    cp -L $(readlink -f ${DEPLOY_DIR_IMAGE}/${BOOTLOADER}) ${DESTDIR}/bootloader/
 
     manifest_name=$(get_manifest_name)
     if [ -n ${manifest_name} ];then
