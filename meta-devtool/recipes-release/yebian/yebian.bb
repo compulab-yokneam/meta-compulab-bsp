@@ -75,3 +75,4 @@ RDEPENDS_${PN} = " kernel kernel-modules kernel-devicetree cl-uboot cl-deploy u-
 RDEPENDS_${PN}_ucm-imx8m-mini_append = " firmware-cypress "
 RDEPENDS_${PN}_mcm-imx8m-mini_append = " firmware-cypress "
 RDEPENDS_${PN}_remove_cl-som-imx6ul = " u-boot-fw-utils "
+RDEPENDS_${PN}_remove_cl-som-imx6 = " u-boot-fw-utils "
