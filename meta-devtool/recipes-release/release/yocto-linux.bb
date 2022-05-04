@@ -39,7 +39,7 @@ export image_name="${image_name}"
 }
 
 do_deploy() {
-    local RELEASE_NAME=${MACHINE}_${PN}
+    local RELEASE_NAME=${MACHINE}:${PN}
     local DIRS='development images kernel/dtb bootloader'
     local DESTDIR=${DEPLOY_DIR_IMAGE}/../${RELEASE_NAME}
 
@@ -88,4 +88,4 @@ do_install () {
     :
 }
 
-PROVIDES_${PN} += "${PN}"
+PROVIDES:${PN} += "${PN}"

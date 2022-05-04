@@ -7,7 +7,7 @@ SRC_URI = "file://boot.script \
     file://README \
 "
 
-ALLOW_EMPTY_${PN} = "1"
+ALLOW_EMPTY:${PN} = "1"
 
 do_compile() {
     sed "s/MACHINE/${MACHINE}/" ${WORKDIR}/boot.script > ${WORKDIR}/boot.in
@@ -23,6 +23,6 @@ do_deploy() {
 
 addtask do_deploy after do_compile before do_build
 
-RPROVIDES_${PN} += "u-boot-script"
+RPROVIDES:${PN} += "u-boot-script"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"

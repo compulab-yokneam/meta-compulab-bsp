@@ -26,5 +26,5 @@ do_install () {
 	ln -s bcm4339/4339.hcd ../4339.hcd
 }
 
-FILES_${PN} += "${base_libdir}/firmware/brcm"
+FILES:${PN} += "${base_libdir}/firmware/brcm"
 PACKAGE_ARCH = "${MACHINE_ARCH}"

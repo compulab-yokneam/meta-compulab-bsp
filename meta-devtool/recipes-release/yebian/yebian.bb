@@ -48,7 +48,7 @@ do_deploy_native () {
     done
 }
 
-do_deploy_append () {
+do_deploy:append () {
     do_deploy_native
 }
 
@@ -58,7 +58,7 @@ do_backup_conf () {
     fi
 }
 
-do_deploy_prepend () {
+do_deploy:prepend () {
     do_backup_conf
 }
 
@@ -71,7 +71,7 @@ do_deploy () {
 addtask deploy after do_compile
 addtask deploy_native after do_deploy
 
-RDEPENDS_${PN} = " kernel kernel-modules kernel-devicetree cl-uboot cl-deploy u-boot-fw-utils "
-RDEPENDS_${PN}_ucm-imx8m-mini_append = " firmware-cypress "
-RDEPENDS_${PN}_mcm-imx8m-mini_append = " firmware-cypress "
-RDEPENDS_${PN}_remove_cl-som-imx6ul = " u-boot-fw-utils "
+RDEPENDS:${PN} = " kernel kernel-modules kernel-devicetree cl-uboot cl-deploy u-boot-fw-utils "
+RDEPENDS:${PN}_ucm-imx8m-mini:append = " firmware-cypress "
+RDEPENDS:${PN}_mcm-imx8m-mini:append = " firmware-cypress "
+RDEPENDS:${PN}:remove:cl-som-imx6ul = " u-boot-fw-utils "

@@ -1,11 +1,11 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "\
   file://asound.conf \
   file://asound.state \
 "
 
-do_install_append() {
+do_install:append() {
 
     case ${MACHINE} in
     *imx8m-mini)
@@ -25,6 +25,6 @@ do_install_append() {
     install -m 0644 ${WORKDIR}/asound.state ${D}${localstatedir}/lib/alsa
 }
 
-RDEPENDS_${PN} = "alsa-utils"
-FILES_${PN} += "${sysconfdir}/asound.conf ${localstatedir}/lib/alsa "
-CONFFILES_${PN} = "${sysconfdir}/asound.conf"
+RDEPENDS:${PN} = "alsa-utils"
+FILES:${PN} += "${sysconfdir}/asound.conf ${localstatedir}/lib/alsa "
+CONFFILES:${PN} = "${sysconfdir}/asound.conf"

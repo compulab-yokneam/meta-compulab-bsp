@@ -23,7 +23,7 @@ do_install () {
 	install -m 0755 ${S}/coremark.exe ${D}/usr/local/bin/coremark
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
     /usr/local/bin/* \
 "
 

@@ -13,7 +13,7 @@ do_logind_patch() {
     fi
 }
 
-do_install_append() {
+do_install:append() {
     do_logind_patch
     do_ro_fix
 }

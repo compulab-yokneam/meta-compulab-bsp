@@ -1,7 +1,7 @@
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/README;md5=dfca3ff67e8e1b399109eb93e66b3465"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 DEPENDS = " u-boot-mkimage-native "
 
@@ -36,10 +36,10 @@ do_install() {
 
 addtask do_deploy after do_compile before do_build
 
-FILES_${PN} += "/boot/"
+FILES:${PN} += "/boot/"
 
-RPROVIDES_${PN} += "u-boot-update-script"
+RPROVIDES:${PN} += "u-boot-update-script"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-DEPENDS_append_mx8 = "imx-boot"
+DEPENDS:append:mx8 = "imx-boot"

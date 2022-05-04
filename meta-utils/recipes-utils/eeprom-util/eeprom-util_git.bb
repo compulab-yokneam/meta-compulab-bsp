@@ -22,7 +22,7 @@ do_install () {
 	install -m 0755 ${S}/eeprom-util ${D}/${prefix}/local/bin/
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
 	/usr \
 "
 

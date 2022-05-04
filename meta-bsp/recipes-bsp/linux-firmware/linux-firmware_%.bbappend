@@ -1,8 +1,8 @@
-do_install_append() {
+do_install:append() {
 	rm -rf ${D}/lib/firmware/brcm
 }
 
-FILES_${PN}-ax200 += " \
+FILES:${PN}-ax200 += " \
        ${nonarch_base_libdir}/firmware/iwlwifi-cc-a0-50.ucode \
        ${nonarch_base_libdir}/firmware/iwlwifi-cc-a0-48.ucode \
        ${nonarch_base_libdir}/firmware/iwlwifi-cc-a0-46.ucode \

@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/compulab:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/compulab:"
 
 SRC_URI += " \
 	file://pulseaudio-compulab.conf \
@@ -7,7 +7,7 @@ SRC_URI += " \
 	file://user-default.pa \
 "
 
-do_install_append () {
+do_install:append () {
 	install -d ${D}${sysconfdir}/pulse
 	install -m 0644 ${WORKDIR}/user-default.pa ${D}${sysconfdir}/pulse/user-default.pa
 

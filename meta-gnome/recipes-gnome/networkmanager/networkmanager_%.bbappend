@@ -1,2 +1,2 @@
-RCONFLICTS_${PN}_remove = "connman"
-RREPLACES_${PN} = "connman"
+RCONFLICTS:${PN}:remove = "connman"
+RREPLACES:${PN} = "connman"

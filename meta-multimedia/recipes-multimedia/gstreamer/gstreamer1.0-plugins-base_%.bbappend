@@ -1,2 +1,2 @@
 # Enable opus plug-in 
-PACKAGECONFIG_append = " opus "
+PACKAGECONFIG:append = " opus "

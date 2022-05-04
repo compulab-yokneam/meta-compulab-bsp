@@ -23,8 +23,8 @@ do_install () {
 	:
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
 	/usr/local/bin/* \
 "
 
-RDEPENDS_${PN} = "bash"
+RDEPENDS:${PN} = "bash"

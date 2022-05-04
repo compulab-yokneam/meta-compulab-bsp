@@ -24,11 +24,11 @@ do_install () {
 	chown -R root:root ${D}
 }
 
-FILES_${PN} = "/usr/ /lib/* /etc/*"
+FILES:${PN} = "/usr/ /lib/* /etc/*"
 
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
-RDEPENDS_${PN} = "libnl libnl-genl"
+RDEPENDS:${PN} = "libnl libnl-genl"
 
-INSANE_SKIP_${PN} = "ldflags"
+INSANE_SKIP:${PN} = "ldflags"

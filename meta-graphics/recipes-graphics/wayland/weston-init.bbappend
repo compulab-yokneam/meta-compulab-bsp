@@ -1,11 +1,11 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI_append = " \
+SRC_URI:append = " \
     file://weston.ini-launcher \
     file://weston.ini-plus \
 "
 
-do_install_append() {
+do_install:append() {
     WESTON_INI_DEST_DIR=${D}${sysconfdir}/xdg/weston
     cat ${WORKDIR}/weston.ini-launcher >> ${WESTON_INI_DEST_DIR}/weston.ini
 
@@ -19,4 +19,4 @@ do_install_append() {
     cat ${WORKDIR}/weston.ini-plus | sed "s/\(transform=\)/\1${rotate}/" >> ${WESTON_INI_DEST_DIR}/weston.ini
 }
 
-RDEPENDS_${PN} += "cl-launcher"
+RDEPENDS:${PN} += "cl-launcher"
