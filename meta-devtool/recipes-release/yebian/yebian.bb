@@ -17,8 +17,8 @@ NATIVE_TOOLS += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'mender-ar
 
 BSP = "${IMX_DEFAULT_BSP}"
 YEBIAN = "yebian"
-IMX_BOOT_PATT_aarch64 = "imx-boot"
-IMX_BOOT_PATT_arm = "u-boot.imx"
+IMX_BOOT_PATT:aarch64 = "imx-boot"
+IMX_BOOT_PATT:arm = "u-boot.imx"
 IMX_BOOT_SEEK ?= "1"
 
 do_compile () {
@@ -52,16 +52,6 @@ do_deploy:append () {
     do_deploy_native
 }
 
-do_backup_conf () {
-    if [ -d ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts ];then
-        mv ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts ${DEPLOY_DIR_IMAGE}/${YEBIAN}/$(date +%Y%m%d_%H%M%S)
-    fi
-}
-
-do_deploy:prepend () {
-    do_backup_conf
-}
-
 do_deploy () {
     install -d ${DEPLOY_DIR_IMAGE}/${YEBIAN}
     cp -a ${WORKDIR}/conf ${DEPLOY_DIR_IMAGE}/${YEBIAN}/
@@ -69,9 +59,8 @@ do_deploy () {
 }
 
 addtask deploy after do_compile
-addtask deploy_native after do_deploy
 
 RDEPENDS:${PN} = " kernel kernel-modules kernel-devicetree cl-uboot cl-deploy u-boot-fw-utils "
-RDEPENDS:${PN}_ucm-imx8m-mini:append = " firmware-cypress "
-RDEPENDS:${PN}_mcm-imx8m-mini:append = " firmware-cypress "
-RDEPENDS:${PN}:remove:cl-som-imx6ul = " u-boot-fw-utils "
+RDEPENDS:${PN}:ucm-imx8m-mini:append = " firmware-cypress "
+RDEPENDS:${PN}:mcm-imx8m-mini:append = " firmware-cypress "
+RDEPENDS:${PN}:cl-som-imx6ul:remove  = " u-boot-fw-utils "
