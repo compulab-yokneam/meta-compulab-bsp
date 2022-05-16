@@ -72,7 +72,6 @@ addtask deploy after do_compile
 addtask deploy_native after do_deploy
 
 RDEPENDS_${PN} = " kernel kernel-modules kernel-devicetree cl-uboot cl-deploy u-boot-fw-utils "
-RDEPENDS_${PN}_ucm-imx8m-mini_append = " firmware-cypress "
-RDEPENDS_${PN}_mcm-imx8m-mini_append = " firmware-cypress "
-RDEPENDS_${PN}_remove_cl-som-imx6ul = " u-boot-fw-utils "
-RDEPENDS_${PN}_remove_cl-som-imx6 = " u-boot-fw-utils "
+RDEPENDS_${PN}_append_ucm-imx8m-mini = " firmware-cypress "
+RDEPENDS_${PN}_append_mcm-imx8m-mini = " firmware-cypress "
+RDEPENDS_${PN}_remove_mx6 = " u-boot-fw-utils "
