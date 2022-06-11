@@ -5,8 +5,8 @@ SRC_URI = ""
 
 DEPENDS += " bzip2 xz "
 
-BOOTLOADER_arm = "u-boot.imx"
-BOOTLOADER_aarch64 = "imx-boot"
+BOOTLOADER:arm = "u-boot.imx"
+BOOTLOADER:aarch64 = "imx-boot"
 
 do_configure () {
     # Specify any needed configure commands here

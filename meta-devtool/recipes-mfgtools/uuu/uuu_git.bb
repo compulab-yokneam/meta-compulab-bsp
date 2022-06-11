@@ -11,7 +11,7 @@ SRCREV = "${AUTOREV}"
 S = "${WORKDIR}/git"
 
 DEPENDS = "openssl zlib libusb libzip"
-DEPENDS_class-native = "bzip2-replacement-native zlib-native libusb-native openssl-native zip-native libzip-native"
+DEPENDS:class-native = "bzip2-replacement-native zlib-native libusb-native openssl-native zip-native libzip-native"
 
 inherit cmake pkgconfig deploy
 
