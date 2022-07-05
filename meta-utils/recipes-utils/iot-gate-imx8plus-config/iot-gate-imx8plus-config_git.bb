@@ -28,7 +28,7 @@ do_install () {
 
 SERVICE_NAME = "iotg-imx8plus-ie-config.service"
 
-pkg_postinst_${PN} () {
+pkg_postinst:${PN} () {
 	if [ -n "$D" ]; then
 		OPTS="--root=$D"
 	fi
@@ -37,7 +37,7 @@ pkg_postinst_${PN} () {
 	fi
 }
 
-pkg_postrm_${PN} () {
+pkg_postrm:${PN} () {
 	if [ -n "$D" ]; then
 		OPTS="--root=$D"
 	fi
