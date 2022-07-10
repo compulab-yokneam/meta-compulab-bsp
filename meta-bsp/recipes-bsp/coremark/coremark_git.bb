@@ -1,7 +1,7 @@
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=0a18b17ae63deaa8a595035f668aebe1"
 
-SRC_URI = "git://github.com/eembc/coremark.git;protocol=https"
+SRC_URI = "git://github.com/eembc/coremark.git;protocol=https;branch=master"
 
 PV = "1.0+git${SRCPV}"
 SRCREV = "7685fd32bd7919581bfff2881a6dac6320581400"
