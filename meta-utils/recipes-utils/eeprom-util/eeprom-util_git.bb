@@ -9,6 +9,8 @@ SRCREV = "257db099e8339404510eded3521da5370b321041"
 
 S = "${WORKDIR}/git"
 
+EXTRA_OEMAKE:append = " static "
+
 do_configure () {
 	oe_runmake auto_generated.h
 }
