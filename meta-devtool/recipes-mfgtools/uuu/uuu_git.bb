@@ -1,25 +1,23 @@
-LICENSE = "MIT & LGPLv2.1"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=38ec0c18112e9a92cffc4951661e85a5 \
-                    file://snap/local/LICENSE;md5=414077511f90c6042e6fbaf84a6e64c0"
+SUMMARY = "Universal Update Utility"
+DESCRIPTION = "Image deploy tool for i.MX chips"
+HOMEPAGE = "https://github.com/NXPmicro/mfgtools"
 
-SRC_URI = "https://github.com/NXPmicro/mfgtools.git;protocol=https"
+SRC_URI = "git://github.com/NXPmicro/mfgtools.git;protocol=https"
+SRCREV = "e10b0260076e0119c259f7f44447904f14109ba2"
+PV = "1.5.0"
 
-# Modify these as desired
-PV = "1.0+git${SRCPV}"
-SRCREV = "${AUTOREV}"
+SRC_URI += "file://0001-remove-unnecessary-libzip-dependency.patch"
 
-S = "${WORKDIR}/git"
-
-DEPENDS = "openssl zlib libusb libzip"
-DEPENDS:class-native = "bzip2-replacement-native zlib-native libusb-native openssl-native zip-native libzip-native"
+LICENSE = "BSD-3-Clause"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=38ec0c18112e9a92cffc4951661e85a5"
 
 inherit cmake pkgconfig deploy
 
-BBCLASSEXTEND = "native"
+S = "${WORKDIR}/git"
 
-# Specify any options you want to pass to cmake using EXTRA_OECMAKE:
-EXTRA_OECMAKE = ""
+DEPENDS = "libusb zlib bzip2 openssl"
 
+BBCLASSEXTEND = "native nativesdk"
 do_deploy() {
     mkdir -p ${DEPLOY_DIR_IMAGE}/${PN}/bin
     cp ${B}/uuu/uuu ${DEPLOY_DIR_IMAGE}/${PN}/bin
