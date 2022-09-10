@@ -28,7 +28,7 @@ CORE_IMAGE_EXTRA_INSTALL += " \
     xf86-video-fbdev \
 "
 
-CORE_IMAGE_EXTRA_INSTALL += "${@bb.utils.contains('DISTRO_CODENAME', 'dunfell', ' ', 'imx-gpu-viv-demos \
+CORE_IMAGE_EXTRA_INSTALL += "${@bb.utils.contains('DISTRO_CODENAME', 'dunfell', ' ', ' \
 packagegroup-fsl-tools-audio \
 packagegroup-fsl-tools-gpu \
 packagegroup-fsl-tools-testapps \
