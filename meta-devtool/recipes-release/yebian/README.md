@@ -17,11 +17,18 @@ BBLAYERS += " ${BSPDIR}/sources/meta-compulab-bsp/meta-utils"
 bitbake yebian
 ```
 
+* Bootstrap
+```
+cd ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts
+./bootsrtap.sh
+cd -
+```
+
 ### Configuring the build
 
 * Issue this script in order to create a Debian build cinfiguration file:
 ```
-${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.cmd
+${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/yebian-tools/debian.cmd
 ```
 * Follow the instructions onf the screen dialog:
 ```
@@ -50,15 +57,17 @@ conf file : conf file : [ ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/conf/d
 
 * Issue this script in order to create a 2-partition Debian image:
 ```
-${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.cmd
+${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/yebian-tools/debian.cmd
 ```
 
 * Issue this script in order to create a 4-partition Mender Debian image:
-```
-mender_image=yes ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.cmd
-```
-|NOTE<br>This feature works if:|1) The mender feature is enabled<br>2) YEBIAN_BRANCH = "devel"|
+
+|NOTE|The mender is required|
 |:---|:---|
+
+```
+mender_image=yes ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/yebian-tools/debian.cmd
+```
 
 ### Look at the build results
 * Deploy the created image to an sd-card. The image is at:
@@ -66,39 +75,19 @@ mender_image=yes ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.
 ls -al ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/images/
 ```
 
-## Etc
-|NOTE|Requires YEBIAN_BRANCH = "devel"|
-|:---|:---|
+## Customization
 
 * Image customization on Debian environment:
 ```
-stages="deb" ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.cmd
+stages="debian" ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/yebian-tools/debian.cmd
 ```
 
 * Image customization on CompuLab environment:
 ```
-stages="cpl" ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.cmd
+stages="compulab" ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/yebian-tools/debian.cmd
 ```
 
 * After customization image build:
 ```
-stages="5" ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/scripts/debian.cmd
+stages="5" ${BUILDDIR}/tmp/deploy/images/${MACHINE}/yebian/yebian-tools/debian.cmd
 ```
-
-### Switch to another branch
-* Set the variable `YEBIAN_BRANCH = "devel-next"` in the con/local.conf
-* Issue:
-```
-bitbake yebian -c cleanall
-```
-* Remove the old yebian build folder:
-```
-rm -rf ${BUILDDIR}/tmp/deploy/image/${MACHINE}/yebian
-```
-* Issue
-```
-bitbake yebian
-```
-* Goto the [Configuring the build](#configuring-the-build)
-
-
