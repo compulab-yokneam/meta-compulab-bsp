@@ -1,0 +1,43 @@
+= Setting up Yocto SDK with Qt6 support =
+
+# Overview
+
+The following document provides step-by-step instructions for setting up Yocto SDK with Qt6 support for CompuLab boards.
+
+## Supported CompuLab Machines
+
+* `cl-som-imx8`
+* `ucm-imx8m-mini`
+* `mcm-imx8m-mini`
+* `ucm-imx8m-plus`
+* `som-imx8m-plus`
+
+## Build the SDK
+* Add the meta-sdk layer
+[source,console]
+bitbake-layers add-layer ${BUILDDIR}/../sources/meta-compulab-bsp/meta-sdk
+
+* Issue the `populate_sdk`
+[source,console]
+bitbake -c populate_sdk compulab-qt6-build-env
+
+## Install the SDK
+* As soon as the `bitbake` process is complete, issue the following script from the command line as root user:
+[source,console]
+sudo ${BUILDDIR}/tmp/deploy/sdk/fsl-imx-xwayland-glibc-x86_64-compulab-qt6-build-env-armv8a-ucm-imx8m-plus-toolchain-5.15-kirkstone.sh
+
+* Set the installation path or accept the default:
+[source,console]
+NXP i.MX Release Distro SDK installer version 5.15-kirkstone
+Enter target directory for SDK (default: /opt/fsl-imx-xwayland/5.15-kirkstone):
+You are about to install the SDK to "/opt/fsl-imx-xwayland/5.15-kirkstone". Proceed [Y/n]?Y
+* Wait for the `done` message:
+[source,console]
+Extracting SDK........................................................................................................................................................................................................................................................................................................................................................................................................................................................................done
+Setting it up...done
+SDK has been successfully set up and is ready to be used.
+
+# Make use of the build environment
+Each time you wish to use the SDK in a new shell session, source the environment setup script e.g.
+[source,console]
+. /opt/fsl-imx-xwayland/5.15-kirkstone/environment-setup-armv8a-poky-linux
