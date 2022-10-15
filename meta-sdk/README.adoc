@@ -17,7 +17,11 @@ The following document provides step-by-step instructions for setting up Yocto S
 [source,console]
 bitbake-layers add-layer ${BUILDDIR}/../sources/meta-compulab-bsp/meta-sdk
 
-* Issue the `populate_sdk`
+* Issue Qt6 image build:
+[source,console]
+bitbake compulab-qt6-build-env
+
+* Issue the `populate_sdk`:
 [source,console]
 bitbake -c populate_sdk compulab-qt6-build-env
 
