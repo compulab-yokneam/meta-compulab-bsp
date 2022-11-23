@@ -10,13 +10,14 @@ SRC_URI = "\
     file://README \
 "
 
-do_compile_mx8() {
-	BOOTLOADER=$(basename $(ls ${WORKDIR}/recipe-sysroot/boot/imx-boot-* | head -1))
-	sed "s|##BOOTLOADER##|${BOOTLOADER}|" ${WORKDIR}/boot.script > ${WORKDIR}/boot.update.in
+do_compile:imx-boot-container() {
+    BOOTLOADER=$(basename $(ls ${WORKDIR}/recipe-sysroot/boot/imx-boot-* | head -1))
+    sed "s|##BOOTLOADER##|${BOOTLOADER}|" ${WORKDIR}/boot.script > ${WORKDIR}/boot.update.in
     mkimage -C none -A arm -T script -d ${WORKDIR}/boot.update.in ${WORKDIR}/boot.update.scr
 }
 
-do_compile_mx7() {
+# To fix the machineoverrides for imx7 machines
+do_compile:compulab-mx7() {
     cp ${WORKDIR}/boot.script ${WORKDIR}/boot.update.in
     mkimage -C none -A arm -T script -d ${WORKDIR}/boot.script ${WORKDIR}/boot.update.scr
 }
@@ -42,4 +43,4 @@ RPROVIDES:${PN} += "u-boot-update-script"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-DEPENDS:append:mx8 = "imx-boot"
+DEPENDS:append:imx-boot-container = "imx-boot"
