@@ -1,0 +1,52 @@
+From 8a4a697ef8d843e4f72bdbf6d840424fc58d0b66 Mon Sep 17 00:00:00 2001
+From: Valentin Raevsky <valentin@compulab.co.il>
+Date: Sat, 18 Feb 2023 18:41:19 +0000
+Subject: [PATCH 1/2] fix
+
+Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
+---
+ configure            | 2 +-
+ src/LT_SMBusBase.cpp | 1 +
+ src/Makefile.am      | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index e88895c..5cf1a5b 100755
+--- a/configure
++++ b/configure
+@@ -1806,7 +1806,7 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
+ ac_compiler_gnu=$ac_cv_c_compiler_gnu
+ 
+ 
+-am__api_version='1.15'
++am__api_version='1.16'
+ 
+ ac_aux_dir=
+ for ac_dir in "$srcdir" "$srcdir/.." "$srcdir/../.."; do
+diff --git a/src/LT_SMBusBase.cpp b/src/LT_SMBusBase.cpp
+index 87cb6d5..84af194 100644
+--- a/src/LT_SMBusBase.cpp
++++ b/src/LT_SMBusBase.cpp
+@@ -42,6 +42,7 @@ extern "C"
+ #else
+ #include <stdio.h>
+ #endif
++#include <i2c/smbus.h>
+ }
+ #include <errno.h>
+ #include "LT_Exception.h"
+diff --git a/src/Makefile.am b/src/Makefile.am
+index d3bb42e..efd1f72 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -1,6 +1,6 @@
+ 
+ bin_PROGRAMS = LT_PMBusApp
+-LT_PMBusApp_SOURCES = LT_PMBusApp.cpp LT_PMBus.cpp LT_SMBus.cpp LT_SMBusBase.cpp LT_SMBusPec.cpp LT_SMBusNoPec.cpp LT_SMBusGroup.cpp LT_PMBusSpeedTest.cpp LT_PMBusMath.cpp LT_Exception.cpp LT_FaultLog.cpp LT_3880FaultLog.cpp LT_3882FaultLog.cpp LT_3883FaultLog.cpp LT_3884FaultLog.cpp LT_3886FaultLog.cpp LT_3887FaultLog.cpp LT_3889FaultLog.cpp LT_3889FaultLog.cpp LT_7880FaultLog.cpp LT_2972FaultLog.cpp LT_2974FaultLog.cpp LT_2975FaultLog.cpp LT_2977FaultLog.cpp LT_2978FaultLog.cpp main_record_processor.cpp LT_Nvm.cpp nvm_data_helpers.cpp hex_file_parser.cpp httoi.cpp LT_PMBusDetect.cpp LT_PMBusDevice.cpp LT_PMBusDeviceLTC2972.cpp LT_PMBusDeviceLTC2974.cpp LT_PMBusDeviceLTC2975.cpp LT_PMBusDeviceLTC2977.cpp LT_PMBusDeviceLTC2978.cpp LT_PMBusDeviceLTC2979.cpp LT_PMBusRail.cpp LT_PMBusDeviceLTC2980.cpp LT_PMBusDeviceLTC3880.cpp LT_PMBusDeviceLTC3882.cpp LT_PMBusDeviceLTC3883.cpp LT_PMBusDeviceLTC3884.cpp LT_PMBusDeviceLTC3886.cpp LT_PMBusDeviceLTC3887.cpp LT_PMBusDeviceLTC3888.cpp LT_PMBusDeviceLTC3889.cpp LT_PMBusDeviceLTC7880.cpp LT_PMBusDeviceLTM2987.cpp  LT_PMBusDeviceLTM4664.cpp LT_PMBusDeviceLTM4675.cpp LT_PMBusDeviceLTM4676.cpp LT_PMBusDeviceLTM4677.cpp LT_PMBusDeviceLTM4678.cpp LT_PMBusDeviceLTM4680.cpp LT_PMBusDeviceLTM4686.cpp LT_PMBusDeviceLTM4700.cpp
++LT_PMBusApp_SOURCES = LT_PMBusApp.cpp LT_PMBus.cpp LT_SMBus.cpp LT_SMBusBase.cpp LT_SMBusPec.cpp LT_SMBusNoPec.cpp LT_SMBusGroup.cpp LT_PMBusSpeedTest.cpp LT_PMBusMath.cpp LT_Exception.cpp LT_FaultLog.cpp LT_3880FaultLog.cpp LT_3882FaultLog.cpp LT_3883FaultLog.cpp LT_3884FaultLog.cpp LT_3886FaultLog.cpp LT_3887FaultLog.cpp LT_3888FaultLog.cpp LT_3889FaultLog.cpp LT_7880FaultLog.cpp LT_2972FaultLog.cpp LT_2974FaultLog.cpp LT_2975FaultLog.cpp LT_2977FaultLog.cpp LT_2978FaultLog.cpp main_record_processor.cpp LT_Nvm.cpp nvm_data_helpers.cpp hex_file_parser.cpp httoi.cpp LT_PMBusDetect.cpp LT_PMBusDevice.cpp LT_PMBusDeviceLTC2972.cpp LT_PMBusDeviceLTC2974.cpp LT_PMBusDeviceLTC2975.cpp LT_PMBusDeviceLTC2977.cpp LT_PMBusDeviceLTC2978.cpp LT_PMBusDeviceLTC2979.cpp LT_PMBusRail.cpp LT_PMBusDeviceLTC2980.cpp LT_PMBusDeviceLTC3880.cpp LT_PMBusDeviceLTC3882.cpp LT_PMBusDeviceLTC3883.cpp LT_PMBusDeviceLTC3884.cpp LT_PMBusDeviceLTC3886.cpp LT_PMBusDeviceLTC3887.cpp LT_PMBusDeviceLTC3888.cpp LT_PMBusDeviceLTC3889.cpp LT_PMBusDeviceLTC7880.cpp LT_PMBusDeviceLTM2987.cpp  LT_PMBusDeviceLTM4664.cpp LT_PMBusDeviceLTM4675.cpp LT_PMBusDeviceLTM4676.cpp LT_PMBusDeviceLTM4677.cpp LT_PMBusDeviceLTM4678.cpp LT_PMBusDeviceLTM4680.cpp LT_PMBusDeviceLTM4686.cpp LT_PMBusDeviceLTM4700.cpp
+ 
+ # Add this for dmalloc
+ # -I../dmalloc-5.5.2 -DDMALLOC
+-- 
+2.17.1
+
