@@ -1,7 +1,7 @@
 LICENSE = "Unknown"
 LIC_FILES_CHKSUM = "file://COPYING;md5=8636bd68fc00cc6a3809b7b58b45f982"
 
-SRC_URI = "git://source.codeaurora.org/external/imx/keyctl_caam.git;protocol=https;branch=master"
+SRC_URI = "git://github.com/nxp-imx/keyctl_caam.git;protocol=https;branch=master"
 PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
 #SRCREV = "81dc06cdb9c4d0d4ba10459d85af9a8603774948"
