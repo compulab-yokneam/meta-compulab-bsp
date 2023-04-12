@@ -1,4 +1,6 @@
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-RDEPENDS:${PN}:remove = "u-boot-fw-utils"
-SRC_URI:remove = "file://cl-deploy.mtd"
-COMPATIBLE_MACHINE = "mx8"
+RDEPENDS:${PN}:remove:mx8 = "u-boot-fw-utils"
+SRC_URI:remove:mx8 = "file://cl-deploy.mtd"
+
+RDEPENDS:${PN}:remove:compulab-mx93 = "u-boot-fw-utils"
+SRC_URI:remove:compulab-mx93 = "file://cl-deploy.mtd"
