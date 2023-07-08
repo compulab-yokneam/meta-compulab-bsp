@@ -6,7 +6,7 @@ setenv boot_autoinst ' \
 	bootz ${loadaddr} - ${fdtaddr} \
 '
 
-setenv continue_boot 'setenv bootscript; boot'
+setenv continue_boot 'exit'
 
 # Issue `setenv skip_inst yes`
 # in order to bypass the auto installer look up logics
