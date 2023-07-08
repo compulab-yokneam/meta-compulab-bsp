@@ -1,1 +1,24 @@
 echo "MACHINE bootscript"
+
+setenv master_script yes
+
+setenv bootcmd_mmc0 'setenv devtype mmc; setenv devnum 0;'
+setenv bootcmd_mmc1 'setenv devtype mmc; setenv devnum 1;'
+setenv bootcmd_mmc2 'setenv devtype mmc; setenv devnum 2;'
+setenv bootcmd_usb0 'setenv devtype usb; setenv devnum 0;'
+
+boot_devs='usb0 mmc1 mmc2'
+bsp_boot_scripts='boot.update.scr boot.ai.scr boot.mender.scr'
+
+# Redefine the boot_devs if iface/dev provided by the environment
+env exist iface && env exist dev && boot_devs=${iface}${dev}
+
+for boot_dev in ${boot_devs};do
+    run bootcmd_${boot_dev} || continue
+    for boot_scr in ${bsp_boot_scripts};do
+        echo Trying ${devtype}${devnum}:${boot_scr}
+        load ${devtype} ${devnum} ${loadaddr} ${boot_scr} && source ${loadaddr}
+    done
+done
+
+exit
