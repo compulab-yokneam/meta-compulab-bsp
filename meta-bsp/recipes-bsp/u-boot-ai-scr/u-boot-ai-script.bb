@@ -9,25 +9,26 @@ SRC_URI = " \
 "
 
 do_compile() {
-    mkimage -C none -A arm -T script -d "${WORKDIR}/boot.script" boot.scr
+    mkimage -C none -A arm -T script -d ${WORKDIR}/boot.script ${WORKDIR}/boot.scr
 }
 
 do_install() {
     install -d ${D}/boot
-    install -m 0644 boot.scr ${D}/boot/boot.scr
-    install -m 0644 ${WORKDIR}/boot.script ${D}/boot/boot.script
+    install -d ${D}/usr/share/compulab
+    install -m 0644 ${WORKDIR}/boot.scr ${D}/boot/boot.ai.scr
+    install -m 0644 ${WORKDIR}/boot.script ${D}/usr/share/compulab/boot.ai.script
 }
 
 inherit deploy
 
 do_deploy() {
     install -d ${DEPLOYDIR}
-    install -m 0644 boot.scr ${DEPLOYDIR}
+    install -m 0644 ${WORKDIR}/boot.scr ${DEPLOYDIR}/boot.ai.scr
 }
 
 addtask do_deploy after do_compile before do_build
 
-FILES:${PN} += "/boot/"
+FILES:${PN} += "/boot/ /usr/share/compulab/ "
 
 RPROVIDES:${PN} += "u-boot-ai-script"
 
