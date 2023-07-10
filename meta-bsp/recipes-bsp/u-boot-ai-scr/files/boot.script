@@ -1,9 +1,9 @@
 setenv boot_autoinst ' \
 	setenv bootargs console=${console},${baudrate} root=${kernel_root} rootwait rw \
 	setenv bootargs ${bootargs} init=/usr/local/bin/cl-init \
-	load ${iface} ${autoinst_dev}:${autoinst_part} ${loadaddr} /boot/${kernel} \
-	load ${iface} ${autoinst_dev}:${autoinst_part} ${fdtaddr} /boot/${fdtfile} \
-	bootz ${loadaddr} - ${fdtaddr} \
+	load ${iface} ${dev}:${part} ${loadaddr} /boot/${kernel} \
+	load ${iface} ${dev}:${part} ${fdtaddr} /boot/${fdtfile} \
+	booti ${loadaddr} - ${fdtaddr} \
 '
 
 setenv continue_boot 'exit'
@@ -12,24 +12,30 @@ setenv continue_boot 'exit'
 # in order to bypass the auto installer look up logics
 env exist skip_inst && run continue_boot
 
-setenv autoinst_dev 0
-setenv autoinst_part 2
+setenv part 2
 
-setenv sd_autoinst  'setenv kernel_root /dev/mmcblk0p2; setenv iface mmc;'
-setenv usb_autoinst 'usb reset; setenv kernel_root /dev/sda2; setenv iface usb;'
-setenv bootlist usb_autoinst sd_autoinst
+setenv sd1_autoinst  'setenv kernel_root /dev/mmcblk1p2; setenv iface mmc; seten dev 1;'
+setenv usb0_autoinst 'usb reset; setenv kernel_root /dev/sda2; setenv iface usb; setenv dev 0;'
+
+if itest.s "x" == "x${bootlist}"; then
+  setenv bootlist usb0 sd1
+fi
 
 # Prepare the environment if running in a legacy system
 env exist kernel  || setenv kernel ${image}
 env exist fdtfile || setenv fdtfile ${fdt_file}
+env exist fdtaddr || setenv fdtaddr ${fdt_addr}
 
 # Before the start, to make sure that all required environment 
 # variables are defined
 env exist kernel  || run continue_boot
 env exist fdtfile || run continue_boot
+env exist fdtaddr || run continue_boot
 
 for src in ${bootlist};do
-run ${src}
-# To figure out whether the condition comes true: <media>:<partition> boot/auto file exists 
-load ${iface} ${autoinst_dev}:${autoinst_part} ${loadaddr} boot/auto && run boot_autoinst
+run ${src}_autoinst
+# To figure out whether the condition comes true: <dev>:<part> boot/auto file exists
+test -e ${iface} ${dev}:${part} boot/auto && run boot_autoinst
 done
+
+run continue_boot
