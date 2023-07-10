@@ -34,5 +34,4 @@ else
     echo ##BOOTLOADER## file not found
 fi
 
-setenv script
-boot
+exit
