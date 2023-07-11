@@ -30,15 +30,13 @@ do_deploy() {
 }
 
 do_install() {
-    install -d ${D}/boot
     install -d ${D}/usr/share/compulab
-    install -m 0644 ${WORKDIR}/boot.update.scr ${D}/boot/
     install -m 0644 ${WORKDIR}/boot.update.in ${D}/usr/share/compulab/boot.update.script
 }
 
 addtask do_deploy after do_compile before do_build
 
-FILES:${PN} += "/boot/ /usr/share/compulab/"
+FILES:${PN} += "/usr/share/compulab/"
 
 RPROVIDES:${PN} += "u-boot-update-script"
 
