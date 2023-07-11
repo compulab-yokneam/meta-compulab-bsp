@@ -9,12 +9,14 @@ SRC_URI = " \
 "
 
 do_compile() {
-    mkimage -C none -A arm -T script -d ${WORKDIR}/boot.script ${WORKDIR}/boot.scr
+    local console="$(printf "${SERIAL_CONSOLES}" | awk -F";" '($0=$2","$1"n8")')"
+    sed "s/@@CONSOLE@@/${console}/g" ${WORKDIR}/boot.script > ${WORKDIR}/boot.script.real
+    mkimage -C none -A arm -T script -d ${WORKDIR}/boot.script.real ${WORKDIR}/boot.scr
 }
 
 do_install() {
     install -d ${D}/usr/share/compulab
-    install -m 0644 ${WORKDIR}/boot.script ${D}/usr/share/compulab/boot.ai.script
+    install -m 0644 ${WORKDIR}/boot.script.real ${D}/usr/share/compulab/boot.ai.script
 }
 
 inherit deploy

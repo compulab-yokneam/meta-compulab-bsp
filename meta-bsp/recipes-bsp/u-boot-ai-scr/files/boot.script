@@ -1,5 +1,5 @@
 setenv boot_autoinst ' \
-	setenv bootargs console=${console},${baudrate} root=${kernel_root} rootwait rw \
+	setenv bootargs console=@@CONSOLE@@ root=${kernel_root} rootwait rw \
 	setenv bootargs ${bootargs} init=/usr/local/bin/cl-init \
 	load ${iface} ${dev}:${part} ${loadaddr} /boot/${kernel} \
 	load ${iface} ${dev}:${part} ${fdtaddr} /boot/${fdtfile} \
