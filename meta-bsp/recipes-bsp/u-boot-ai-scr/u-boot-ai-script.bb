@@ -1,4 +1,4 @@
-LICENSE = "GPLv2+"
+LICENSE = "GPL-2.0-or-later"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/README;md5=20919b3b0882c4ea49630574a50dd4e8"
 
 DEPENDS = "u-boot-mkimage-native"
