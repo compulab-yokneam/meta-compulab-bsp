@@ -24,7 +24,7 @@ get_manifest_name() {
 
 get_image_name() {
 	local fn=$(get_manifest_name)
-	fn=${fn%.*}
+	fn=${fn%.*}.
 
 	for _c in bz2 xz;do
 		for _f in  ${fn}*.${_c}; do
@@ -35,7 +35,7 @@ get_image_name() {
 			fi
 		done
 	done
-export image_name="${image_name}"
+	export image_name="${image_name}"
 }
 
 do_deploy() {
@@ -60,8 +60,8 @@ do_deploy() {
     if [ -n ${manifest_name} ];then
         cp -L ${manifest_name} ${DESTDIR}/images/
     fi
-
-    image_name='' get_image_name
+    image_name=''
+    get_image_name
     for _name in ${image_name};do
         if [ -n ${_name} ];then
             cp -L ${_name} ${DESTDIR}/images/
