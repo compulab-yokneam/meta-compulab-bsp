@@ -26,9 +26,13 @@ get_image_name() {
 	local fn=$(get_manifest_name)
 	fn=${fn%.*}.
 
-	for _c in bz2 xz;do
+	for _c in bz2 xz zst;do
 		for _f in  ${fn}*.${_c}; do
-			[ ${_c} = 'xz' ] && C='xz -dc ' || C='bzip2 -dc '
+			[ ${_c} = 'xz' ] && C='xz -dc ' || true
+			[ ${_c} = 'bz2' ] && C='bzip2 -dc ' || true
+			[ ${_c} = 'zst' ] && C='zstd -dc ' || true
+			_f=$(readlink -e ${_f}) && rc=$? || rc=$?
+			[ ${rc} -eq 0 ] || continue
 			${C} ${_f} | file - | grep -q -e partition -e archive && rc=0 || rc=1
 			if [ ${rc} -eq 0 ];then
 				image_name="${image_name} ${_f}"
