@@ -20,6 +20,7 @@ YEBIAN = "yebian"
 IMX_BOOT_PATT:aarch64 = "imx-boot"
 IMX_BOOT_PATT:arm = "u-boot.imx"
 IMX_BOOT_SEEK ?= "1"
+CL_RELEASE ?= "1.0"
 
 do_compile () {
 mkdir -p ${WORKDIR}/conf
@@ -35,6 +36,7 @@ FEATURES="${FEATURES}"
 BSP=${BSP}
 DPKG_ARCH=${DPKG_ARCH}
 DISTRO_CODENAME=${DISTRO_CODENAME}
+CL_RELEASE=${CL_RELEASE}
 eof
 
 }
