@@ -26,6 +26,7 @@ fi
 export IMX_DEV=/dev/${SELECT}
 }
 
+function mmc_update() {
 if [[ -f /sys/class/block/${_device}/force_ro ]];then
 function ro_rw() {
 	force_ro=$(cat /sys/class/block/${_device}/force_ro)
@@ -45,7 +46,6 @@ function rw_ro() {
 }
 fi
 
-function mmc_update() {
 N=$(cat <<< ${_device} | awk -F"boot" '/boot/ { print $2+1 }')
 N=${N:-0}
 
