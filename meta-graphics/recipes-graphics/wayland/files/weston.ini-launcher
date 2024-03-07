@@ -1,8 +1,5 @@
 
 [launcher]
-icon=/usr/share/compulab/icons/terminal.png
-path=/usr/bin/weston-terminal
-[launcher]
 icon=/usr/share/compulab/icons/cl-camera32x32.png
 path=/usr/share/compulab/scripts/cl-camera
 

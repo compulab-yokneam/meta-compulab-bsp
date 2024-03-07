@@ -1,0 +1,4 @@
+
+[launcher]
+icon=/usr/share/compulab/icons/terminal.png
+path=/usr/bin/weston-terminal
