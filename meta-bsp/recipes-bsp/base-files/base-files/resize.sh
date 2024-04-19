@@ -1,2 +1,1 @@
-shopt -s checkwinsize
-command -v resize &>/dev/null && resize
+shopt -s checkwinsize; command resize &>/dev/null
