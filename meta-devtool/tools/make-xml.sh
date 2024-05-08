@@ -11,6 +11,7 @@ _layer+=( ['iot-gate-imx8']='meta-bsp-imx8mm' )
 _layer+=( ['mcm-imx8m-mini']='meta-bsp-imx8mm' )
 _layer+=( ['ucm-imx8m-mini']='meta-bsp-imx8mm' )
 _layer+=( ['ucm-imx93']='meta-bsp-imx9' )
+_layer+=( ['mcm-imx93']='meta-bsp-imx9' )
 
 _LAYER=${_layer[${_MACHINE}]}
 
