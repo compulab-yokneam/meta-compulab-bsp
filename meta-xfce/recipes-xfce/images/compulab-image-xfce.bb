@@ -29,7 +29,6 @@ CORE_IMAGE_EXTRA_INSTALL += " \
 "
 
 CORE_IMAGE_EXTRA_INSTALL += "${@bb.utils.contains('DISTRO_CODENAME', 'dunfell', ' ', 'imx-gpu-viv-demos \
-packagegroup-fsl-tools-audio \
 packagegroup-fsl-tools-gpu \
 packagegroup-fsl-tools-testapps \
 packagegroup-fsl-tools-benchmark \
