@@ -4,7 +4,7 @@ dialog_app='dialog '
 [[ -n ${QUIET} ]] && dialog_app='true || '${dialog_app}
 
 function get_boot_loader() {
-RADIO=$(ls /boot/ | awk '(/uboot|flash/)&&($0=$1" OFF ")' ORS="")
+local RADIO=$(ls /boot/ | awk '(/uboot|flash/)&&($0=$1" OFF ")' ORS="")
 SELECT=$(dialog --no-items --backtitle "Select a U-Boot file:" --radiolist "Available U-Boot files:" 12 80 12 ${RADIO} --stdout)
 [[ -z ${SELECT} ]] && exit
 
@@ -12,7 +12,12 @@ export IMX_BOOT=/boot/${SELECT}
 }
 
 function get_boot_device() {
-RADIO=$(ls /sys/class/block/mmcblk[[:digit:]]boot0/size /sys/class/block/mmcblk[[:digit:]]/size | awk -F"/" '($0=$5" OFF ")' ORS="")
+local RADIO=""
+local _boot=$(ls /sys/class/block/mmcblk[[:digit:]]boot[[:digit:]]/size | awk -F"/" '($0=$5)' ORS=" ")
+local _raw=$(ls /sys/class/block/mmcblk[[:digit:]]/size  | awk -F"/" '($0=$5)' ORS=" ")
+for _r in ${_raw};do [[ ${_boot} =~ ${_r} ]] || _boot+=" ${_r}"; done
+for _b in ${_boot};do RADIO+="${_b} OFF "; done
+
 if [[ ! -z ${RADIO} ]];then
 SELECT=$(dialog --no-items --backtitle "Select a boot device:" --radiolist "Available boot devices:" 12 80 12 ${RADIO} --stdout)
 [[ -z ${SELECT} ]] && exit
