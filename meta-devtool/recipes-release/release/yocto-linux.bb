@@ -19,7 +19,7 @@ do_compile () {
 }
 
 get_manifest_name() {
-	ls ${DEPLOY_DIR_IMAGE}/*${MACHINE}.manifest | awk '(NR == 1 || length < length(shortest)) { shortest = $0 } END { print shortest }'
+	ls ${DEPLOY_DIR_IMAGE}/*${MACHINE}*.manifest | awk '(NR == 1 || length < length(shortest)) { shortest = $0 } END { print shortest }'
 }
 
 get_image_name() {
