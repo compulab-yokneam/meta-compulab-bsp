@@ -2,9 +2,9 @@ SUMMARY = "Universal Update Utility"
 DESCRIPTION = "Image deploy tool for i.MX chips"
 HOMEPAGE = "https://github.com/NXPmicro/mfgtools"
 
-SRC_URI = "git://github.com/NXPmicro/mfgtools.git;protocol=https"
-SRCREV = "e10b0260076e0119c259f7f44447904f14109ba2"
-PV = "1.5.0"
+SRC_URI = "git://github.com/NXPmicro/mfgtools.git;protocol=https;branch=master"
+SRCREV = "da3cd53f056a7868fdffaa631e4e426847aec309"
+PV = "1.5.182"
 
 SRC_URI += "file://0001-remove-unnecessary-libzip-dependency.patch"
 
