@@ -23,6 +23,10 @@ do_compile () {
 
 do_install () {
 	tar --exclude="README.md" -cf - . | tar -C ${D} -xf -
+	if ${@bb.utils.contains('DISTRO_FEATURES','usrmerge','true','false',d)}; then
+		mkdir -p ${D}/usr
+		mv ${D}/lib ${D}/usr/
+	fi
 	chown -R 0:0 ${D}
 }
 
@@ -46,5 +50,5 @@ pkg_postrm:${PN} () {
 	fi
 }
 
-FILES:${PN} = "etc/* lib/* usr*"
+FILES:${PN} = "etc/* ${base_libdir}/* usr/*"
 RDEPENDS:${PN} = "bash"
