@@ -28,3 +28,4 @@ FILES:${PN} = " \
 
 PACKAGE_ARCH = "${MACHINE_SOCARCH}"
 INSANE_SKIP:${PN} += "ldflags"
+COMPATIBLE_MACHINE = "${MACHINE}-obsolete"
