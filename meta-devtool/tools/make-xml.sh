@@ -7,6 +7,7 @@ declare -A _layer
 _layer+=( ['iot-gate-imx8plus']='meta-bsp-imx8mp' )
 _layer+=( ['som-imx8m-plus']='meta-bsp-imx8mp' )
 _layer+=( ['ucm-imx8m-plus']='meta-bsp-imx8mp' )
+_layer+=( ['ucm-imx8m-plus-sbev']='meta-bsp-imx8mp' )
 _layer+=( ['iot-gate-imx8']='meta-bsp-imx8mm' )
 _layer+=( ['mcm-imx8m-mini']='meta-bsp-imx8mm' )
 _layer+=( ['ucm-imx8m-mini']='meta-bsp-imx8mm' )
