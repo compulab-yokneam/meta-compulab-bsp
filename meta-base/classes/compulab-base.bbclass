@@ -1,0 +1,1 @@
+../../meta-bsp/classes/compulab-bsp.bbclass
