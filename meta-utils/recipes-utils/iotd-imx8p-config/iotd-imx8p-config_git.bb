@@ -54,4 +54,4 @@ pkg_postrm:${PN} () {
 }
 
 FILES:${PN} = "etc/* ${base_libdir}/* opt/* usr/*"
-RDEPENDS:${PN} = "bash tree gpiod"
+RDEPENDS:${PN} = "bash tree gpiod coreutils"
