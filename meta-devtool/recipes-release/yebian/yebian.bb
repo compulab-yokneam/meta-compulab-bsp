@@ -21,6 +21,8 @@ IMX_BOOT_PATT:aarch64 = "imx-boot"
 IMX_BOOT_PATT:arm = "u-boot.imx"
 IMX_BOOT_SEEK ?= "1"
 CL_RELEASE ?= "1.0"
+PART_LABEL:aarch64 = "gpt"
+PART_LABEL:arm = "msdos"
 
 do_compile () {
 mkdir -p ${WORKDIR}/conf
@@ -37,6 +39,7 @@ BSP=${BSP}
 DPKG_ARCH=${DPKG_ARCH}
 DISTRO_CODENAME=${DISTRO_CODENAME}
 CL_RELEASE=${CL_RELEASE}
+lable=${PART_LABEL}
 eof
 
 }
