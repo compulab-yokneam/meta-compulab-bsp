@@ -8,6 +8,6 @@ do_install:prepend:aarch64() {
     sed -i "s|##SEEK##|${IMX_BOOT_SEEK}|" ${S}/cl-uboot.work
 }
 
-PACKAGE_ARCH = "${MACHINE_ARCH}"
+PACKAGE_ARCH = "${MACHINE_SOCARCH}"
 RDEPENDS:${PN}:remove:aarch64 = " mtd-utils u-boot-compulab "
-RDEPENDS:${PN}:append:aarch64 = " imx-boot mmc-utils "
+RDEPENDS:${PN}:append:aarch64 = " mmc-utils "
