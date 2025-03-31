@@ -4,7 +4,7 @@ dialog_app='dialog '
 [[ -n ${QUIET} ]] && dialog_app='true || '${dialog_app}
 
 function get_boot_loader() {
-RADIO=$(ls /boot/ | awk '(/uboot|flash/)&&($0=$1" OFF ")' ORS="")
+local RADIO=$(ls /boot/ | awk '(/uboot|flash|imx-boot_/)&&($0=$1" OFF ")' ORS="")
 SELECT=$(dialog --no-items --backtitle "Select a U-Boot file:" --radiolist "Available U-Boot files:" 12 80 12 ${RADIO} --stdout)
 [[ -z ${SELECT} ]] && exit
 
@@ -30,6 +30,9 @@ N=${N:-0}
 export CMD="mmc bootpart enable ${N} 0 /dev/${_device}"
 ${CMD}
 }
+
+IMX_BOOT=${SRC:-""}
+IMX_DEV=${DST:-""}
 
 [[ -n ${IMX_BOOT} && -f ${IMX_BOOT} ]] || get_boot_loader
 [[ -n ${IMX_DEV} && -b ${IMX_DEV} ]] || get_boot_device
