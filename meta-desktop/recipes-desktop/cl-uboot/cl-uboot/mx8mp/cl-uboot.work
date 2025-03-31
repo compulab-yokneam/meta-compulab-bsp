@@ -58,6 +58,9 @@ export CMD="mmc bootpart enable ${N} 0 /dev/${_device}"
 ${CMD}
 }
 
+IMX_BOOT=${SRC:-""}
+IMX_DEV=${DST:-""}
+
 [[ -n ${IMX_BOOT} && -f ${IMX_BOOT} ]] || get_boot_loader
 [[ -n ${IMX_DEV} && -b ${IMX_DEV} ]] || get_boot_device
 
