@@ -10,4 +10,4 @@ do_install:prepend:aarch64() {
 
 PACKAGE_ARCH = "${MACHINE_SOCARCH}"
 RDEPENDS:${PN}:remove:aarch64 = " mtd-utils u-boot-compulab "
-RDEPENDS:${PN}:append:aarch64 = " mmc-utils "
+RDEPENDS:${PN}:append:aarch64 = " mmc-utils imx-boot"
