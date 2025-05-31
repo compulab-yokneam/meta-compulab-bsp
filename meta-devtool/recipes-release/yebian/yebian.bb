@@ -4,6 +4,7 @@ LIC_FILES_CHKSUM = ""
 YEBIAN_BRANCH ?= "master"
 
 SRC_URI = "git://github.com/compulab-yokneam/yebian.git;protocol=https;branch=${YEBIAN_BRANCH}"
+SRC_URI:append  = " file://linux-kernel.conf "
 
 PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
@@ -41,6 +42,8 @@ DISTRO_CODENAME=${DISTRO_CODENAME}
 CL_RELEASE=${CL_RELEASE}
 lable=${PART_LABEL}
 eof
+
+cat ${WORKDIR}/linux-kernel.conf >> ${WORKDIR}/conf/local.conf
 
 }
 
