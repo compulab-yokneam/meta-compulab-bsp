@@ -1,13 +1,11 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI += "\
-  file://asound.conf \
-  file://asound.state \
-"
-
 do_install:append() {
 
     case ${MACHINE} in
+    ucm-imx93|ucm-imx91)
+        ALSA_MACHINE=wm8962audio
+	;;
     *imx8m-mini)
         ALSA_MACHINE=climx8mmini
 	;;
