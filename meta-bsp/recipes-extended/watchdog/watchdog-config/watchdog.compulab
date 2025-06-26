@@ -1,0 +1,8 @@
+# This is the sample compulab config
+watchdog-device  = /dev/watchdog0
+watchdog-timeout = 10
+interval = 1
+sigterm-delay = 5
+retry-timeout = 1
+test-binary = /usr/bin/true
+realtime = yes
