@@ -3,12 +3,14 @@ do_ro_fix() {
 
     # Postpone the listed services start to the moment they are granted RW disk operations
     for i in systemd-rfkill systemd-backlight@ systemd-tmpfiles-setup; do
-	sed -e '/^After=/ {/local-fs.target/!s/^\(.*\)$/& local-fs.target/}' -i ${D}/lib/systemd/system/${i}.service
+    if [ -f ${D}/lib/systemd/system/${i}.service ];then
+        sed -e '/^After=/ {/local-fs.target/!s/^\(.*\)$/& local-fs.target/}' -i ${D}/lib/systemd/system/${i}.service
+    fi
     done
 }
 
 do_logind_patch() {
-    if [[ -f ${D}/etc/systemd/logind.conf ]];then
+    if [ -f ${D}/etc/systemd/logind.conf ];then
         sed -i '/^HandlePowerKey=ignore/d' ${D}/etc/systemd/logind.conf
     fi
 }
