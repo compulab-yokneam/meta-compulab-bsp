@@ -10,7 +10,7 @@ SRC_URI = "git://github.com/compulab-yokneam/bin.git;protocol=https;branch=cl-wd
 PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
 
-S = "${WORKDIR}/git/${BPN}"
+S = "${UNPACKDIR}/git/${BPN}"
 
 do_configure () {
 	:

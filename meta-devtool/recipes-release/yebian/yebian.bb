@@ -9,7 +9,7 @@ SRC_URI:append  = " file://linux-kernel.conf "
 PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 FEATURES += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', 'EMPTY:', d)}"
 FEATURES += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'MENDER:', 'EMPTY:', d)}"
@@ -26,9 +26,9 @@ PART_LABEL:aarch64 = "gpt"
 PART_LABEL:arm = "msdos"
 
 do_compile () {
-mkdir -p ${WORKDIR}/conf
+mkdir -p ${UNPACKDIR}/conf
 
-cat << eof > ${WORKDIR}/conf/local.conf
+cat << eof > ${UNPACKDIR}/conf/local.conf
 YEBIAN=${DEPLOY_DIR_IMAGE}/${YEBIAN}
 DEPLOY_DIR=${DEPLOY_DIR}
 DEPLOY_DIR_IMAGE=${DEPLOY_DIR_IMAGE}
@@ -43,7 +43,7 @@ CL_RELEASE=${CL_RELEASE}
 lable=${PART_LABEL}
 eof
 
-cat ${WORKDIR}/linux-kernel.conf >> ${WORKDIR}/conf/local.conf
+cat ${UNPACKDIR}/linux-kernel.conf >> ${UNPACKDIR}/conf/local.conf
 
 }
 
@@ -52,7 +52,7 @@ inherit deploy
 do_deploy_native () {
     for native_tool in ${NATIVE_TOOLS};do
         mkdir -p ${DEPLOY_DIR_IMAGE}/${YEBIAN}/bin
-        cp ${WORKDIR}/recipe-sysroot-native/usr/bin/${native_tool} ${DEPLOY_DIR_IMAGE}/${YEBIAN}/bin/
+        cp ${UNPACKDIR}/recipe-sysroot-native/usr/bin/${native_tool} ${DEPLOY_DIR_IMAGE}/${YEBIAN}/bin/
     done
 }
 
@@ -62,8 +62,8 @@ do_deploy:append () {
 
 do_deploy () {
     install -d ${DEPLOY_DIR_IMAGE}/${YEBIAN}
-    cp -a ${WORKDIR}/conf ${DEPLOY_DIR_IMAGE}/${YEBIAN}/
-    cp -a ${WORKDIR}/git ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts
+    cp -a ${UNPACKDIR}/conf ${DEPLOY_DIR_IMAGE}/${YEBIAN}/
+    cp -a ${UNPACKDIR}/git ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts
 }
 
 addtask deploy after do_compile

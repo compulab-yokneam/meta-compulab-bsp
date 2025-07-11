@@ -10,7 +10,7 @@ SRC_URI += " \
 PV = "1.0+git${SRCPV}"
 SRCREV = "310a1e23519619c9d9b26a6d9f97b5a5e2a34966"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 inherit cmake autotools-brokensep
 

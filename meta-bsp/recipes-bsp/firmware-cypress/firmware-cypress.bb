@@ -9,7 +9,7 @@ SRC_URI = "git://github.com/compulab-yokneam/bin.git;branch=cypress;protocol=htt
 PV = "1.0+git${SRCPV}"
 SRCREV = "b1c41c55fe183db211c8e73780673c8d82fc6d74"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 do_install () {
 	install -d ${D}${base_libdir}/firmware/brcm/bcm4339

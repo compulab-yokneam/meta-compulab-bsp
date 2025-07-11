@@ -6,7 +6,7 @@ PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
 #SRCREV = "81dc06cdb9c4d0d4ba10459d85af9a8603774948"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 EXTRA_OEMAKE:append = ' KEYBLOB_LOCATION=/data/caam/keys/ '
 

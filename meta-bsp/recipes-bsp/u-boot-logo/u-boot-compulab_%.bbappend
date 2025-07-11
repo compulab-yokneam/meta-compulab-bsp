@@ -5,5 +5,5 @@ SRC_URI:append = " \
 "
 
 do_configure:append () {
-    cp -fv ${WORKDIR}/compulab.bmp ${S}/tools/logos/
+    cp -fv ${UNPACKDIR}/compulab.bmp ${S}/tools/logos/
 }

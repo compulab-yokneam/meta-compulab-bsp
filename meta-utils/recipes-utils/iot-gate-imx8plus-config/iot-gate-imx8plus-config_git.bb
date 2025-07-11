@@ -11,7 +11,7 @@ PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
 # SRCREV = "be4a2e9d2b7274fa65dcddc67707d824bf345c67"
 
-S = "${WORKDIR}/git/${BPN}"
+S = "${UNPACKDIR}/git/${BPN}"
 
 do_configure () {
 	:

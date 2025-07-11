@@ -7,7 +7,7 @@ SRC_URI += "file://Xorg.conf"
 # That is why thr prepend() copies Xorg.conf on top of xorg.conf.
 # Quick & dirty solution. To be fixed.
 do_install:prepend() {
-	cp ${WORKDIR}/Xorg.conf ${WORKDIR}/xorg.conf
+	cp ${UNPACKDIR}/Xorg.conf ${UNPACKDIR}/xorg.conf
 }
 
 RDEPENDS:${PN} += " xf86-video-fbdev "

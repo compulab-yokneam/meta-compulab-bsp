@@ -8,7 +8,7 @@ SRC_URI = " \
 	file://COPYING \
 "
 
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 do_compile() {
     :

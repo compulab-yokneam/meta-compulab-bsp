@@ -7,7 +7,7 @@ PR = "r2"
 
 SRC_URI = "file://xorg.conf"
 
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 CONFFILES:${PN} = "${sysconfdir}/X11/xorg.conf.d/99-compulab-xorg.conf"
 
@@ -15,8 +15,8 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 ALLOW_EMPTY:${PN} = "1"
 
 do_install () {
-	if test -s ${WORKDIR}/xorg.conf; then
+	if test -s ${UNPACKDIR}/xorg.conf; then
 		install -d ${D}/${sysconfdir}/X11/xorg.conf.d
-		install -m 0644 ${WORKDIR}/xorg.conf ${D}/${sysconfdir}/X11/xorg.conf.d/99-compulab-xorg.conf
+		install -m 0644 ${UNPACKDIR}/xorg.conf ${D}/${sysconfdir}/X11/xorg.conf.d/99-compulab-xorg.conf
 	fi
 }

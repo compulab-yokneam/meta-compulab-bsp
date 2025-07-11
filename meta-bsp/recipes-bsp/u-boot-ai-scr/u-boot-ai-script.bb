@@ -1,5 +1,5 @@
 LICENSE = "GPL-2.0-or-later"
-LIC_FILES_CHKSUM = "file://${WORKDIR}/README;md5=20919b3b0882c4ea49630574a50dd4e8"
+LIC_FILES_CHKSUM = "file://${UNPACKDIR}/README;md5=20919b3b0882c4ea49630574a50dd4e8"
 
 DEPENDS = "u-boot-mkimage-native"
 
@@ -10,20 +10,20 @@ SRC_URI = " \
 
 do_compile() {
     local console="$(printf "${SERIAL_CONSOLES}" | awk -F";" '($0=$2","$1"n8")')"
-    sed "s/@@CONSOLE@@/${console}/g" ${WORKDIR}/boot.script > ${WORKDIR}/boot.script.real
-    mkimage -C none -A arm -T script -d ${WORKDIR}/boot.script.real ${WORKDIR}/boot.scr
+    sed "s/@@CONSOLE@@/${console}/g" ${UNPACKDIR}/boot.script > ${UNPACKDIR}/boot.script.real
+    mkimage -C none -A arm -T script -d ${UNPACKDIR}/boot.script.real ${UNPACKDIR}/boot.scr
 }
 
 do_install() {
     install -d ${D}/usr/share/compulab
-    install -m 0644 ${WORKDIR}/boot.script.real ${D}/usr/share/compulab/boot.ai.script
+    install -m 0644 ${UNPACKDIR}/boot.script.real ${D}/usr/share/compulab/boot.ai.script
 }
 
 inherit deploy
 
 do_deploy() {
     install -d ${DEPLOYDIR}
-    install -m 0644 ${WORKDIR}/boot.scr ${DEPLOYDIR}/boot.ai.scr
+    install -m 0644 ${UNPACKDIR}/boot.scr ${DEPLOYDIR}/boot.ai.scr
 }
 
 addtask do_deploy after do_compile before do_build

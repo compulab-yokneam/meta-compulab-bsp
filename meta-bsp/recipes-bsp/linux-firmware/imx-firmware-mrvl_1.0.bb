@@ -15,7 +15,7 @@ SRC_URI = "git://github.com/nxp-imx/imx-firmware.git;protocol=https;branch=lf-5.
 PV = "1.0"
 SRCREV = "982bb10dfabfb9e7b9dc106c59a4fbb2c45bfb44"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 inherit allarch
 

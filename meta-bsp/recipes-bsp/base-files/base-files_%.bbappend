@@ -9,8 +9,8 @@ SRC_URI:append = " \
 "
 do_install:append () {
     install -d ${D}${sysconfdir}/profile.d/
-    install -m 0755 ${WORKDIR}/resize.sh ${D}${sysconfdir}/profile.d/resize.sh
-    install -m 0755 ${WORKDIR}/pager.sh ${D}${sysconfdir}/profile.d/pager.sh
+    install -m 0755 ${UNPACKDIR}/resize.sh ${D}${sysconfdir}/profile.d/resize.sh
+    install -m 0755 ${UNPACKDIR}/pager.sh ${D}${sysconfdir}/profile.d/pager.sh
 }
 
 FILES:${PN} += "${sysconfdir}/profile.d/*"

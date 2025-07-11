@@ -18,7 +18,7 @@ SRC_URI[sha256sum] = "b07c05f1cfcf24260b5329436d7aaf147ebc12e66b7485f16521bea63b
 SRC_URI[sha384sum] = "dd3065fc9e495332f04842beb94016f18050e2ede72e2ed618e1bb64878def275c1a78d70a1aeeb675f0a91ca09bf3d1"
 SRC_URI[sha512sum] = "ce91439bc9f0b2f8ee28130e43ffa897dec0e8d0cbecdeda1348115091028c0c637d5a051c2f2709ae30c39de76fb23cac01b19b0823aee635d3f45d4f921683"
 
-S = "${WORKDIR}/${PN}-src"
+S = "${UNPACKDIR}/${PN}-src"
 #
 # NOTE: no Makefile found, unable to determine what needs to be done
 

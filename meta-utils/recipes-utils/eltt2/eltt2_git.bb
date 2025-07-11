@@ -7,10 +7,10 @@ SRC_URI += "file://Makefile.target"
 PV = "1.0+git${SRCPV}"
 SRCREV = "3d55476179da9bd61c2df1ba1ef010afe27e7776"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 do_configure () {
-	cp ${WORKDIR}/Makefile.target ${S}/
+	cp ${UNPACKDIR}/Makefile.target ${S}/
 }
 
 do_compile () {

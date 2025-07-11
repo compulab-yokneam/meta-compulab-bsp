@@ -6,7 +6,7 @@ SRC_URI = "file://cl-iselect \
 	file://cl-oselect \
 "
 
-S = "${WORKDIR}"
+S = "${UNPACKDIR}"
 
 do_configure () {
 	:

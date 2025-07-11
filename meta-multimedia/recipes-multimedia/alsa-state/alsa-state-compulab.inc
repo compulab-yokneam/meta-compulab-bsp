@@ -14,13 +14,13 @@ do_install:append() {
 	;;
     esac
 
-    sed -i "s|##MACHINE##|${ALSA_MACHINE}|g" ${WORKDIR}/asound.conf
-    sed -i "s|##MACHINE##|${ALSA_MACHINE}|g" ${WORKDIR}/asound.state
+    sed -i "s|##MACHINE##|${ALSA_MACHINE}|g" ${UNPACKDIR}/asound.conf
+    sed -i "s|##MACHINE##|${ALSA_MACHINE}|g" ${UNPACKDIR}/asound.state
 
     install -d ${D}/${localstatedir}/lib/alsa
     install -d ${D}${sysconfdir}
-    install -m 0644 ${WORKDIR}/asound.conf ${D}${sysconfdir}
-    install -m 0644 ${WORKDIR}/asound.state ${D}${localstatedir}/lib/alsa
+    install -m 0644 ${UNPACKDIR}/asound.conf ${D}${sysconfdir}
+    install -m 0644 ${UNPACKDIR}/asound.state ${D}${localstatedir}/lib/alsa
 }
 
 RDEPENDS:${PN} = "alsa-utils"

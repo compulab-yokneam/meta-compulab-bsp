@@ -5,7 +5,7 @@ SRC_URI = "git://github.com/nxp-imx-support/imx_sec_apps.git;protocol=https;bran
 PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
 
-S = "${WORKDIR}/git/mp-verification-tool"
+S = "${UNPACKDIR}/git/mp-verification-tool"
 
 do_compile () {
 	oe_runmake
