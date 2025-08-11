@@ -30,7 +30,7 @@ do_install () {
 	chown -R 0:0 ${D}
 }
 
-SERVICE_NAME = "iotg-imx8plus-ie-config.service"
+SERVICE_NAME = "iotg-imx8plus-ie-config.service iotg-imx8plus-gw-config.service iotg-imx8plus-stack-config.service"
 
 pkg_postinst:${PN} () {
 	if [ -n "$D" ]; then
