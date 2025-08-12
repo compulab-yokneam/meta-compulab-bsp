@@ -11,8 +11,9 @@ SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"
 
-FEATURES += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', 'EMPTY:', d)}"
-FEATURES += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'MENDER:', 'EMPTY:', d)}"
+FEATURES = "DEVEL:DESK:LEGACY:"
+FEATURES += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', '', d)}"
+FEATURES += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'MENDER:', '', d)}"
 DEPENDS += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'mender-artifact-native', '', d)}"
 NATIVE_TOOLS += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'mender-artifact', '', d)}"
 
