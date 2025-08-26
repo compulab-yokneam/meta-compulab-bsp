@@ -29,21 +29,13 @@ pkg_postinst_ontarget:${PN} () {
 	dpkg --root=${rootfs} -L ${pkg_name} | awk '(/libncurses/)&&(/aarch64/)' | grep -q ${bin_lib} && rc=$? || rc=$?
 
 	if [ ${rc} -eq 0 ];then
-		echo "Ready to run with ${bin_lib} ... "
 		exit 0
 	fi
 
 	lib_name=$(basename $(dpkg --root=${rootfs} -L ${pkg_name} | awk '(/libncurses.so.[[:digit:]]$/)'))
-
-	echo "Patche is needed ..."
-
 	patchelf --replace-needed ${bin_lib} ${lib_name} ${bin_name} || true
-
-	echo "done"
-	
 	exit 0
 }
-
 
 RDEPENDS:${PN} += "ncurses patchelf elfutils"
 
