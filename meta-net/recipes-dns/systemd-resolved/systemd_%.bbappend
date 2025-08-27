@@ -4,5 +4,5 @@ FILES:${PN} += " ${sysconfdir}/tmpfiles.d/systemd_resolved.conf "
 
 do_install:append() {
 	install -d ${D}${sysconfdir}/tmpfiles.d
-	install -m 0644 ${WORKDIR}/systemd_resolved.conf ${D}${sysconfdir}/tmpfiles.d/systemd_resolved.conf
+	install -m 0644 ${UNPACKDIR}/systemd_resolved.conf ${D}${sysconfdir}/tmpfiles.d/systemd_resolved.conf
 }
