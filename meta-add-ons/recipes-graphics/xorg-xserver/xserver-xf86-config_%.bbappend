@@ -1,9 +1,9 @@
 do_package_fix() {
 
 if [ ${DISTRO} = fsl-imx-x11 ];then
-	install -d ${WORKDIR}/image/etc/X11 
+	install -d ${UNPACKDIR}/image/etc/X11
 
-cat << eom > ${WORKDIR}/image/etc/X11/xorg.conf
+cat << eom > ${UNPACKDIR}/image/etc/X11/xorg.conf
 Section "Device"
     Identifier  "i.MX DRM Device"
     Driver      "fbdev"
