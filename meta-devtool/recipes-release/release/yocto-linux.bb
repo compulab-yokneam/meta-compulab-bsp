@@ -43,9 +43,9 @@ get_image_name() {
 }
 
 do_deploy() {
-    local RELEASE_NAME=${MACHINE}:${PN}
+    local RELEASE_NAME=${MACHINE}_${PN}_v$(printf ${CL_RELEASE} | sed 's/compulab-//g')
     local DIRS='development images kernel/dtb bootloader'
-    local DESTDIR=${DEPLOY_DIR_IMAGE}/../${RELEASE_NAME}
+    local DESTDIR=${DEPLOY_DIR_IMAGE}/../${PN}/${RELEASE_NAME}
 
     for dir in ${DIRS};do
         mkdir ${DESTDIR}/${dir} -p
@@ -80,7 +80,7 @@ DISTRO_VERSION:	${DISTRO_VERSION}
 BOOT_LOADER:	${BOOT_LOADER}
 LINUX_KERNEL:	${LINUX_KERNEL}
 eof
-    cd ${DEPLOY_DIR_IMAGE}/..
+    cd ${DESTDIR}/../
     tree --noreport ${RELEASE_NAME} -o ${RELEASE_NAME}.tree
     cd -
 }
