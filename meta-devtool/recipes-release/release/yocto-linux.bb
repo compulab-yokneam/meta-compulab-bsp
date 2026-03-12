@@ -58,7 +58,11 @@ do_deploy() {
 
     cp -L ${DEPLOY_DIR_IMAGE}/modules-${MACHINE}.tgz ${DESTDIR}/kernel/
     cp -L ${DEPLOY_DIR_IMAGE}/${KERNEL_IMAGETYPE}-${MACHINE}.bin ${DESTDIR}/kernel/${KERNEL_IMAGETYPE}-${MACHINE}
-    cp -L $(readlink -f ${DEPLOY_DIR_IMAGE}/${BOOTLOADER}) ${DESTDIR}/bootloader/
+    if [ -d ${DEPLOY_DIR_IMAGE}/compulab-bootloader/mfg ];then
+        cp -va ${DEPLOY_DIR_IMAGE}/compulab-bootloader/mfg/* ${DESTDIR}/bootloader
+    else
+        cp -L $(readlink -f ${DEPLOY_DIR_IMAGE}/${BOOTLOADER}) ${DESTDIR}/bootloader/
+    fi
 
     manifest_name=$(get_manifest_name)
     if [ -n ${manifest_name} ];then
