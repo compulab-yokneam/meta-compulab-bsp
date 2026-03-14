@@ -18,11 +18,21 @@ do_compile () {
     :
 }
 
+get_file_name_by_ext() {
+    [ -n ${ext:-""} ] || return 0
+    ls ${DEPLOY_DIR_IMAGE}/*${MACHINE}*.${ext} | awk '(NR == 1 || length < length(shortest)) { shortest = $0 } END { print shortest }'
+}
+
 get_manifest_name() {
-	ls ${DEPLOY_DIR_IMAGE}/*${MACHINE}*.manifest | awk '(NR == 1 || length < length(shortest)) { shortest = $0 } END { print shortest }'
+	ext=manifest get_file_name_by_ext
+}
+
+get_bmap_name() {
+	ext=bmap get_file_name_by_ext
 }
 
 get_image_name() {
+	image_name=""
 	local fn=$(get_manifest_name)
 	fn=${fn%.*}.
 
@@ -31,9 +41,10 @@ get_image_name() {
 			[ ${_c} = 'xz' ] && C='xz -dc ' || true
 			[ ${_c} = 'bz2' ] && C='bzip2 -dc ' || true
 			[ ${_c} = 'zst' ] && C='zstd -dc ' || true
-			_f=$(readlink -e ${_f}) && rc=$? || rc=$?
+			_ff=$(readlink -e ${_f}) && rc=$? || rc=$?
 			[ ${rc} -eq 0 ] || continue
-			${C} ${_f} | file - | grep -q -e partition -e archive && rc=0 || rc=1
+			echo ${_ff} | grep -q "tar" && continue || true
+			${C} ${_ff} | file - | grep -q -e partition -e archive && rc=0 || rc=1
 			if [ ${rc} -eq 0 ];then
 				image_name="${image_name} ${_f}"
 			fi
@@ -68,6 +79,10 @@ do_deploy() {
     if [ -n ${manifest_name} ];then
         cp -L ${manifest_name} ${DESTDIR}/images/
     fi
+    bmap_name=$(get_bmap_name)
+    if [ -n ${bmap_name} ];then
+        cp -L ${bmap_name} ${DESTDIR}/images/
+    fi
     image_name=''
     get_image_name
     for _name in ${image_name};do
@@ -80,9 +95,10 @@ do_deploy() {
     LINUX_KERNEL=$(awk '(/kernel-image-[[:digit:]]/)&&($0=$1)' ${DESTDIR}/images/*.manifest | sort -u)
 
 cat << eof > ${DESTDIR}/version.txt
-DISTRO_VERSION:	${DISTRO_VERSION}
-BOOT_LOADER:	${BOOT_LOADER}
-LINUX_KERNEL:	${LINUX_KERNEL}
+CL_RELEASE:     $(printf ${CL_RELEASE} | sed 's/compulab-//g')
+DISTRO_VERSION: ${DISTRO_VERSION}
+BOOT_LOADER:    ${BOOT_LOADER}
+LINUX_KERNEL:   ${LINUX_KERNEL}
 eof
     cd ${DESTDIR}/../
     tree --noreport ${RELEASE_NAME} -o ${RELEASE_NAME}.tree
