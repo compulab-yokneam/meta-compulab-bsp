@@ -9,5 +9,5 @@ do_install:prepend:aarch64() {
 }
 
 PACKAGE_ARCH = "${MACHINE_SOCARCH}"
-RDEPENDS:${PN}:remove:aarch64 = " mtd-utils u-boot-compulab "
-RDEPENDS:${PN}:append:aarch64 = " mmc-utils imx-boot"
+RDEPENDS:${PN}:remove:aarch64 = " mtd-utils ${@oe.utils.ifelse(d.getVar('UBOOT_PROVIDES_BOOT_CONTAINER') == '1', '', 'u-boot-compulab')}"
+RDEPENDS:${PN}:append:aarch64 = " mmc-utils ${@oe.utils.ifelse(d.getVar('UBOOT_PROVIDES_BOOT_CONTAINER') == '1', '', 'imx-boot')}"
