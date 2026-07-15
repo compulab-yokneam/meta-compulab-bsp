@@ -7,8 +7,6 @@ SRC_URI += "file://0001-Makefile-Take-CC-from-the-environment-if-defined.patch"
 PV = "1.0+git${SRCPV}"
 SRCREV = "257db099e8339404510eded3521da5370b321041"
 
-S = "${UNPACKDIR}/git"
-
 EXTRA_OEMAKE:append = " static "
 
 do_configure () {
