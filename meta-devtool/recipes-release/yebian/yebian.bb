@@ -9,8 +9,6 @@ SRC_URI:append  = " file://linux-kernel.conf "
 PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
 
-S = "${UNPACKDIR}/git"
-
 FEATURES += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'compulab-uefi', 'GRUB:', 'EMPTY:', d)}"
 FEATURES += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'MENDER:', 'EMPTY:', d)}"
 DEPENDS += "${@bb.utils.contains('BBFILE_COLLECTIONS', 'mender', 'mender-artifact-native', '', d)}"
@@ -63,7 +61,7 @@ do_deploy:append () {
 do_deploy () {
     install -d ${DEPLOY_DIR_IMAGE}/${YEBIAN}
     cp -a ${UNPACKDIR}/conf ${DEPLOY_DIR_IMAGE}/${YEBIAN}/
-    cp -a ${UNPACKDIR}/git ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts
+    cp -a ${S} ${DEPLOY_DIR_IMAGE}/${YEBIAN}/scripts
 }
 
 addtask deploy after do_compile
