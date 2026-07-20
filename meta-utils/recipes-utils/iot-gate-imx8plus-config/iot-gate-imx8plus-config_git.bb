@@ -1,28 +1,21 @@
 DESCRIPTION = "CompuLab iot-gate-imx8plus configuration tool"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://README.md;md5=626e1dacff5ee3ba1b58877fed161ba0"
+LIC_FILES_CHKSUM = "file://README.md;md5=d64ca8f8dd2a5f3c658d5261d48ec786"
 MAINTAINER = "CompuLab <compulab@compulab.com>"
 
 inherit systemd
 
-SRC_URI = "git://github.com/compulab-yokneam/bin.git;protocol=https;branch=iot-gate-imx8plus"
+IOTG_CFG_BRANCH ?= "iot-gate-imx8plus"
+SRC_URI = "git://github.com/compulab-yokneam/bin.git;protocol=https;branch=${IOTG_CFG_BRANCH}"
 
 PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
-# SRCREV = "be4a2e9d2b7274fa65dcddc67707d824bf345c67"
 
-S = "${UNPACKDIR}/git/${BPN}"
-
-do_configure () {
-	:
-}
-
-do_compile () {
-	:
-}
+do_configure[noexec] = "1"
+do_compile[noexec] = "1"
 
 do_install () {
-	tar --exclude="README.md" -cf - . | tar -C ${D} -xf -
+	tar -C ${PN} --exclude="README.md" -cf - . | tar -C ${D} -xf -
 	if ${@bb.utils.contains('DISTRO_FEATURES','usrmerge','true','false',d)}; then
 		mkdir -p ${D}/usr
 		mv ${D}/lib ${D}/usr/
