@@ -5,23 +5,17 @@ MAINTAINER = "CompuLab <compulab@compulab.com>"
 
 inherit systemd
 
-SRC_URI = "git://github.com/compulab-yokneam/bin.git;protocol=https;branch=iotdin-imx8p"
+IOTDIN_CFG_BRANCH ?= "iotdin-imx8p"
+SRC_URI = "git://github.com/compulab-yokneam/bin.git;protocol=https;branch=${IOTDIN_CFG_BRANCH}"
 
 PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
 
-S = "${UNPACKDIR}/git"
-
-do_configure () {
-	:
-}
-
-do_compile () {
-	:
-}
+do_configure[noexec] = "1"
+do_compile[noexec] = "1"
 
 do_install () {
-	tar -C ${S}/${BPN} -cf - . | tar -C ${D} -xf -
+	tar -C ${PN} --exclude="README.md" -cf - . | tar -C ${D} -xf -
 	if ${@bb.utils.contains('DISTRO_FEATURES','usrmerge','true','false',d)}; then
 		mkdir -p ${D}/usr
 		mv ${D}/lib ${D}/usr/
