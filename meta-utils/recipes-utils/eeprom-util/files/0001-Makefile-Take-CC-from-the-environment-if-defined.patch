@@ -3,6 +3,8 @@ From: Valentin Raevsky <valentin@compulab.co.il>
 Date: Sun, 1 Nov 2020 14:15:20 +0200
 Subject: [PATCH] Makefile: Take CC from the environment if defined
 
+Upstream-Status: Pending
+
 Signed-off-by: Valentin Raevsky <valentin@compulab.co.il>
 ---
  Makefile | 2 +-
