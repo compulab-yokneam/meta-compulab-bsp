@@ -18,12 +18,10 @@ do_compile () {
 }
 
 do_install () {
-	install -d ${D}/${prefix}/local/bin/
-	install -m 0755 ${S}/eeprom-util ${D}/${prefix}/local/bin/
+	install -d ${D}${bindir}
+	install -m 0755 ${S}/eeprom-util ${D}${bindir}/eeprom-util
 }
 
-FILES:${PN} = " \
-	/usr \
-"
+FILES:${PN} = "${bindir}/eeprom-util"
 
 PACKAGE_ARCH = "${MACHINE_SOCARCH}"
