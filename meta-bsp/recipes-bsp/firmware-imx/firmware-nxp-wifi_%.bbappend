@@ -1,3 +1,11 @@
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+
+SRC_URI:append = " \
+    file://moal.conf;subdir=local-conf \
+    file://btnxpuart.conf;subdir=local-conf \
+"
+
+
 SRC_URI:append = " https://github.com/Ezurio/Connectivity_Stack_Release_Packages/releases/download/LRD-REL-14.8.0.13/summit-nx61x-firmware-14.8.0.13.tar.bz2;name=nx61x-firmware;subdir=summit "
 SRC_URI[nx61x-firmware.md5sum] = "efe0166462579d27377beaf0f14afbd2"
 SRC_URI[nx61x-firmware.sha256sum] = "0ef2c4d56c7ad27c7206457f3e3de1e14fe96a6b0b64bef79fc8610dba56b825"
@@ -9,6 +17,7 @@ SRCREV_FORMAT = "default_${PN}"
 
 SUMMIT_DIR = "${UNPACKDIR}/summit/lib/firmware"
 IW612_RFTEST_DIR = "${UNPACKDIR}/iw612-rftest"
+LOCAL_CONF = "${UNPACKDIR}/local-conf"
 
 do_install:append() {
     install -d ${D}${nonarch_base_libdir}/firmware/nxp
@@ -22,25 +31,37 @@ do_install:append() {
 
     install -m 0644 ${IW612_RFTEST_DIR}/*.bin.se \
         ${D}${nonarch_base_libdir}/firmware/nxp/IW612_SD_RFTest/
+
+    install -d ${D}/${sysconfdir}/modprobe.d
+    install -m 0644 ${LOCAL_CONF}/moal.conf ${D}/${sysconfdir}/modprobe.d/moal.conf
+    install -m 0644 ${LOCAL_CONF}/btnxpuart.conf ${D}/${sysconfdir}/modprobe.d/btnxpuart.conf
+
 }
 
 PACKAGES =+ " \
     ${PN}-nxpiw612-sdio-rftest \
-    ${PN}-nxpiw612-sdio-extra \
+    ${PN}-nxpiw612-sdio-conf \
+    ${PN}-nxpiw612-sdio-rgpower \
 "
 
-FILES:${PN}-nxpiw612-sdio-extra:append = " \
+FILES:${PN}-nxpiw612-sdio-rgpower:append = " \
     ${nonarch_base_libdir}/firmware/nxp/rgpower* \
+"
+
+FILES:${PN}-nxpiw612-sdio-conf:append = " \
     ${nonarch_base_libdir}/firmware/nxp/wifi_prod_params.conf \
     ${nonarch_base_libdir}/firmware/nxp/wifi_prod_serdev_params.conf \
+    ${sysconfdir}/modprobe.d/moal.conf \
+    ${sysconfdir}/modprobe.d/btnxpuart.conf \
 "
 
 FILES:${PN}-nxpiw612-sdio-rftest:append = " \
     ${nonarch_base_libdir}/firmware/nxp/IW612_SD_RFTest/ \
 "
 
-RDEPENDS:${PN}-nxpiw612-sdio += "${PN}-nxpiw612-sdio-extra ${PN}-nxpiw612-sdio-rftest"
+RDEPENDS:${PN}-nxpiw612-sdio += "${PN}-nxpiw612-sdio-conf ${PN}-nxpiw612-sdio-rgpower ${PN}-nxpiw612-sdio-rftest"
 
 # The standalone Summit packages install the same firmware/configuration paths.
 RCONFLICTS:${PN}-nxpiw612-sdio += "summit-nx61x-firmware summit-nx61x-1218-firmware"
-RCONFLICTS:${PN}-nxpiw612-sdio-extra += "summit-nx61x-firmware summit-nx61x-1218-firmware"
+RCONFLICTS:${PN}-nxpiw612-sdio-conf += "summit-nx61x-firmware summit-nx61x-1218-firmware"
+RCONFLICTS:${PN}-nxpiw612-sdio-rgpower += "summit-nx61x-firmware"
