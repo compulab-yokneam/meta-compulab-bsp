@@ -3,10 +3,10 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI:append = " \
     file://moal.conf;subdir=local-conf \
     file://btnxpuart.conf;subdir=local-conf \
+    file://wifi_prod_params.conf;subdir=local-conf \
 "
 
-
-SRC_URI:append = " https://github.com/Ezurio/Connectivity_Stack_Release_Packages/releases/download/LRD-REL-14.8.0.13/summit-nx61x-firmware-14.8.0.13.tar.bz2;name=nx61x-firmware;subdir=summit "
+SRC_URI:append = " https://github.com/Ezurio/Connectivity_Stack_Release_Packages/releases/download/LRD-REL-14.8.0.13/summit-nx61x-firmware-14.8.0.13.tar.bz2;name=nx61x-firmware;subdir=summit"
 SRC_URI[nx61x-firmware.md5sum] = "efe0166462579d27377beaf0f14afbd2"
 SRC_URI[nx61x-firmware.sha256sum] = "0ef2c4d56c7ad27c7206457f3e3de1e14fe96a6b0b64bef79fc8610dba56b825"
 
@@ -24,8 +24,6 @@ do_install:append() {
 
     install -m 0644 ${SUMMIT_DIR}/nxp/rgpower* \
         ${D}${nonarch_base_libdir}/firmware/nxp/
-    install -m 0644 ${SUMMIT_DIR}/nxp/*.conf \
-        ${D}${nonarch_base_libdir}/firmware/nxp/
 
     install -d ${D}${nonarch_base_libdir}/firmware/nxp/IW612_SD_RFTest
 
@@ -35,7 +33,7 @@ do_install:append() {
     install -d ${D}/${sysconfdir}/modprobe.d
     install -m 0644 ${LOCAL_CONF}/moal.conf ${D}/${sysconfdir}/modprobe.d/moal.conf
     install -m 0644 ${LOCAL_CONF}/btnxpuart.conf ${D}/${sysconfdir}/modprobe.d/btnxpuart.conf
-
+    install -m 0644 ${LOCAL_CONF}/wifi_prod_params.conf ${D}${nonarch_base_libdir}/firmware/nxp/wifi_prod_params.conf
 }
 
 PACKAGES =+ " \
@@ -50,7 +48,6 @@ FILES:${PN}-nxpiw612-sdio-rgpower:append = " \
 
 FILES:${PN}-nxpiw612-sdio-conf:append = " \
     ${nonarch_base_libdir}/firmware/nxp/wifi_prod_params.conf \
-    ${nonarch_base_libdir}/firmware/nxp/wifi_prod_serdev_params.conf \
     ${sysconfdir}/modprobe.d/moal.conf \
     ${sysconfdir}/modprobe.d/btnxpuart.conf \
 "
