@@ -42,10 +42,30 @@ get_image_name() {
 	export image_name="${image_name}"
 }
 
+do_deploy:append:compulab-mx8mp() {
+	supported_mach=""
+	if [ ${SUPER_EVK} = "1" ];then
+		supported_mach="${supported_mach} ${COMPULAB_IMX8MP_EVK_MACHINES}"
+	fi
+	if [ ${SUPER_IOT} = "1" ];then
+		supported_mach="${supported_mach} ${COMPULAB_IMX8MP_IOT_MACHINES}"
+	fi
+	if [ -z "${supported_mach}" ];then
+		supported_mach=${MACHINE}
+	fi
+
+cat << eof >> ${DESTDIR}/version.txt
+---
+ALT_BOOT_MACHINE:   ${MACHINE}
+SUPPORTED_MACHINES: ${supported_mach}
+eof
+
+}
+
 do_deploy() {
-    local RELEASE_NAME=${MACHINE}:${PN}
-    local DIRS='development images kernel/dtb bootloader'
-    local DESTDIR=${DEPLOY_DIR_IMAGE}/../${RELEASE_NAME}
+    RELEASE_NAME=${MACHINE}:${PN}
+    DIRS='development images kernel/dtb bootloader'
+    DESTDIR=${DEPLOY_DIR_IMAGE}/../${RELEASE_NAME}
 
     for dir in ${DIRS};do
         mkdir ${DESTDIR}/${dir} -p
